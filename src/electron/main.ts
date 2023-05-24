@@ -19,7 +19,7 @@ const createWindow = () => {
 		autoHideMenuBar: true,
 		icon: path.join(app.getAppPath(), 'src', 'images', 'favicon.png'),
 		// frame: false,
-		title: 'Fabric Processing Monitoring System',
+		title: 'Garment Tracking',
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
