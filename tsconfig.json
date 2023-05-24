@@ -1,19 +1,60 @@
 {
-  "compilerOptions": {
-    "target": "ES6",
-    "allowJs": true,
-    "module": "commonjs",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "outDir": "dist",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    }
-  },
-  "include": ["src/**/*"]
+	"compilerOptions": {
+		// type checking
+		"strict": true,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUncheckedIndexedAccess": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
+		"useUnknownInCatchVariables": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+
+		// modules
+		"baseUrl": ".",
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"paths": {
+			"*": ["node_modules/*"]
+		},
+
+		// emit
+		"outDir": "dist",
+		"downlevelIteration": true,
+		"sourceMap": true,
+
+		// javascript support
+		"allowJs": true,
+		"checkJs": true,
+
+		// interop constraints
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"importsNotUsedAsValues": "error",
+		"ignoreDeprecations": "5.0",
+		// "verbatimModuleSyntax": true,
+
+		// language and environment
+		"jsx": "react-jsx",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"target": "esnext",
+
+		// output formatting
+		"noErrorTruncation": true,
+
+		// completeness
+		"skipLibCheck": true
+	},
+	"exclude": ["node_modules", "dist", "build", "public"]
 }
