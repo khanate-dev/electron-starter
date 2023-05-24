@@ -23,9 +23,6 @@
 		"module": "CommonJS",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
-		"paths": {
-			"~/*": ["./src/*"]
-		},
 
 		// emit
 		"outDir": "dist",

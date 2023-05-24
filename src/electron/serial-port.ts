@@ -3,7 +3,7 @@ import { ipcMain } from 'electron';
 
 import { SerialPort } from 'serialport';
 
-import { humanizeToken } from '~/shared/helpers/string';
+import { humanizeToken } from '@shared/helpers/string';
 
 import type { BrowserWindow } from 'electron';
 
