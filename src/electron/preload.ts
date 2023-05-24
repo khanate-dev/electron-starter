@@ -23,7 +23,7 @@ const ipcApi: IpcApi = {
 			return ipcRenderer.invoke(`disconnectBarCodeReader`);
 		},
 		listen: (callback) => {
-			ipcRenderer.on('onWeight', (_event, value) => {
+			ipcRenderer.on('onRead', (_event, value) => {
 				if (typeof value !== 'number') return;
 				callback(value);
 			});

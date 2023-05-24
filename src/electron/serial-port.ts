@@ -4,12 +4,15 @@ import { ipcMain } from 'electron';
 import { SerialPort } from 'serialport';
 
 import type { BrowserWindow } from 'electron';
+import type { IpcApi } from '@shared/types/ipc';
 
 const paths: Partial<Record<NodeJS.Platform, string>> & { default: string } = {
 	win32: 'COM102',
 	linux: '/dev/qrCodeReader',
 	default: '/dev/qrCodeReader',
 };
+
+type T = IpcApi['barCodeReader'];
 
 export const setupReader = (mainWindow: BrowserWindow) => {
 	const reader = new SerialPort({
@@ -18,23 +21,29 @@ export const setupReader = (mainWindow: BrowserWindow) => {
 		baudRate: 115200,
 	});
 
-	ipcMain.handle('connectBarCodeReader', async () => {
-		if (reader.isPaused()) return reader.resume();
+	const connectBarCodeReader: T['connect'] = async () => {
+		if (reader.isPaused()) {
+			reader.resume();
+			return;
+		}
 		return new Promise<void>((resolve, reject) => {
 			reader.open((error) => {
 				error ? reject(error) : resolve();
 			});
 		});
-	});
+	};
 
-	ipcMain.handle('disconnectBarCodeReader', async () => {
+	const disconnectBarCodeReader: T['disconnect'] = async () => {
 		if (!reader.isOpen) return;
 		return new Promise<void>((resolve, reject) => {
 			reader.open((error) => {
 				error ? reject(error) : resolve();
 			});
 		});
-	});
+	};
+
+	ipcMain.handle('connectBarCodeReader', connectBarCodeReader);
+	ipcMain.handle('disconnectBarCodeReader', disconnectBarCodeReader);
 
 	reader.on('data', (data) => {
 		const dataString = data.toString('utf-8');

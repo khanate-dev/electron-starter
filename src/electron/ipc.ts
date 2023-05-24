@@ -7,10 +7,10 @@ import type { IpcApi } from '@shared/types/ipc';
 
 export const setupIpc = (mainWindow: BrowserWindow) => {
 	ipcMain.handle('getIsPackaged', (async () =>
-		Promise.resolve(app.isPackaged)) satisfies IpcApi['getIsPackaged']);
+		Promise.resolve(app.isPackaged)) satisfies IpcApi['app']['getIsPackaged']);
 
 	ipcMain.on('closeApplication', (() =>
-		app.exit()) satisfies IpcApi['closeApplication']);
+		app.exit()) satisfies IpcApi['app']['closeApplication']);
 
 	setupReader(mainWindow);
 };
