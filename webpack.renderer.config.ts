@@ -1,4 +1,3 @@
-/* eslint-disable import/no-nodejs-modules */
 /* eslint-disable require-unicode-regexp */
 import path from 'path';
 

@@ -24,7 +24,7 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"paths": {
-			"*": ["node_modules/*"]
+			"~/*": ["./src/*"]
 		},
 
 		// emit
@@ -47,7 +47,7 @@
 
 		// language and environment
 		"jsx": "react-jsx",
-		"lib": ["dom", "dom.iterable", "esnext"],
+		"lib": ["esnext"],
 		"target": "esnext",
 
 		// output formatting
