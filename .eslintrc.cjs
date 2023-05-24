@@ -114,7 +114,6 @@ const config = {
 		'import/no-duplicates': 'warn',
 		'import/export': 'off',
 		'import/no-empty-named-blocks': 'warn',
-		'import/no-nodejs-modules': 'error',
 		'import/no-self-import': 'warn',
 		'import/no-useless-path-segments': 'warn',
 		'import/order': [
@@ -279,12 +278,9 @@ const config = {
 			},
 		},
 		{
-			files: ['./src/main.ts', './src/main/**/*'],
-			env: {
-				browser: false,
-			},
+			files: ['./src/renderer/**/*'],
 			rules: {
-				'import/no-nodejs-modules': 'off',
+				'import/no-nodejs-modules': 'error',
 			},
 		},
 	],
