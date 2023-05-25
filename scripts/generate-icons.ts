@@ -16,7 +16,7 @@ const colors = {
 	blue: '\x1b[34m',
 };
 
-const sourceFolder = './src/assets/icons';
+const sourceFolder = './src/app/assets/icons';
 const targetFolder = './src/app/components/media/icons';
 
 const config: Config = {
