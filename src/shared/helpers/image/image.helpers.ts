@@ -1,4 +1,4 @@
-import { IMAGE_EXTENSIONS, essentialsApiPath } from 'config';
+import { IMAGE_EXTENSIONS, apiEndpoint } from '~/app/config';
 
 import type { Dayjs } from 'dayjs';
 
@@ -52,7 +52,7 @@ export const getImageUrl = (
 	updatedAt: Dayjs | null
 ): string => {
 	if (!updatedAt) return '';
-	const url = new URL(`/images/${table}/${identifier}.png`, essentialsApiPath);
+	const url = new URL(`/images/${table}/${identifier}.png`, apiEndpoint);
 	url.searchParams.set('timeStamp', updatedAt.toISOString());
 	return url.href;
 };

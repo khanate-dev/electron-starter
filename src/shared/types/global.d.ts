@@ -9,13 +9,13 @@ import type {
 import type { LoaderFunction, ActionFunction } from 'react-router-dom';
 import type { SxProps, Theme } from '@mui/material';
 import type { SystemStyleObject } from '@mui/system';
-import type { ENVIRONMENTS } from 'config';
+import type { ENVIRONMENTS } from '~/app/config';
 import type {
 	NumberSelection,
 	StringSelection,
 	dbIdSchema,
-} from 'helpers/schema';
-import type { _localIdSchema } from 'helpers/data';
+} from '~/shared/helpers/schema';
+import type { _localIdSchema } from '~/shared/helpers/data';
 
 type DropFirst<T extends readonly unknown[]> = T extends readonly [
 	any?,

@@ -1,8 +1,9 @@
-import { getCatchMessage } from 'errors';
-import { createBulkResponseSchema } from 'helpers/schema';
+import { getCatchMessage } from '~/shared/errors';
 
-import type { DefaultBulkResponseObj } from 'helpers/schema';
-import type { BulkResponse } from 'helpers/api';
+import { createBulkResponseSchema } from '~/shared/helpers/schema';
+
+import type { DefaultBulkResponseObj } from '~/shared/helpers/schema';
+import type { BulkResponse } from '~/shared/helpers/api';
 import type { z } from 'zod';
 
 export const readableTypeOf = (value: unknown) => {

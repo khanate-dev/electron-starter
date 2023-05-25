@@ -1,6 +1,5 @@
 export type IpcApi = {
 	app: {
-		getIsPackaged: () => Promise<boolean>;
 		closeApplication: () => void;
 	};
 	barCodeReader: {

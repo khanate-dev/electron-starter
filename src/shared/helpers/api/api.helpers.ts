@@ -3,16 +3,15 @@ import { z } from 'zod';
 import { disableAuth, isFetchMocked } from '~/app/config';
 import { getSetting } from '~/shared/helpers/settings';
 import { dbDataSorter } from '~/shared/helpers/schema';
-
-import type { timestampSchema } from '~/shared/helpers/schema';
-
 import {
 	ApiError,
 	AuthError,
 	ConnectionError,
 	getCatchMessage,
-} from '~/errors';
-import { logout } from '~/contexts/user';
+} from '~/shared/errors';
+import { logout } from '~/app/contexts/user';
+
+import type { timestampSchema } from '~/shared/helpers/schema';
 
 const responseSchema = z.strictObject({
 	errorCode: z.string(),
