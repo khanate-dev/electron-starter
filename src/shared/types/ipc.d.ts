@@ -1,5 +1,6 @@
 export type IpcApi = {
 	app: {
+		environment: Environment;
 		closeApplication: () => void;
 	};
 	barCodeReader: {
