@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { disableAuth, isFetchMocked } from '~/app/config';
-import { getSetting } from '~/shared/helpers/settings';
+import { getSetting } from '~/app/helpers/settings';
 import { dbDataSorter } from '~/shared/helpers/schema';
 import {
 	ApiError,
