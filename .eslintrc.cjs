@@ -278,9 +278,44 @@ const config = {
 			},
 		},
 		{
-			files: ['./src/renderer/**/*'],
+			files: ['./src/app/**/*'],
 			rules: {
 				'import/no-nodejs-modules': 'error',
+				'no-restricted-imports': [
+					'warn',
+					{
+						patterns: [
+							{
+								group: ['../*'],
+								message: 'Do not use parent imports',
+							},
+							{
+								group: ['~/electron/*'],
+								message: 'Do not use electron modules in app',
+							},
+						],
+					},
+				],
+			},
+		},
+		{
+			files: ['./src/electron/**/*'],
+			rules: {
+				'no-restricted-imports': [
+					'warn',
+					{
+						patterns: [
+							{
+								group: ['../*'],
+								message: 'Do not use parent imports',
+							},
+							{
+								group: ['~/app/*'],
+								message: 'Do not use app modules in electron',
+							},
+						],
+					},
+				],
 			},
 		},
 	],
