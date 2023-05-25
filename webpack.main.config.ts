@@ -15,7 +15,7 @@ export const mainConfig: Configuration = {
 	resolve: {
 		extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
 		alias: {
-			'~/*': path.join(__dirname, 'src/*'),
+			'~': path.join(__dirname, 'src'),
 		},
 	},
 	// ! This is needed for webpack to not mess up `serialport`

@@ -22,7 +22,7 @@ export const rendererConfig: Configuration = {
 	resolve: {
 		extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
 		alias: {
-			'~/*': path.join(__dirname, 'src/*'),
+			'~': path.join(__dirname, 'src'),
 		},
 	},
 	// ! this enables the application to work when `devContentSecurityPolicy` is set.
