@@ -7,6 +7,8 @@ React Electron desktop application for CBL Garment Tracking
 - Electron with Electron Forge
 - React
 - Typescript
+- React Router
+- Material UI 5
 - npm for package management
 
 ---
