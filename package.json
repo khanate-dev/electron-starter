@@ -16,7 +16,6 @@
 		"format": "prettier --write .",
 		"generate-icons": "tsx ./scripts/generate-icons.ts"
 	},
-	"keywords": [],
 	"dependencies": {
 		"@emotion/react": "^11.11.0",
 		"@emotion/styled": "^11.11.0",
