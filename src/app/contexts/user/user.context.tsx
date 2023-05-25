@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { removeSetting } from '~/shared/helpers/settings';
+import { removeSetting } from '~/app/helpers/settings';
 
 import type { LoggedInUser } from '~/app/schemas/user';
 

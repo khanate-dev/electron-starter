@@ -6,7 +6,7 @@ import { resetUserPassword } from '~/app/endpoints/user';
 import { FormSchema } from '~/app/schemas';
 import { userZodSchema } from '~/app/schemas/user';
 import { logout, useUser } from '~/app/contexts/user';
-import { getImageUrl } from '~/shared/helpers/image';
+import { getImageUrl } from '~/app/helpers/image';
 import { CustomAvatar } from '~/app/components/media/custom-avatar';
 import { SchemaForm } from '~/app/components/forms/schema-form';
 import { CustomButton } from '~/app/components/controls/custom-button';

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Stack } from '@mui/material';
 
 import { IMAGE_EXTENSIONS } from '~/app/config';
-import { assertValidImage } from '~/shared/helpers/image';
+import { assertValidImage } from '~/app/helpers/image';
 import { CustomAvatar } from '~/app/components/media/custom-avatar';
 import { FileUploadButton } from '~/app/components/controls/file-upload-button';
 

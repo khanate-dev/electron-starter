@@ -11,7 +11,7 @@ import {
 import { FormSchema } from '~/app/schemas';
 import { userZodSchema } from '~/app/schemas/user';
 import { login } from '~/app/endpoints/user';
-import { getSetting, setSetting } from '~/shared/helpers/settings';
+import { getSetting, setSetting } from '~/app/helpers/settings';
 import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
 import { BackgroundImage } from '~/app/components/media/background-image';
 import { SchemaForm } from '~/app/components/forms/schema-form';

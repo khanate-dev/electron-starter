@@ -8,7 +8,7 @@ import { isDayjs } from 'dayjs';
 
 import { useUser } from '~/app/contexts/user';
 import { dayjsFormatPatterns } from '~/shared/helpers/date';
-import { getImageUrl } from '~/shared/helpers/image';
+import { getImageUrl } from '~/app/helpers/image';
 import { CustomAvatar } from '~/app/components/media/custom-avatar';
 import { GeneralTable } from '~/app/components/tables/general-table';
 import { FieldActions } from '~/app/components/app/field-actions';

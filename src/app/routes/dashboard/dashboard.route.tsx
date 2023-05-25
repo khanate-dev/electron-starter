@@ -7,7 +7,7 @@ import { Breadcrumbs } from '~/app/components/navigation/breadcrumbs';
 import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
 import { ThemeSwitch } from '~/app/components/controls/theme-switch';
 import { UserProfile } from '~/app/components/app/user-profile';
-import { getSetting } from '~/shared/helpers/settings';
+import { getSetting } from '~/app/helpers/settings';
 
 import { homeStyles as styles } from './dashboard.styles';
 

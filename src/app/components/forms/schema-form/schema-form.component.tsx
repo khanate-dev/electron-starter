@@ -4,7 +4,7 @@ import { isDayjs } from 'dayjs';
 
 import { useStatus } from '~/app/hooks/status';
 import { csx } from '~/shared/helpers/style';
-import { getImageUrl } from '~/shared/helpers/image';
+import { getImageUrl } from '~/app/helpers/image';
 import { FormField } from '~/app/components/forms/form-field';
 import { FormImage } from '~/app/components/forms/form-image';
 import { CustomButton } from '~/app/components/controls/custom-button';
