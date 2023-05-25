@@ -83,7 +83,7 @@ const config: ForgeConfig = {
 					},
 				],
 			},
-			devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self'; connect-src http: https: ws:`,
+			// devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self'; connect-src http: https: ws:`,
 		}),
 	],
 };
