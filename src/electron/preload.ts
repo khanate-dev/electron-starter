@@ -1,12 +1,12 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
-import { ipcRenderer, contextBridge } from 'electron';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { ipcRenderer, contextBridge } = require('electron');
 
-import type { IpcApi } from '~/shared/types/ipc';
-
-const ipcApi: IpcApi = {
+const ipcApi = {
 	app: {
+		environment: process.env.DEV ? 'development' : 'production',
 		closeApplication: () => ipcRenderer.send('closeApplication'),
 	},
 	barCodeReader: {
@@ -30,4 +30,4 @@ const ipcApi: IpcApi = {
 	},
 };
 
-contextBridge.exposeInMainWorld('bridge', ipcApi);
+contextBridge.exposeInMainWorld('ipc', ipcApi);
