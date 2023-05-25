@@ -1,7 +1,11 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getSetting, setSetting } from '~/shared/helpers/settings';
+import {
+	getSetting,
+	removeSetting,
+	setSetting,
+} from '~/shared/helpers/settings';
 import { dayjsUtc } from '~/shared/helpers/date';
 
 import type { LoggedInUser } from '~/app/schemas/user';
@@ -12,14 +16,8 @@ const defaultUser: LoggedInUser = {
 	userID: 1 as DbId,
 	userName: 'admin',
 	userType: 'Administrator',
-	lineID: 1 as DbId,
-	sectionID: 1 as DbId,
-	sectionCode: 'test',
-	sectionDescription: 'test',
-	lineCode: 'test',
-	lineDescription: 'test',
-	imageUpdatedAt: null,
 	token: '8224f044-0407-4021-aba9-aa537354ca43',
+	imageUpdatedAt: null,
 	createdAt: dayjsUtc.utc(),
 	updatedAt: dayjsUtc.utc(),
 };
@@ -32,9 +30,8 @@ export const UserProvider = ({ children }: ComponentWithChildren) => {
 
 		const logout = () => {
 			if (!getSetting('user')) setSetting('user', defaultUser);
-
-			// removeSetting('user');
-			// navigate('/login');
+			removeSetting('user');
+			navigate('/login');
 		};
 		window.addEventListener('logout', logout);
 
