@@ -7,7 +7,6 @@ import type { IpcApi } from '~/shared/types/ipc';
 
 const ipcApi: IpcApi = {
 	app: {
-		getIsPackaged: async () => ipcRenderer.invoke('getIsPackaged'),
 		closeApplication: () => ipcRenderer.send('closeApplication'),
 	},
 	barCodeReader: {
