@@ -18,4 +18,5 @@ export const mainConfig: Configuration = {
 			'~/*': path.join(__dirname, 'src/*'),
 		},
 	},
+	externals: 'serialport',
 };
