@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { getSetting, setSetting } from '@shared/helpers/settings';
+
+import { getSetting, setSetting } from '~/shared/helpers/settings';
 
 const DarkModeContext = createContext<boolean>(false);
 

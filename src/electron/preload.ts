@@ -3,7 +3,7 @@
 
 import { ipcRenderer, contextBridge } from 'electron';
 
-import type { IpcApi } from '@shared/types/ipc';
+import type { IpcApi } from '~/shared/types/ipc';
 
 const ipcApi: IpcApi = {
 	app: {

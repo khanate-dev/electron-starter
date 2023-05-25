@@ -4,7 +4,7 @@ import { ipcMain } from 'electron';
 import { SerialPort } from 'serialport';
 
 import type { BrowserWindow } from 'electron';
-import type { IpcApi } from '@shared/types/ipc';
+import type { IpcApi } from '~/shared/types/ipc';
 
 const paths: Partial<Record<NodeJS.Platform, string>> & { default: string } = {
 	win32: 'COM102',

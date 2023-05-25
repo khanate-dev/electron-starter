@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getSetting, setSetting } from 'helpers/settings';
-import { dayjsUtc } from 'helpers/date';
+import { getSetting, setSetting } from '~/shared/helpers/settings';
+import { dayjsUtc } from '~/shared/helpers/date';
 
-import type { LoggedInUser } from 'schemas/user';
+import type { LoggedInUser } from '~/app/schemas/user';
 
 const UserContext = createContext<null | LoggedInUser>(null);
 

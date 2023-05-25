@@ -1,11 +1,7 @@
 {
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"paths": {
-			"@shared/*": ["./src/shared/*"],
-			"~/*": ["./src/app/*"]
-		}
+		"lib": ["dom", "dom.iterable", "esnext"]
 	},
 	"include": ["**/*", "../shared/**/*"]
 }
