@@ -1,0 +1,7 @@
+@font-face {
+	font-family: 'Inter';
+	font-weight: 100 1000;
+	src: url(../assets/fonts/inter-variable.ttf) format('truetype-variations');
+	src: url(../assets/fonts/inter-variable.ttf) format('truetype')
+		tech('variable');
+}
