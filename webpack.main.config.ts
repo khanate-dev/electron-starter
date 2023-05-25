@@ -18,5 +18,6 @@ export const mainConfig: Configuration = {
 			'~/*': path.join(__dirname, 'src/*'),
 		},
 	},
+	// ! This is needed for webpack to not mess up `serialport`
 	externals: 'serialport',
 };
