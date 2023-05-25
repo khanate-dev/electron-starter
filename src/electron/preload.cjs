@@ -1,9 +1,9 @@
-// See the Electron documentation for details on how to use preload scripts:
-// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
+// ! MUST USE COMMONJS IN THIS FILE
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, import/no-commonjs
 const { ipcRenderer, contextBridge } = require('electron');
 
+/** @type {import('~/shared/types/ipc').IpcApi} */
 const ipcApi = {
 	app: {
 		environment: process.env.DEV ? 'development' : 'production',

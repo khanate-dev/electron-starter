@@ -25,7 +25,7 @@ const createWindow = () => {
 			contextIsolation: true,
 			preload: app.isPackaged
 				? MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
-				: path.join(app.getAppPath(), 'src', 'electron', 'preload.ts'),
+				: path.join(app.getAppPath(), 'src', 'electron', 'preload.cjs'),
 		},
 	});
 

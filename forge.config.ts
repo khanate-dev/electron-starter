@@ -78,12 +78,12 @@ const config: ForgeConfig = {
 						js: './src/app/index.tsx',
 						name: 'main_window',
 						preload: {
-							js: './src/electron/preload.ts',
+							js: './src/electron/preload.cjs',
 						},
 					},
 				],
 			},
-			// devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self'; connect-src http: https: ws:`,
+			devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self'; connect-src http: https: ws:`,
 		}),
 	],
 };
