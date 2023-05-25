@@ -23,6 +23,7 @@
 		"module": "CommonJS",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
+		"types": ["vitest/globals"],
 		"paths": {
 			"~/*": ["./src/*"]
 		},
