@@ -1,7 +1,10 @@
 import { z } from 'zod';
 
 import { apiEndpoint } from '~/app/config';
-import { userSansPasswordZodSchema, userZodSchema } from '~/app/schemas/user';
+import {
+	loggedInUserZodSchema,
+	userSansPasswordZodSchema,
+} from '~/app/schemas/user';
 import {
 	deleteRequest,
 	getRequest,
@@ -40,7 +43,7 @@ export const resetUserPassword = async (userId: DbId, body: FormData) => {
 
 export const login = async (data: FormData) => {
 	const response = await postRequest('signin', data, true);
-	return userZodSchema.parse(response);
+	return loggedInUserZodSchema.parse(response);
 };
 
 export const updateUser = async (userId: DbId, body: FormData) => {
