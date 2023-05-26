@@ -10,7 +10,7 @@ import {
 	getRequest,
 	postRequest,
 	putRequest,
-} from '~/shared/helpers/api';
+} from '~/app/helpers/api';
 
 const prefix = `${apiEndpoint}/user`;
 

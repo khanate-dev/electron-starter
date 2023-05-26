@@ -14,8 +14,8 @@ import {
 	Remove as MinimizeIcon,
 	Add as MaximizeIcon,
 } from '@mui/icons-material';
-import { usePagination } from '~/app/hooks/pagination';
 
+import { usePagination } from '~/app/hooks/pagination';
 import { humanizeToken } from '~/shared/helpers/string';
 import { csx } from '~/shared/helpers/style';
 import { SearchBar } from '~/app/components/controls/search-bar';

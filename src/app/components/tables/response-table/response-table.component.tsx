@@ -11,7 +11,7 @@ import { InfoTooltip } from '~/app/components/feedback/info-tooltip';
 import { schemaToGeneralTableColumns } from '~/shared/helpers/schema';
 
 import type { FormSchema, FormSchemaLists, ViewSchema } from '~/app/schemas';
-import type { BulkResponse } from '~/shared/helpers/api';
+import type { BulkResponse } from '~/app/helpers/api';
 import type { z } from 'zod';
 
 const alertStyle = {

@@ -1,6 +1,5 @@
 import type { ButtonProps, TableCellProps } from '@mui/material';
 import type { Sorting } from '~/app/hooks/sorting';
-import type { ViewSchema } from '~/app/schemas';
 
 export const generalTableCommonStyles = [
 	'container',
@@ -111,9 +110,6 @@ export type GeneralTableProps<Type extends Obj> = {
 
 	/** the details for the table's footer */
 	footer?: TableCellProps[];
-
-	/** the schema to use for data export */
-	exportSchema?: ViewSchema<any, any, any, any>;
 
 	/** the default sorting for the table */
 	defaultSorting?: Sorting<keyof Type>;

@@ -1,5 +1,4 @@
 import { getCatchMessage } from '~/shared/errors';
-
 import { createBulkResponseSchema } from '~/shared/helpers/schema';
 
 import type { DefaultBulkResponseObj } from '~/shared/helpers/schema';

@@ -29,7 +29,7 @@ import type {
 	FormFieldZodType,
 	FormSchemaField,
 } from '~/app/schemas';
-import type { BulkResponse } from '~/shared/helpers/api';
+import type { BulkResponse } from '~/app/helpers/api';
 
 export const FormTable = <
 	Zod extends z.ZodObject<Record<string, FormFieldZodType>, 'strict'>,

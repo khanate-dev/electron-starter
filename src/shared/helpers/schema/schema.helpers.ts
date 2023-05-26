@@ -6,7 +6,7 @@ import { omit } from '~/shared/helpers/object';
 import { dayjsFormatPatterns, dayjsUtc } from '~/shared/helpers/date';
 
 import type { GeneralTableColumn } from '~/app/components/tables/general-table';
-import type { BulkResponse } from '~/shared/helpers/api';
+import type { BulkResponse } from '~/app/helpers/api';
 
 export const dbIdSchema = z.number().int().positive().finite().brand('DbKey');
 

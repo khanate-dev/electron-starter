@@ -4,7 +4,7 @@ import type {
 	GeneralTableProps,
 	GeneralTableStyles,
 } from '~/app/components/tables/general-table';
-import type { BulkResponse } from '~/shared/helpers/api';
+import type { BulkResponse } from '~/app/helpers/api';
 import type { Sorting } from '~/app/hooks/sorting';
 import type { StatusAction } from '~/app/hooks/status';
 import type {

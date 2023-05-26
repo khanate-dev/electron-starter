@@ -45,7 +45,6 @@ export const GeneralTable = <Type extends Obj>({
 	styles: passedStyles,
 	controls,
 	footer,
-	exportSchema,
 	defaultSorting,
 	fullActionButtons,
 	isBusy,

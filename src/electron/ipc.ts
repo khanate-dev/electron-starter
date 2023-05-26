@@ -34,8 +34,10 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 
 	ipcMain.handle('removeSetting', (async (_, key) => {
 		const settings = await getSettings();
-		delete settings[key];
-		return setSettings(settings);
+		return setSettings({
+			...settings,
+			[key]: undefined,
+		});
 	}) satisfies IpcApi['settings']['remove']);
 
 	setupReader(mainWindow);

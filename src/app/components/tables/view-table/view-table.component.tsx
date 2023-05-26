@@ -211,7 +211,6 @@ export const ViewTable = <
 				styles: passedStyles,
 				emptyLabel,
 				footer,
-				exportSchema: hasExport ? schema : undefined,
 				defaultSorting,
 				isBusy,
 				hasPagination,
