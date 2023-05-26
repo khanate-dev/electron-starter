@@ -6,11 +6,6 @@ const ipcApi = {
 		environment: process.env.DEV ? 'development' : 'production',
 		closeApplication: () => ipcRenderer.send('closeApplication'),
 	},
-	settings: {
-		get: (key) => ipcRenderer.invoke('getSetting', key),
-		set: (key, value) => ipcRenderer.invoke('setSetting', key, value),
-		remove: (key) => ipcRenderer.invoke('removeSetting', key),
-	},
 	barCodeReader: {
 		connect: async () => {
 			return ipcRenderer.invoke(`connectBarCodeReader`).catch((error) => {
