@@ -8,17 +8,17 @@ import type { IpcApi } from '~/shared/types/ipc';
 
 const paths: Partial<Record<NodeJS.Platform, string>> & { default: string } = {
 	win32: 'COM102',
-	linux: '/dev/qrCodeReader',
-	default: '/dev/qrCodeReader',
+	linux: '/dev/ttyUSB0',
+	default: '/dev/ttyUSB0',
 };
 
 type T = IpcApi['barCodeReader'];
 
-export const setupReader = (mainWindow: BrowserWindow) => {
+export const setupSerialPorts = (mainWindow: BrowserWindow) => {
 	const reader = new SerialPort({
 		path: paths[os.platform()] ?? paths.default,
 		autoOpen: false,
-		baudRate: 115200,
+		baudRate: 9600,
 	});
 
 	const connectBarCodeReader: T['connect'] = async () => {
@@ -26,6 +26,7 @@ export const setupReader = (mainWindow: BrowserWindow) => {
 			reader.resume();
 			return;
 		}
+		if (reader.isOpen || reader.opening) return;
 		return new Promise<void>((resolve, reject) => {
 			reader.open((error) => {
 				error ? reject(error) : resolve();
@@ -34,9 +35,9 @@ export const setupReader = (mainWindow: BrowserWindow) => {
 	};
 
 	const disconnectBarCodeReader: T['disconnect'] = async () => {
-		if (!reader.isOpen) return;
+		if (!reader.isOpen || reader.closing) return;
 		return new Promise<void>((resolve, reject) => {
-			reader.open((error) => {
+			reader.close((error) => {
 				error ? reject(error) : resolve();
 			});
 		});
@@ -47,12 +48,7 @@ export const setupReader = (mainWindow: BrowserWindow) => {
 
 	reader.on('data', (data) => {
 		const dataString = data.toString('utf-8');
-		const newBarCodeScan = parseFloat(dataString.split('-')?.[1]);
-		const isDataValid =
-			dataString.match(/^[\s]*P-[0-9]*[\s]*$/giu) &&
-			!isNaN(newBarCodeScan) &&
-			newBarCodeScan !== 0;
-
-		if (isDataValid) mainWindow.webContents.send('onRead', newBarCodeScan);
+		const newBarCodeScan = parseInt(dataString);
+		mainWindow.webContents.send('onRead', newBarCodeScan);
 	});
 };
