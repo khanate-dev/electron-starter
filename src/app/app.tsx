@@ -6,7 +6,7 @@ import { Providers } from '~/app/components/app/providers';
 import { ErrorBoundary } from '~/app/components/app/error-boundary';
 import { Login } from '~/app/routes/login';
 
-import { Example } from './routes/example/example.route';
+import { Example } from './routes/example';
 
 const router = createHashRouter([
 	{

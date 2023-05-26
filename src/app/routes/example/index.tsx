@@ -1,1 +1,1 @@
-export * from './login.route';
+export * from './example.route';
