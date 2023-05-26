@@ -13,6 +13,7 @@ import { BackgroundImage } from '~/app/components/media/background-image';
 import { AppLogo } from '~/app/components/media/app-logo';
 import { ThemeSwitch } from '~/app/components/controls/theme-switch';
 import { LOGIN_HEADER_HEIGHT } from '~/app/config';
+import { dayjsUtc } from '~/shared/helpers/date';
 
 const headerLogoSx = {
 	width: 'auto',
@@ -34,7 +35,7 @@ export const Example = () => {
 				window.ipc.barCodeReader.listen((data) => {
 					setVal((prev) =>
 						prev.connected
-							? { ...prev, data, lastRead: new Date().toISOString() }
+							? { ...prev, data, lastRead: dayjsUtc().format('h:mm:ss A') }
 							: prev
 					);
 				});
