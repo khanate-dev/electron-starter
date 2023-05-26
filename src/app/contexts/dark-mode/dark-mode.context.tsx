@@ -6,12 +6,15 @@ const DarkModeContext = createContext<boolean>(false);
 
 const prefersDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-const defaultIsDarkMode = getSetting('isDarkMode') ?? prefersDarkQuery.matches;
-
 export const DarkModeProvider = ({ children }: ComponentWithChildren) => {
-	const [isDarkMode, setIsDarkMode] = useState<boolean>(defaultIsDarkMode);
+	const [isDarkMode, setIsDarkMode] = useState<boolean>(
+		prefersDarkQuery.matches
+	);
 
 	useEffect(() => {
+		getSetting('isDarkMode').then((newIsDarkMode) =>
+			setIsDarkMode((prev) => newIsDarkMode ?? prev)
+		);
 		const toggleDarkMode: EventListener = () => {
 			setIsDarkMode((prev) => {
 				setSetting('isDarkMode', !prev);

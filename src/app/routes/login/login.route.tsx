@@ -35,8 +35,8 @@ const headerLogoSx = {
 	maxHeight: '70%',
 };
 
-const loader = () => {
-	const user = getSetting('user');
+const loader = async () => {
+	const user = await getSetting('user');
 	if (user) return redirect('/');
 	return null;
 };

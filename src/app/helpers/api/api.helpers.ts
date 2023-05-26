@@ -41,7 +41,7 @@ const apiRequest = async <Response = unknown>(
 		} = { method, headers: {} };
 
 		if (!isPublic && !disableAuth) {
-			const user = getSetting('user');
+			const user = await getSetting('user');
 			if (!user) throw new AuthError('user auth token not found!');
 			options.headers.Authorization = `Bearer ${user.token}`;
 		}

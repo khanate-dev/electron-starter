@@ -13,8 +13,8 @@ import { homeStyles as styles } from './dashboard.styles';
 
 import type { LoggedInUser } from '~/app/schemas/user';
 
-const loader = () => {
-	const user = getSetting('user');
+const loader = async () => {
+	const user = await getSetting('user');
 	if (!user) return redirect('/login');
 	return user;
 };

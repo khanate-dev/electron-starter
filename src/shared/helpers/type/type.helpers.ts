@@ -2,7 +2,7 @@ import { getCatchMessage } from '~/shared/errors';
 import { createBulkResponseSchema } from '~/shared/helpers/schema';
 
 import type { DefaultBulkResponseObj } from '~/shared/helpers/schema';
-import type { BulkResponse } from '~/shared/helpers/api';
+import type { BulkResponse } from '~/app/helpers/api';
 import type { z } from 'zod';
 
 export const readableTypeOf = (value: unknown) => {

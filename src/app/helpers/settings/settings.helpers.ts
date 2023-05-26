@@ -13,15 +13,15 @@ export type Settings = {
 	[K in keyof SettingSchemas]: z.infer<SettingSchemas[K]>;
 };
 
-export const removeSetting = (key: keyof Settings): void => {
-	window.ipc.settings.remove(key);
+export const removeSetting = async (key: keyof Settings): Promise<void> => {
+	return window.ipc.settings.remove(key);
 };
 
-export const getSetting = <Key extends keyof Settings>(
+export const getSetting = async <Key extends keyof Settings>(
 	key: Key
-): null | Settings[Key] => {
+): Promise<null | Settings[Key]> => {
 	try {
-		const string = window.ipc.settings.get(key);
+		const string = await window.ipc.settings.get(key);
 		if (!string) return null;
 
 		return schemas[key].parse(JSON.parse(string)) as never;
@@ -31,9 +31,9 @@ export const getSetting = <Key extends keyof Settings>(
 	}
 };
 
-export const setSetting = <Key extends keyof Settings>(
+export const setSetting = async <Key extends keyof Settings>(
 	key: Key,
 	value: Settings[Key]
-): void => {
-	window.ipc.settings.set(key, JSON.stringify(value));
+): Promise<void> => {
+	return window.ipc.settings.set(key, JSON.stringify(value));
 };

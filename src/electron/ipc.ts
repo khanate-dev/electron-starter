@@ -22,23 +22,27 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	ipcMain.on('closeApplication', (() =>
 		app.exit()) satisfies IpcApi['app']['closeApplication']);
 
-	ipcMain.handle('getSetting', (async (_, key) => {
+	ipcMain.handle('getSetting', async (_, key: string) => {
 		const settings = await getSettings();
 		return settings[key];
-	}) satisfies IpcApi['settings']['get']);
+	});
 
-	ipcMain.handle('setSetting', (async (_, key, value) => {
+	ipcMain.handle('setSetting', async (_, key: string, value: string) => {
 		const settings = await getSettings();
-		return (settings[key] = value);
-	}) satisfies IpcApi['settings']['set']);
+		settings[key] = value;
+		setSettings({
+			...settings,
+			[key]: value,
+		});
+	});
 
-	ipcMain.handle('removeSetting', (async (_, key) => {
+	ipcMain.handle('removeSetting', async (_, key: string) => {
 		const settings = await getSettings();
 		return setSettings({
 			...settings,
 			[key]: undefined,
 		});
-	}) satisfies IpcApi['settings']['remove']);
+	});
 
 	setupReader(mainWindow);
 };
