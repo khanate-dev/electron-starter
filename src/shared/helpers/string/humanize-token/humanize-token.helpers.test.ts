@@ -5,7 +5,7 @@ import type { HumanizeCase } from './humanize-token.helpers';
 type Test = {
 	input: string;
 	output: Record<HumanizeCase, string>;
-}
+};
 
 const tests: Test[] = [
 	{

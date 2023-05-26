@@ -5,7 +5,7 @@ import type { CxInput } from './style.helpers';
 type Test = {
 	input: CxInput[];
 	output: string;
-}
+};
 
 const tests: Test[] = [
 	{

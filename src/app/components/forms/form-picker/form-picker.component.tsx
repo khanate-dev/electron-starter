@@ -35,7 +35,7 @@ export type FormPickerProps = {
 
 	/** is the dropdown a required field? */
 	required?: boolean;
-}
+};
 
 export const FormPicker = ({
 	sx,
