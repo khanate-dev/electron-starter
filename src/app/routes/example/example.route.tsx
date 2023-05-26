@@ -27,16 +27,19 @@ export const Example = () => {
 	>({ connected: false });
 
 	useEffect(() => {
-		window.ipc.barCodeReader.connect().then(() => {
-			setVal({ connected: true });
-			window.ipc.barCodeReader.listen((data) => {
-				setVal((prev) =>
-					prev.connected
-						? { ...prev, data, lastRead: new Date().toISOString() }
-						: prev
-				);
-			});
-		});
+		window.ipc.barCodeReader
+			.connect()
+			.then(() => {
+				setVal({ connected: true });
+				window.ipc.barCodeReader.listen((data) => {
+					setVal((prev) =>
+						prev.connected
+							? { ...prev, data, lastRead: new Date().toISOString() }
+							: prev
+					);
+				});
+			})
+			.catch(console.error);
 		return () => {
 			window.ipc.barCodeReader.disconnect();
 		};

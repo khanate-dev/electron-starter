@@ -8,12 +8,7 @@ const ipcApi = {
 	},
 	barCodeReader: {
 		connect: async () => {
-			return ipcRenderer.invoke(`connectBarCodeReader`).catch((error) => {
-				const splitError = error?.toString()?.split?.(':');
-				Promise.reject(
-					splitError?.[splitError?.length - 1] ?? 'Something Went Wrong'
-				);
-			});
+			return ipcRenderer.invoke(`connectBarCodeReader`);
 		},
 		disconnect: async () => {
 			return ipcRenderer.invoke(`disconnectBarCodeReader`);
