@@ -6,6 +6,8 @@ import { Providers } from '~/app/components/app/providers';
 import { ErrorBoundary } from '~/app/components/app/error-boundary';
 import { Login } from '~/app/routes/login';
 
+import { Example } from './routes/example/example.route';
+
 const router = createHashRouter([
 	{
 		path: 'login',
@@ -14,7 +16,7 @@ const router = createHashRouter([
 		loader: Login.loader,
 	},
 	{
-		path: '',
+		path: 'test',
 		element: <Dashboard />,
 		errorElement: <ErrorBoundary />,
 		loader: Dashboard.loader,
@@ -30,6 +32,11 @@ const router = createHashRouter([
 				],
 			},
 		],
+	},
+	{
+		path: '',
+		element: <Example />,
+		errorElement: <ErrorBoundary />,
 	},
 ]);
 

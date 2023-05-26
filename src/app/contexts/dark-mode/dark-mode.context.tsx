@@ -20,7 +20,7 @@ export const DarkModeProvider = ({ children }: ComponentWithChildren) => {
 		};
 
 		const updateDarkMode: EventListener = (event) => {
-			const newIsDarkMode = (event as CustomEvent).detail as unknown;
+			const newIsDarkMode = (event as CustomEvent).detail;
 			if (typeof newIsDarkMode !== 'boolean')
 				throw new Error('isDarkMode must be a boolean');
 
