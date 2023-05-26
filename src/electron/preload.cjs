@@ -1,6 +1,3 @@
-// ! MUST USE COMMONJS IN THIS FILE
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires, import/no-commonjs
 const { ipcRenderer, contextBridge } = require('electron');
 
 /** @type {import('~/shared/types/ipc').IpcApi} */

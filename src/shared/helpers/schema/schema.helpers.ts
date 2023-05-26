@@ -60,11 +60,9 @@ export const createGroupedOptionalSchema = <
 };
 
 export type DefaultBulkResponseObj = z.ZodObject<
-	// eslint-disable-next-line @typescript-eslint/ban-types
 	{},
 	'strip',
 	z.ZodUnknown,
-	// eslint-disable-next-line @typescript-eslint/ban-types
 	z.objectOutputType<{}, z.ZodUnknown, 'strip'>
 >;
 

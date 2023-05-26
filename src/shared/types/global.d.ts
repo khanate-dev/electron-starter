@@ -76,7 +76,6 @@ export declare global {
 	/** global type helper to prettify complex object types */
 	type Prettify<T> = {
 		[K in keyof T]: T[K];
-		// eslint-disable-next-line @typescript-eslint/ban-types
 	} & {};
 
 	/** takes a string literal as input and returns the union of all the characters */

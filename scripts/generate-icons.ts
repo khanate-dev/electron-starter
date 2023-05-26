@@ -1,5 +1,3 @@
-/* eslint-disable import/no-nodejs-modules */
-
 import { mkdir, readFile, readdir, rm, writeFile } from 'fs/promises';
 import path from 'path';
 import { spawnSync } from 'child_process';
