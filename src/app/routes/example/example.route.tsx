@@ -14,6 +14,7 @@ import { AppLogo } from '~/app/components/media/app-logo';
 import { ThemeSwitch } from '~/app/components/controls/theme-switch';
 import { LOGIN_HEADER_HEIGHT } from '~/app/config';
 import { dayjsUtc } from '~/shared/helpers/date';
+import { getCatchMessage } from '~/shared/errors';
 
 const headerLogoSx = {
 	width: 'auto',
@@ -24,25 +25,32 @@ const headerLogoSx = {
 
 export const Example = () => {
 	const [val, setVal] = useState<
-		{ connected: false } | { connected: true; lastRead?: string; data?: number }
-	>({ connected: false });
+		| { type: 'error'; message: string }
+		| { type: 'connecting' }
+		| { type: 'connected'; reading?: { at: string; data: number } }
+	>({ type: 'connecting' });
 
 	useEffect(() => {
-		window.ipc.barCodeReader
+		window.ipc.barCode
 			.connect()
-			.then(() => {
-				setVal({ connected: true });
-				window.ipc.barCodeReader.listen((data) => {
-					setVal((prev) =>
-						prev.connected
-							? { ...prev, data, lastRead: dayjsUtc().format('h:mm:ss A') }
-							: prev
-					);
-				});
-			})
-			.catch(console.error);
+			.then(() => setVal({ type: 'connected' }))
+			.catch((error) =>
+				setVal({ type: 'error', message: getCatchMessage(error) })
+			);
+
+		window.ipc.barCode.listen((data) => {
+			setVal((prev) =>
+				prev.type === 'connected'
+					? {
+							...prev,
+							reading: { data, at: dayjsUtc().format('h:mm:ss A') },
+					  }
+					: prev
+			);
+		});
+
 		return () => {
-			window.ipc.barCodeReader.disconnect();
+			window.ipc.barCode.disconnect();
 		};
 	}, []);
 
@@ -134,30 +142,41 @@ export const Example = () => {
 					}}
 				>
 					<Typography
-						variant='h1'
+						variant='h2'
 						color='primary.main'
 					>
 						Bar Code Reader
 					</Typography>
 
 					<Typography
-						variant='h2'
-						color={val.connected ? 'success.main' : 'error.main'}
+						variant='h3'
+						color={val.type === 'error' ? 'error.main' : 'success.main'}
 					>
-						{val.connected ? 'CONNECTED!' : 'DISCONNECTED!'}
+						{val.type === 'connecting'
+							? 'CONNECTING...'
+							: val.type === 'connected'
+							? 'CONNECTED!'
+							: 'DISCONNECTED!'}
 					</Typography>
-					<Typography
-						variant='h4'
-						color='primary.main'
-					>
-						{val.connected && val.data !== undefined
-							? val.data
-							: 'No Value Read Yet!'}
-					</Typography>
-					<Typography variant='h4'>
-						Last Read On:{' '}
-						{val.connected && val.lastRead !== undefined ? val.lastRead : 'N/A'}
-					</Typography>
+					{val.type === 'connected' && (
+						<>
+							<Typography
+								variant='h4'
+								color='primary.main'
+							>
+								{val.reading ? val.reading.data : 'No Value Read Yet!'}
+							</Typography>
+							<Typography variant='h4'>
+								Last Read On: {val.reading ? val.reading.at : 'N/A'}
+							</Typography>
+						</>
+					)}
+
+					{val.type === 'error' && (
+						<Typography sx={{ '& > code': { backgroundColor: '#8882' } }}>
+							<code>{val.message}</code>
+						</Typography>
+					)}
 
 					<WiMetrixLogo
 						width={150}
