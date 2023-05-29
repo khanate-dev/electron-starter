@@ -15,20 +15,20 @@ export const cx = (...input: CxInput[]): string => {
 		.join(' ');
 };
 
-export type CsxInput = 0 | undefined | false | null | SxProp;
+export type CsxInput = 0 | undefined | false | null | Mui.SxProp;
 
-export const csx = (...input: CsxInput[]): SxProp => {
+export const csx = (...input: CsxInput[]): Mui.SxProp => {
 	const sxArray: unknown[] = [];
 	for (const sx of input) {
 		if (!sx) continue;
 		sxArray.push(...(Array.isArray(sx) ? sx : [sx]));
 	}
-	return sxArray as SxProp;
+	return sxArray as Mui.SxProp;
 };
 
 export const getOppositeColor = (
 	{ palette }: Theme,
-	color: ThemeColor = 'primary'
+	color: App.ThemeColor = 'primary'
 ) => palette[color][palette.mode === 'light' ? 'dark' : 'light'];
 
 const transitionAnimation = keyframes({
@@ -43,7 +43,7 @@ export const pageTransitionStyles = {
 		`${transitions.duration.enteringScreen}ms`,
 	animationTimingFunction: ({ transitions }) => transitions.easing.easeInOut,
 	animationName: String(transitionAnimation),
-} satisfies SxStyle;
+} satisfies Mui.SxStyle;
 
 const loadingAnimation = keyframes({
 	to: {
@@ -51,7 +51,7 @@ const loadingAnimation = keyframes({
 	},
 });
 
-export const getLoadingStyles = (color: ThemeColor): SxStyle => ({
+export const getLoadingStyles = (color: App.ThemeColor): Mui.SxStyle => ({
 	color: `${color}.dark`,
 	background: ({ palette }) =>
 		`repeating-linear-gradient(${[
