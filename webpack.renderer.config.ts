@@ -25,6 +25,5 @@ export const rendererConfig: Configuration = {
 			'~': path.join(__dirname, 'src'),
 		},
 	},
-	// ! this enables the application to work when `devContentSecurityPolicy` is set.
 	devtool: 'source-map',
 };
