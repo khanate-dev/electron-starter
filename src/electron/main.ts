@@ -13,7 +13,6 @@ const createWindow = () => {
 	const mainWindow = new BrowserWindow({
 		minWidth: 700,
 		minHeight: 500,
-		fullscreen: true,
 		resizable: true,
 		backgroundColor: '#F4F4FE',
 		autoHideMenuBar: true,
@@ -29,9 +28,7 @@ const createWindow = () => {
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
-			preload: app.isPackaged
-				? MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
-				: path.join(app.getAppPath(), 'src', 'electron', 'preload.cjs'),
+			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
 		},
 	});
 
