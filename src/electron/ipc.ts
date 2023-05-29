@@ -21,9 +21,9 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	});
 	reader.open();
 
-	main.on('closeApplication', () => app.exit());
+	main.app.closeApplication('appCloseApplication', () => app.exit());
 
-	main.handle('connectBarCodeReader', async () => {
+	main.barCode.connect('barCodeConnect', async () => {
 		if (reader.isPaused()) {
 			reader.resume();
 			return;
@@ -36,7 +36,7 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 		});
 	});
 
-	main.handle('disconnectBarCodeReader', async () => {
+	main.barCode.disconnect('barCodeDisconnect', async () => {
 		if (!reader.isOpen || reader.closing) return;
 		return new Promise<void>((resolve, reject) => {
 			reader.close((error) => {
@@ -48,6 +48,6 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	reader.on('data', (data) => {
 		const dataString = data.toString('utf-8');
 		const newBarCodeScan = parseInt(dataString);
-		main.send(mainWindow, 'onBarCodeData', newBarCodeScan);
+		main.barCode.listen('barCodeListen', mainWindow, newBarCodeScan);
 	});
 };

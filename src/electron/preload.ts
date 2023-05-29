@@ -7,18 +7,18 @@ import type { IpcApi } from '~/shared/ipc-spec';
 const ipcApi: IpcApi = {
 	app: {
 		environment: process.env.DEV ? 'development' : 'production',
-		closeApplication: () => renderer.send('closeApplication'),
+		closeApplication: () =>
+			renderer.app.closeApplication('appCloseApplication'),
 	},
 	barCode: {
 		connect: async () => {
-			return renderer.invoke('connectBarCodeReader');
+			return renderer.barCode.connect('barCodeConnect');
 		},
 		disconnect: async () => {
-			return renderer.invoke('disconnectBarCodeReader');
+			return renderer.barCode.disconnect('barCodeDisconnect');
 		},
 		listen: (callback) => {
-			renderer.on('onBarCodeData', (_event, value) => {
-				if (typeof value !== 'number') return;
+			renderer.barCode.listen('barCodeListen', (_event, value) => {
 				callback(value);
 			});
 		},

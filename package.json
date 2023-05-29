@@ -5,7 +5,7 @@
 	"description": "electron react application for cbl garment tracking",
 	"main": ".webpack/main",
 	"scripts": {
-		"start": "DEV=true electron-forge start",
+		"start": "DEV=1 electron-forge start",
 		"package": "electron-forge package",
 		"make": "electron-forge make",
 		"publish": "electron-forge publish",
