@@ -95,10 +95,6 @@ const getBaseTheme = (mode: 'light' | 'dark') =>
 			fontWeightRegular: 400,
 			fontWeightMedium: 600,
 			fontWeightBold: 800,
-			h1: {
-				fontWeight: 'bold',
-				fontSize: '3em',
-			},
 		},
 	});
 
