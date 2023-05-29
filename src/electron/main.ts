@@ -13,12 +13,18 @@ const createWindow = () => {
 	const mainWindow = new BrowserWindow({
 		minWidth: 700,
 		minHeight: 500,
-		//fullscreen: true,
+		fullscreen: true,
 		resizable: true,
 		backgroundColor: '#F4F4FE',
 		autoHideMenuBar: true,
-		icon: path.join(app.getAppPath(), 'src', 'images', 'favicon.png'),
-		// frame: false,
+		icon: path.join(
+			app.getAppPath(),
+			'src',
+			'app',
+			'assets',
+			'favicon',
+			'favicon.png'
+		),
 		title: 'Garment Tracking',
 		webPreferences: {
 			nodeIntegration: false,
