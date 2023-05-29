@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 
 import { getWiMetrixLogoStyles } from './wimetrix-logo.styles';
 
 export type WiMetrixLogoProps = {
 	/** the styles to apply to the SVG element */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the logo's background. @default 'light' */
 	background?: 'light' | 'dark';

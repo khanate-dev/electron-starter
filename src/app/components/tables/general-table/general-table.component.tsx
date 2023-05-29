@@ -21,7 +21,7 @@ import { PAGINATION_SIZES } from '~/app/config';
 import { usePagination } from '~/app/hooks/pagination';
 import { useSorting } from '~/app/hooks/sorting';
 import { useFiltering } from '~/app/hooks/filtering';
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { humanizeToken } from '~/shared/helpers/string';
 import { CustomButton } from '~/app/components/controls/custom-button';
 

@@ -12,7 +12,7 @@ export type AppLinkProps = {
 	to: string;
 
 	/** the label of the link */
-	label?: ReactNode;
+	label?: React.Node;
 } & LinkProps;
 
 export const AppLink = forwardRef(

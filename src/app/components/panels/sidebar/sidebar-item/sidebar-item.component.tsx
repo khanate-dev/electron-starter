@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 import { formatToken, humanizeToken } from '~/shared/helpers/string';
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { AppIcon } from '~/app/components/media/app-icon';
 import { CustomTooltip } from '~/app/components/feedback/custom-tooltip';
 import { AppLink } from '~/app/components/navigation/app-link';

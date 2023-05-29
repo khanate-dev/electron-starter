@@ -1,13 +1,13 @@
 import { Box, Stack, alpha } from '@mui/material';
 
-import { csx, getOppositeColor } from '~/shared/helpers/style';
+import { csx, getOppositeColor } from '~/app/helpers/style';
 import { CustomTooltip } from '~/app/components/feedback/custom-tooltip';
 
 import type { TextFieldProps } from '@mui/material';
 
 export type FormReadonlyProps = {
 	/** the styles to pass to the underlying form component */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the size of the form field */
 	size: TextFieldProps['size'];

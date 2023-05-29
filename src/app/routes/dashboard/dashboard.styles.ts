@@ -1,5 +1,5 @@
 import { APP_HEADER_HEIGHT } from '~/app/config';
-import { pageTransitionStyles } from '~/shared/helpers/style';
+import { pageTransitionStyles } from '~/app/helpers/style';
 
 export const homeStyles = {
 	container: {
@@ -57,4 +57,4 @@ export const homeStyles = {
 		flexDirection: 'column',
 		flexWrap: 'nowrap',
 	},
-} satisfies SxStyleObj;
+} satisfies Mui.SxStyleObj;

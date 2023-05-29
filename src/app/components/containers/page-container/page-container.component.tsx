@@ -14,13 +14,12 @@ import {
 	LocalShippingRounded as PostIcon,
 } from '@mui/icons-material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { CustomButton } from '~/app/components/controls/custom-button';
 import { useUser } from '~/app/contexts/user';
 
 import { pageContainerStyles as styles } from './page-container.styles';
 
-import type { ReactNode } from 'react';
 import type { UserType } from '~/app/schemas/user';
 import type { FullButtonProps } from '~/app/components/controls/custom-button';
 
@@ -49,10 +48,10 @@ type Navigation = {
 } & Omit<FullButtonProps, 'label'>;
 
 export type PageContainerProps = {
-	children: ReactNode;
+	children: React.Node;
 
 	/** the styles to apply to the body container */
-	sx?: SxStyle;
+	sx?: Mui.SxStyle;
 
 	/** the title of the page */
 	title: string;

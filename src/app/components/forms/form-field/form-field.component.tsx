@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { isDayjs } from 'dayjs';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { FormCheckbox } from '~/app/components/forms/form-checkbox';
 import { FormDropdown } from '~/app/components/forms/form-dropdown';
 import { FormTextfield } from '~/app/components/forms/form-textfield';
@@ -21,7 +21,7 @@ export type FormFieldProps<
 	Name extends ObjKeys
 > = {
 	/** the styles to apply to the container */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the current schema field */
 	field: Field & {
@@ -60,8 +60,8 @@ export type FormFieldProps<
 } & (Field['type'] extends 'selection'
 	? {
 			/** the object containing the lists for dropdown fields */
-			options: Exclude<WorkingObj[Name], null> extends DropdownType
-				? DropdownOption<Exclude<WorkingObj[Name], null>>[]
+			options: Exclude<WorkingObj[Name], null> extends App.DropdownType
+				? App.DropdownOption<Exclude<WorkingObj[Name], null>>[]
 				: never;
 	  }
 	: Field extends { hasSuggestions: true }

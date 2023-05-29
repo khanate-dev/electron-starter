@@ -5,14 +5,14 @@ import {
 } from '@mui/icons-material';
 
 import { useDarkMode, toggleDarkMode } from '~/app/contexts/dark-mode';
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 
 const buttonSize = 40;
 const padding = 5;
 const iconSize = buttonSize - padding * 2;
 
 export type ThemeSwitchProps = {
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 };
 
 export const ThemeSwitch = ({ sx }: ThemeSwitchProps) => {

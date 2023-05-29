@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import { z } from 'zod';
 
 import { CustomAlert } from '~/app/components/feedback/custom-alert';
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { getCatchMessage } from '~/shared/errors';
 import { createGroupedOptionalSchema } from '~/shared/helpers/schema';
 
@@ -76,7 +76,7 @@ export const isStatusAction = (value: unknown): value is StatusAction => {
 
 type StatusParams = {
 	/** the styles to apply to the alert */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the key to add to the status. @default `status-hook-jsx` */
 	key?: string;

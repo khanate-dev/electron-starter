@@ -10,6 +10,7 @@ import type {
 	ZodStringSelection,
 } from '~/shared/helpers/schema';
 import type { InputHTMLAttributes } from 'react';
+import type { Utils } from '~/shared/types/utils';
 
 export type FormSchemaLists<
 	Zod extends z.ZodObject<Record<string, FormFieldZodType>, 'strict'>,
@@ -26,7 +27,7 @@ export type FormSchemaLists<
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
 	}
-> = FilteredKeys<
+> = Utils.filteredKeys<
 	Fields,
 	{ type: 'selection' } | { hasSuggestions: true }
 > extends never
@@ -34,8 +35,8 @@ export type FormSchemaLists<
 	: {
 			/** the object containing option lists for dropdown element, if any */
 			lists: {
-				[K in FilteredKeys<Fields, { type: 'selection' }>]: K extends Keys
-					? DropdownOption<
+				[K in Utils.filteredKeys<Fields, { type: 'selection' }>]: K extends Keys
+					? App.DropdownOption<
 							Zod['shape'][K] extends z.ZodArray<infer U, 'atleastone' | 'many'>
 								? U extends BaseSelectionType
 									? z.infer<U>
@@ -44,7 +45,10 @@ export type FormSchemaLists<
 					  >[]
 					: never;
 			} & {
-				[K in FilteredKeys<Fields, { hasSuggestions: true }>]: K extends Keys
+				[K in Utils.filteredKeys<
+					Fields,
+					{ hasSuggestions: true }
+				>]: K extends Keys
 					? Fields[K]['type'] extends 'string'
 						? string[]
 						: number[]
@@ -159,7 +163,7 @@ export type SelectionSchemaField<
 	Type = Zod extends z.ZodArray<any>
 		? z.infer<Zod>[number]
 		: Exclude<z.infer<Zod>, null>,
-	Options = Type extends DropdownType ? DropdownOption<Type> : never
+	Options = Type extends App.DropdownType ? App.DropdownOption<Type> : never
 > = AgnosticSchemaField<Zod> & {
 	type: 'selection';
 
@@ -176,7 +180,7 @@ type ReadonlySchemaField<Zod extends FormFieldZodType> = Omit<
 	AgnosticSchemaField<Zod>,
 	'isSortable'
 > & { type: 'readonly' } & (Zod extends z.AnyZodObject | z.ZodArray<any>
-		? { getValue: (row: z.infer<Zod>) => ReactNode }
+		? { getValue: (row: z.infer<Zod>) => React.Node }
 		: { getValue?: undefined });
 
 type DateSchemaField<Zod extends DateType> = AgnosticSchemaField<Zod> & {

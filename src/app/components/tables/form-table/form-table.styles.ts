@@ -42,4 +42,4 @@ export const formTableStyles = {
 	button: {
 		minWidth: 125,
 	},
-} satisfies SxStyleObj;
+} satisfies Mui.SxStyleObj;

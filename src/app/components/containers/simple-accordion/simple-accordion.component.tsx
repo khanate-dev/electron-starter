@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { ExpandMoreRounded as ExpandIcon } from '@mui/icons-material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { CustomButton } from '~/app/components/controls/custom-button';
 
 import type { AccordionProps } from '@mui/material';
@@ -10,22 +10,22 @@ import type { FullButtonProps } from '~/app/components/controls/custom-button';
 
 export type SimpleAccordionProps = {
 	/** the title to show in the accordion summary */
-	title: ReactNode;
+	title: React.Node;
 
 	/** the subtitle to show in the accordion summary */
-	subtitle?: ReactNode;
+	subtitle?: React.Node;
 
 	/** the actions to show on the accordion header */
 	actions?: FullButtonProps[];
 
 	/** the contents to render in the accordion details */
-	children: ReactNode;
+	children: React.Node;
 
 	/** the styles to apply to the accordion children */
 	styles?: {
-		accordion?: SxStyle;
-		summary?: SxStyle;
-		details?: SxStyle;
+		accordion?: Mui.SxStyle;
+		summary?: Mui.SxStyle;
+		details?: Mui.SxStyle;
 	};
 } & Pick<
 	AccordionProps,

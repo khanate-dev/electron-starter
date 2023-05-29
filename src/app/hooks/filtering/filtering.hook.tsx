@@ -4,11 +4,13 @@ import { Box, Grid as Stack } from '@mui/material';
 import { objectValues } from '~/shared/helpers/object';
 import { SearchBar } from '~/app/components/controls/search-bar';
 
+import type { Dispatch, SetStateAction } from 'react';
+
 type FilterResponse<Type extends Obj> = {
 	searchString: string;
-	setSearchString: SetState<string>;
+	setSearchString: Dispatch<SetStateAction<string>>;
 	filteredData: Type[];
-	filterJsx: ReactNode;
+	filterJsx: React.Node;
 };
 
 export const useFiltering = <Type extends Obj>(

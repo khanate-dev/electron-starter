@@ -12,6 +12,7 @@ import {
 import { logout } from '~/app/contexts/user';
 
 import type { timestampSchema } from '~/shared/helpers/schema';
+import type { Utils } from '~/shared/types/utils';
 
 const responseSchema = z.strictObject({
 	errorCode: z.string(),
@@ -41,7 +42,7 @@ const apiRequest = async <Response = unknown>(
 		} = { method, headers: {} };
 
 		if (!isPublic && !disableAuth) {
-			const user = await getSetting('user');
+			const user = getSetting('user');
 			if (!user) throw new AuthError('user auth token not found!');
 			options.headers.Authorization = `Bearer ${user.token}`;
 		}
@@ -138,7 +139,7 @@ export const postRequest = async <Response = void>(
 
 export type BulkResponse<Type extends Obj = Obj> = {
 	successful: Type[];
-	failed: Prettify<Type & { error: string }>[];
+	failed: Utils.prettify<Type & { error: string }>[];
 };
 
 /**

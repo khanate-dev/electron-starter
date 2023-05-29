@@ -8,7 +8,7 @@ import {
 import { z } from 'zod';
 import { useState } from 'react';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { _localIdSchema, createLocalId } from '~/shared/helpers/data';
 import { FormField } from '~/app/components/forms/form-field';
 import { CustomButton } from '~/app/components/controls/custom-button';
@@ -46,7 +46,7 @@ export const FormTable = <
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
 	},
-	Type extends WithLocalId<WorkingObj>
+	Type extends App.WithLocalId<WorkingObj>
 >({
 	schema,
 	formId,
@@ -65,7 +65,7 @@ export const FormTable = <
 	disableSorting,
 }: FormTableProps<Zod, Keys, WorkingObj, Fields, Type>) => {
 	const [response, setResponse] = useState<null | BulkResponse<
-		WithLocalId<z.infer<Zod>>
+		App.WithLocalId<z.infer<Zod>>
 	>>(null);
 
 	const {

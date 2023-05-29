@@ -9,8 +9,8 @@ import { breadcrumbsStyles as styles } from './breadcrumbs.styles';
 
 type BaseCrumbProps = {
 	to?: string;
-	sx: SxStyle;
-	children: ReactNode;
+	sx: Mui.SxStyle;
+	children: React.Node;
 };
 type CrumbProps =
 	| ({ to?: undefined } & BaseCrumbProps)

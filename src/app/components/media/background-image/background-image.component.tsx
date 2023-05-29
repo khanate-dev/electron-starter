@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 
 import { getBackgroundImageStyles } from './background-image.styles';
 
 export type BackgroundImageProps = {
 	/** the styles to apply to the SVG element */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the opacity to set on the SVG element */
 	opacity?: number;

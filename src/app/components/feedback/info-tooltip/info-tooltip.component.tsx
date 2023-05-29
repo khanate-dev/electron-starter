@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ClickAwayListener, IconButton, Popper } from '@mui/material';
 import { InfoOutlined as InfoIcon } from '@mui/icons-material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { CustomTooltip } from '~/app/components/feedback/custom-tooltip';
 
 import type { CustomTooltipProps } from '~/app/components/feedback/custom-tooltip';

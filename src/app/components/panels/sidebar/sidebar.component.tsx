@@ -19,7 +19,7 @@ export type TSidebarItem = {
 	name: string;
 
 	/** the styles to apply on the item */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the label to show on the list item */
 	label?: string;

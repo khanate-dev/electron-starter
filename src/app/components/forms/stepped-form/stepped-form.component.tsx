@@ -13,6 +13,8 @@ import {
 
 import { CustomButton } from '~/app/components/controls/custom-button';
 
+import type { Utils } from '~/shared/types/utils';
+
 const showForm = keyframes({
 	from: {
 		top: -20,
@@ -22,7 +24,7 @@ const showForm = keyframes({
 
 export type SteppedFormProps<
 	Steps extends Readonly<string[]>,
-	Children = RepeatedTuple<JSX.Element, Steps['length']>
+	Children = Utils.repeatedTuple<JSX.Element, Steps['length']>
 > = {
 	children: Children;
 

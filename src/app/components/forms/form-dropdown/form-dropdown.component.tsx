@@ -2,12 +2,12 @@ import { Autocomplete, TextField } from '@mui/material';
 
 import type { AutocompleteProps, TextFieldProps } from '@mui/material';
 
-export type FormDropdownProps<Type extends DropdownType> = {
+export type FormDropdownProps<Type extends App.DropdownType> = {
 	/** the styles to pass to the underlying form component */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the configuration object for current form field */
-	options: DropdownOption<Type>[];
+	options: App.DropdownOption<Type>[];
 
 	/** the size of the form field */
 	size: TextFieldProps['size'];
@@ -46,7 +46,7 @@ export type FormDropdownProps<Type extends DropdownType> = {
 	  }
 );
 
-export const FormDropdown = <Type extends DropdownType>({
+export const FormDropdown = <Type extends App.DropdownType>({
 	label,
 	options,
 	value,

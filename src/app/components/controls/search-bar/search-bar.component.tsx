@@ -9,11 +9,11 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 
-import { csx, getOppositeColor } from '~/shared/helpers/style';
+import { csx, getOppositeColor } from '~/app/helpers/style';
 
 export type SearchBarProps = {
 	/** the styles to apply on the InputBase component */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the total rows in current view */
 	totalRows?: number;

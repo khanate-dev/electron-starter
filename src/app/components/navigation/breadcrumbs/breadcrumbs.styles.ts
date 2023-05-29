@@ -53,4 +53,4 @@ export const breadcrumbsStyles = {
 			},
 		},
 	},
-} satisfies SxStyleObj;
+} satisfies Mui.SxStyleObj;

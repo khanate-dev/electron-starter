@@ -16,7 +16,7 @@ export const generalTableCommonStyles = [
 export type GeneralTableCommonStyle = (typeof generalTableCommonStyles)[number];
 
 export type GeneralTableStyles = Partial<
-	Record<GeneralTableCommonStyle, SxProp>
+	Record<GeneralTableCommonStyle, Mui.SxProp>
 >;
 
 export type GeneralTableColumn<Type extends Obj> = {
@@ -24,16 +24,16 @@ export type GeneralTableColumn<Type extends Obj> = {
 	id: string;
 
 	/** the styles to apply to the header cell */
-	headerSx?: SxProp;
+	headerSx?: Mui.SxProp;
 
 	/** the styles to apply to the body row cell */
-	bodySx?: SxProp;
+	bodySx?: Mui.SxProp;
 
 	/** the content to show in the header cell */
-	headerContent: ReactNode;
+	headerContent: React.Node;
 
 	/** the content to show in the body row cell */
-	getBodyContent: (row: Type, index: number) => ReactNode;
+	getBodyContent: (row: Type, index: number) => React.Node;
 
 	/** should the column be shown on the table? */
 	hidden?: boolean;
@@ -62,10 +62,10 @@ export type GeneralTableAction<Type extends Obj> = {
 	name: string;
 
 	/** the label of the action */
-	label?: ReactNode;
+	label?: React.Node;
 
 	/** the styles to apply to the MUI Button or IconButton component */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the callback function for the the action in table header. header will be rendered as action if this is provided. */
 	onHeaderClick?: () => void;
@@ -74,7 +74,7 @@ export type GeneralTableAction<Type extends Obj> = {
 	onClick: (row: Type) => void;
 
 	/** the ico nto show on the action button */
-	icon: ReactNode;
+	icon: React.Node;
 
 	/** the color of the button */
 	color?: ButtonProps['color'];

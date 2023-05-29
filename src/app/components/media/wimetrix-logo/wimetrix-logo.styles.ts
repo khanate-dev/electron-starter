@@ -31,5 +31,5 @@ export const getWiMetrixLogoStyles = ({
 		secondary: {
 			fill: (theme) => getColor(theme, secondary),
 		},
-	} satisfies SxStyleObj;
+	} satisfies Mui.SxStyleObj;
 };

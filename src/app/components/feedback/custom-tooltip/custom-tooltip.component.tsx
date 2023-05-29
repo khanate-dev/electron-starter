@@ -1,6 +1,6 @@
 import { Tooltip } from '@mui/material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 
 import type { TooltipProps } from '@mui/material';
 

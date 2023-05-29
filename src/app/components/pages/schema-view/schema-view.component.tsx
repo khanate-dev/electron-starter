@@ -31,7 +31,7 @@ export type SchemaViewProps<
 	onReload?: () => void;
 
 	/** the endpoint for the delete row operation. delete operation is only rendered if provided. */
-	deleteEndpoint?: (id: DbId) => Promise<void>;
+	deleteEndpoint?: (id: App.DbId) => Promise<void>;
 
 	/** does the page have an update route? */
 	hasUpdate?: boolean;
@@ -50,7 +50,7 @@ export type SchemaViewProps<
 };
 
 type ToDelete = {
-	id: DbId;
+	id: App.DbId;
 	label: string;
 };
 
@@ -99,15 +99,17 @@ export const SchemaView = <
 				hasExport={!noExport}
 				actions={{
 					view: hasDetails
-						? (state) => navigate(`details/${state[schema.primaryKey] as DbId}`)
+						? (state) =>
+								navigate(`details/${state[schema.primaryKey] as App.DbId}`)
 						: undefined,
 					update: hasUpdate
-						? (state) => navigate(`update/${state[schema.primaryKey] as DbId}`)
+						? (state) =>
+								navigate(`update/${state[schema.primaryKey] as App.DbId}`)
 						: undefined,
 					delete: deleteEndpoint
 						? (state) =>
 								setToDelete({
-									id: state[schema.primaryKey] as DbId,
+									id: state[schema.primaryKey] as App.DbId,
 									label: state[schema.identifier] as string,
 								})
 						: undefined,

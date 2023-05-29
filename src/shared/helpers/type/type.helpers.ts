@@ -4,6 +4,7 @@ import { createBulkResponseSchema } from '~/shared/helpers/schema';
 import type { DefaultBulkResponseObj } from '~/shared/helpers/schema';
 import type { BulkResponse } from '~/app/helpers/api';
 import type { z } from 'zod';
+import type { Utils } from '~/shared/types/utils';
 
 export const readableTypeOf = (value: unknown) => {
 	if (typeof value !== 'object') return typeof value;
@@ -15,7 +16,7 @@ export const readableTypeOf = (value: unknown) => {
 export const isObject = (value: unknown): value is Obj =>
 	readableTypeOf(value) === 'object';
 
-export const assertObject: AssertFunction<Obj> = (value) => {
+export const assertObject: Utils.assertFunction<Obj> = (value) => {
 	const type = readableTypeOf(value);
 	if (type !== 'object')
 		throw new TypeError(`Expected object, received ${type}`);
@@ -30,7 +31,7 @@ export const isArray = <Type = unknown>(
 
 type AssertArray = <Type = unknown>(
 	value: unknown,
-	checker?: AssertFunction<Type>
+	checker?: Utils.assertFunction<Type>
 ) => asserts value is Type[];
 
 export const assertArray: AssertArray = (value, checker) => {

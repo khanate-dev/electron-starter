@@ -10,7 +10,7 @@ import {
 
 const loader = (async ({ params }) => {
 	return getUserById(getParamId(params));
-}) satisfies Loader;
+}) satisfies Router.Loader;
 
 export const UserUpdate = () => {
 	const user = useLoaderData<typeof loader>();

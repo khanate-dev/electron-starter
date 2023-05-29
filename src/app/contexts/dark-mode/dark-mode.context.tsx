@@ -2,13 +2,15 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { getSetting, setSetting } from '~/app/helpers/settings';
 
+import type { PropsWithChildren } from 'react';
+
 const DarkModeContext = createContext<boolean>(false);
 
 const prefersDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
 const defaultIsDarkMode = getSetting('isDarkMode') ?? prefersDarkQuery.matches;
 
-export const DarkModeProvider = ({ children }: ComponentWithChildren) => {
+export const DarkModeProvider = ({ children }: PropsWithChildren) => {
 	const [isDarkMode, setIsDarkMode] = useState<boolean>(defaultIsDarkMode);
 
 	useEffect(() => {

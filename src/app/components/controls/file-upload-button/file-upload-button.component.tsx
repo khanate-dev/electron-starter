@@ -1,10 +1,10 @@
 import { Button, Box } from '@mui/material';
 import { DescriptionOutlined as UploadIcon } from '@mui/icons-material';
 
-import { getLoadingStyles } from '~/shared/helpers/style';
+import { getLoadingStyles } from '~/app/helpers/style';
 import { excludeString } from '~/shared/helpers/type';
 
-import type { InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes, ChangeEventHandler } from 'react';
 import type { ButtonProps } from '@mui/material';
 
 export type FileUploadButtonProps = {
@@ -15,7 +15,7 @@ export type FileUploadButtonProps = {
 	>;
 
 	/** the callback function to fire on file input change */
-	onChange: InputChangeHandler;
+	onChange: ChangeEventHandler<HTMLInputElement>;
 
 	/** the name to give the input element */
 	name: string;

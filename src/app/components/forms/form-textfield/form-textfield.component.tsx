@@ -14,7 +14,7 @@ import type { TextFieldProps } from '@mui/material';
 
 export type FormTextfieldProps = {
 	/** the styles to pass to the underlying form component */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the type of the `input` tag */
 	type?: TextFieldProps['type'];

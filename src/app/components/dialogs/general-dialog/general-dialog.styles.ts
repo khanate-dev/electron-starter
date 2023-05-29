@@ -100,4 +100,4 @@ export const getGeneralDialogStyles = ({
 			padding: '10px 20px',
 			lineHeight: 1.2,
 		},
-	} satisfies SxStyleObj);
+	} satisfies Mui.SxStyleObj);

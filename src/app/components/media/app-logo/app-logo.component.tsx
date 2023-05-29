@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 
 import { getAppLogoStyles } from './app-logo.styles';
 
 export type AppLogoProps = {
 	/** the styles to apply to the svg element */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/**  color override. if provided, logo will be single colored */
 	color?: 'primary' | 'secondary' | 'white' | 'black';

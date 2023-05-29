@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 
 import { CustomButton } from '~/app/components/controls/custom-button';
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 
 const icons = {
 	add: <AddIcon />,
@@ -30,7 +30,7 @@ export type FieldAction = {
 
 export type FieldActionsProps = {
 	/** the styles to apply to the container */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the list of actions to render */
 	actions: FieldAction[];

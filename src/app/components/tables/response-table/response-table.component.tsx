@@ -28,7 +28,7 @@ const alertStyle = {
 		backgroundColor: 'action.selected',
 		textTransform: 'none',
 	},
-} satisfies SxStyle;
+} satisfies Mui.SxStyle;
 
 export type ResponseTableProps<
 	T extends FormSchema<any, any, any, any> | ViewSchema<any, any, any, any>
@@ -39,7 +39,7 @@ export type ResponseTableProps<
 	/** the response data to use */
 	response: T extends FormSchema<any, any, any, any>
 		?
-				| BulkResponse<WithLocalId<z.infer<T['zod']>>>
+				| BulkResponse<App.WithLocalId<z.infer<T['zod']>>>
 				| BulkResponse<z.infer<T['zod']>>
 		: BulkResponse<z.infer<T['zod']>>;
 } & (T extends FormSchema<any, any, any, any>

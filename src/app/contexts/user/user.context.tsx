@@ -3,13 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { removeSetting } from '~/app/helpers/settings';
 
+import type { PropsWithChildren } from 'react';
 import type { LoggedInUser } from '~/app/schemas/user';
 
 const UserContext = createContext<null | LoggedInUser>(null);
 
-type UserProviderProps = ComponentWithChildren & {
-	user: LoggedInUser;
-};
+type UserProviderProps = PropsWithChildren<{ user: LoggedInUser }>;
 
 export const UserProvider = ({ user, children }: UserProviderProps) => {
 	const navigate = useNavigate();

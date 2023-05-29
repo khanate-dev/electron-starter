@@ -40,7 +40,7 @@ export const getUserLabel = (val: User) => val.userName;
 
 export const getUserDropdownOptions = (
 	list: User[]
-): DropdownOption<DbId>[] => {
+): App.DropdownOption<App.DbId>[] => {
 	return list.map((row) => ({
 		value: row.userID,
 		label: getUserLabel(row),

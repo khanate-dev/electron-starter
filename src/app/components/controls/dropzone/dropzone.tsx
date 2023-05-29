@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Box, Stack, alpha } from '@mui/material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 
 export type DropzoneProps = {
 	/** the styles to apply on the container */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the function to call when data or files are dropped */
 	onDrop: (dataTransfer: DataTransfer) => void;
 
-	children?: ReactNode;
+	children?: React.Node;
 };
 
 export const Dropzone = ({ sx, onDrop, children }: DropzoneProps) => {

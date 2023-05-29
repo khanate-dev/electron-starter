@@ -17,7 +17,7 @@ import {
 
 import { usePagination } from '~/app/hooks/pagination';
 import { humanizeToken } from '~/shared/helpers/string';
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { SearchBar } from '~/app/components/controls/search-bar';
 import { Dropzone } from '~/app/components/controls/dropzone';
 
@@ -25,7 +25,7 @@ import { getOptionPanelStyles } from './option-panel.styles';
 
 export type OptionPanelProps<Type extends Obj> = {
 	/** the styles to apply to the container */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the list of items to show */
 	list: Type[];
@@ -36,7 +36,7 @@ export type OptionPanelProps<Type extends Obj> = {
 	/** the function to call when a panel item is picked */
 	onPick: (item: Type) => void;
 
-	children: ReactNode;
+	children: React.Node;
 };
 
 export const OptionPanel = <Type extends Obj>({

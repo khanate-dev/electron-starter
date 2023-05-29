@@ -1,4 +1,4 @@
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { GeneralDialog } from '~/app/components/dialogs/general-dialog';
 
 import type { GeneralDialogProps } from '~/app/components/dialogs/general-dialog';

@@ -8,7 +8,7 @@ import type { ViewSchema, ViewSchemaField } from '~/app/schemas';
 import type { AnyZodObject, z } from 'zod';
 
 export type ViewTableStyles = {
-	actionHeader?: SxProp;
+	actionHeader?: Mui.SxProp;
 } & GeneralTableStyles;
 
 type InheritedProps<Type extends Obj> = Pick<

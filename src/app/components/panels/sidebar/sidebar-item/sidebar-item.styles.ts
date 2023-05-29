@@ -60,4 +60,4 @@ export const sidebarItemStyles = {
 			textOverflow: 'ellipsis',
 		},
 	},
-} satisfies SxStyleObj;
+} satisfies Mui.SxStyleObj;

@@ -41,6 +41,10 @@ export const numberSelectionSchema = z.number().brand('SelectionNumber');
 export type ZodNumberSelection = typeof numberSelectionSchema;
 export type NumberSelection = z.infer<ZodNumberSelection>;
 
+type OptionalGroup<T extends Record<string, unknown>> =
+	| T
+	| { [K in keyof T]?: never };
+
 export const createGroupedOptionalSchema = <
 	Schema extends z.ZodObject<any, any, any, any>
 >(
@@ -122,7 +126,7 @@ export const schemaToGeneralTableColumns = <T extends Record<string, Field>>(
 	lists?: {
 		[K in keyof T as T[K]['type'] extends 'selection'
 			? K
-			: never]: DropdownOption<z.infer<T[K]['zod']>>[];
+			: never]: App.DropdownOption<z.infer<T[K]['zod']>>[];
 	}
 ) => {
 	return Object.values(fields).map<

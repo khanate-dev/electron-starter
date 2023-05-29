@@ -31,4 +31,4 @@ export const formPageStyles = {
 		gap: 2,
 		justifyContent: 'center',
 	},
-} satisfies SxStyleObj;
+} satisfies Mui.SxStyleObj;

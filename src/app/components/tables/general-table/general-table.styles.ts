@@ -288,4 +288,4 @@ export const generalTableStyles = {
 			},
 		},
 	},
-} satisfies SxStyleObj;
+} satisfies Mui.SxStyleObj;

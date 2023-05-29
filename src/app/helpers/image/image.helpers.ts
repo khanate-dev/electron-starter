@@ -1,13 +1,14 @@
 import { IMAGE_EXTENSIONS, apiEndpoint } from '~/app/config';
 
 import type { Dayjs } from 'dayjs';
+import type { Utils } from '~/shared/types/utils';
 
 /**
  * a function that throws an error if the given value is not a valid image
  * @param file the value to check
  * @throws {Error}
  */
-export const assertValidImage: AssertFunction<File> = (file) => {
+export const assertValidImage: Utils.assertFunction<File> = (file) => {
 	if (!(file instanceof File))
 		throw new Error('invalid image: the given value is not a valid file');
 

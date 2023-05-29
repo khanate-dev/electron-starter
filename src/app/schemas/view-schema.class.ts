@@ -2,6 +2,7 @@ import { humanizeToken } from '~/shared/helpers/string';
 
 import type { z } from 'zod';
 import type { ZodDatetime, ZodDbId } from '~/shared/helpers/schema';
+import type { Utils } from '~/shared/types/utils';
 
 export type ViewFieldZodType =
 	| z.ZodString
@@ -74,7 +75,7 @@ type ViewSchemaConstructor<
 export class ViewSchema<
 	Zod extends z.AnyZodObject,
 	Fields extends {
-		[K in FilteredKeys<Zod['shape'], ViewFieldZodType>]?: ViewSchemaField<
+		[K in Utils.filteredKeys<Zod['shape'], ViewFieldZodType>]?: ViewSchemaField<
 			Zod['shape'][K]
 		>;
 	},

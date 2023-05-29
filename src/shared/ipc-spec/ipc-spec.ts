@@ -2,10 +2,11 @@
 import { ipcRenderer, ipcMain } from 'electron';
 
 import type { BrowserWindow } from 'electron';
+import type { Utils } from '~/shared/types/utils';
 
 export type IpcApi = {
 	app: {
-		environment: Environment;
+		environment: 'development' | 'production';
 		closeApplication: () => void;
 	};
 	barCode: {
@@ -22,16 +23,10 @@ declare global {
 	}
 }
 
-type Equal<T, U> = (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U
-	? 1
-	: 2
-	? true
-	: false;
-
 type Invoker<T> = T extends (...args: any[]) => Promise<any> ? T : never;
 
 type Sender<T> = T extends (...args: infer Args extends any[]) => infer R
-	? Equal<R, void> extends true
+	? Utils.equal<R, void> extends true
 		? Args extends [(...args: any[]) => void]
 			? never
 			: T
@@ -39,7 +34,7 @@ type Sender<T> = T extends (...args: infer Args extends any[]) => infer R
 	: never;
 
 type Listener<T> = T extends (...args: infer Args extends any[]) => infer R
-	? Equal<R, void> extends true
+	? Utils.equal<R, void> extends true
 		? Args extends [(...args: any[]) => void]
 			? T
 			: never
@@ -65,7 +60,7 @@ type RemoveEmptyObjects<T extends Record<string, unknown>> = {
 type Render<
 	T extends Record<string, unknown>,
 	Prefix extends string = ''
-> = Prettify<
+> = Utils.prettify<
 	RemoveEmptyObjects<{
 		[K in keyof T as T[K] extends ExcludingNonFuncs<T[K]>
 			? K
@@ -116,7 +111,7 @@ export const renderer: Render<IpcApi> = {
 type Main<
 	T extends Record<string, unknown>,
 	Prefix extends string = ''
-> = Prettify<
+> = Utils.prettify<
 	RemoveEmptyObjects<{
 		[K in keyof T as T[K] extends ExcludingNonFuncs<T[K]>
 			? K

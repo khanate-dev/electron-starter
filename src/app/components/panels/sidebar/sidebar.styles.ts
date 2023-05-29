@@ -116,4 +116,4 @@ export const sidebarStyles = {
 			},
 		},
 	},
-} satisfies SxStyleObj;
+} satisfies Mui.SxStyleObj;

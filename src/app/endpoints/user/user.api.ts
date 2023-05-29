@@ -21,7 +21,7 @@ export const getUsers = async () => {
 	});
 };
 
-export const getUserById = async (userId: DbId) => {
+export const getUserById = async (userId: App.DbId) => {
 	return getRequest(`${prefix}/get/${userId}`, {
 		schema: userSansPasswordZodSchema,
 	});
@@ -34,7 +34,7 @@ export const addUser = async (body: FormData) => {
 	return postRequest(`${prefix}/insert`, body);
 };
 
-export const resetUserPassword = async (userId: DbId, body: FormData) => {
+export const resetUserPassword = async (userId: App.DbId, body: FormData) => {
 	if (body.get('password') !== body.get('confirmPassword'))
 		throw new Error("The two passwords don't match!");
 
@@ -46,10 +46,10 @@ export const login = async (data: FormData) => {
 	return loggedInUserZodSchema.parse(response);
 };
 
-export const updateUser = async (userId: DbId, body: FormData) => {
+export const updateUser = async (userId: App.DbId, body: FormData) => {
 	return putRequest(`${prefix}/update/${userId}`, body);
 };
 
-export const deleteUser = async (userId: DbId) => {
+export const deleteUser = async (userId: App.DbId) => {
 	return deleteRequest(`${prefix}/delete/${userId}`);
 };

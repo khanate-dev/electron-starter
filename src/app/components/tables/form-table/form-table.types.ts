@@ -15,6 +15,7 @@ import type {
 	FormSchemaLists,
 } from '~/app/schemas';
 import type { z } from 'zod';
+import type { Utils } from '~/shared/types/utils';
 
 export type FormTableFormStyles = Partial<
 	Record<
@@ -24,7 +25,7 @@ export type FormTableFormStyles = Partial<
 		| 'formCheckbox'
 		| 'formReadonly'
 		| 'formTextField',
-		SxProp
+		Mui.SxProp
 	>
 >;
 
@@ -45,7 +46,7 @@ export type FormTableProps<
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
 	},
-	Type extends WithLocalId<WorkingObj>
+	Type extends App.WithLocalId<WorkingObj>
 > = Pick<
 	GeneralTableProps<Type>,
 	| 'data'
@@ -81,9 +82,9 @@ export type FormTableProps<
 	 * - `void` the form status is set to idle
 	 */
 	onSubmit: (
-		parsedData: WithLocalId<z.infer<Zod>>[]
+		parsedData: App.WithLocalId<z.infer<Zod>>[]
 	) => Promise<
-		void | string | StatusAction | BulkResponse<WithLocalId<z.infer<Zod>>>
+		void | string | StatusAction | BulkResponse<App.WithLocalId<z.infer<Zod>>>
 	>;
 
 	/** the styles to apply to table components. @default {} */
@@ -118,6 +119,6 @@ export type FormTableProps<
 
 	/** the default sorting for the table */
 	defaultSorting?: Sorting<
-		FilteredKeys<Fields, { type: 'readonly' } | { isSortable: true }>
+		Utils.filteredKeys<Fields, { type: 'readonly' } | { isSortable: true }>
 	>;
 } & FormSchemaLists<Zod, Keys, WorkingObj, Fields>;

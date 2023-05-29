@@ -29,7 +29,7 @@ export type SchemaUpdateProps<
 	}
 > = {
 	/** the endpoint functions to use */
-	endpoint: (id: DbId, body: FormData) => Promise<void>;
+	endpoint: (id: App.DbId, body: FormData) => Promise<void>;
 } & Pick<
 	UpdateSchemaFormProps<Zod, Keys, WorkingObj, Fields>,
 	| 'schema'

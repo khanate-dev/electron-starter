@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { Cancel as CancelIcon } from '@mui/icons-material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { CustomButton } from '~/app/components/controls/custom-button';
 
 import { getGeneralDialogStyles } from './general-dialog.styles';
@@ -18,24 +18,24 @@ import type { FullButtonProps } from '~/app/components/controls/custom-button';
 export type GeneralDialogAction = FullButtonProps;
 
 export type GeneralDialogProps = {
-	children: ReactNode;
+	children: React.Node;
 
 	/** the styles to pass to the Dialog container */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the accent color for the dialog. used for default color for header and buttons */
 	accent?: 'primary' | 'secondary' | 'error' | 'success' | 'info' | 'warning';
 
 	/** the styles to apply to the dialog components */
 	styles?: Partial<
-		Record<'container' | 'title' | 'content' | 'actions', SxProp>
+		Record<'container' | 'title' | 'content' | 'actions', Mui.SxProp>
 	>;
 
 	/** the callback function when the dialog closes */
 	onClose: () => void;
 
 	/** the title to show on the dialog header */
-	title: ReactNode;
+	title: React.Node;
 
 	/** the actions to show for the dialog */
 	actions?: GeneralDialogAction[];

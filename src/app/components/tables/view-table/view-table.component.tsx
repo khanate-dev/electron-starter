@@ -72,7 +72,7 @@ export const ViewTable = <
 		field: Schema['fieldsArray'][number],
 		row: z.infer<Zod>
 	): JSX.Element => {
-		let content: ReactNode = '';
+		let content: React.Node = '';
 		const value: unknown = row[field.name] ?? '';
 
 		switch (field.type) {

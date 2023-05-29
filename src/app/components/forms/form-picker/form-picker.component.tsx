@@ -11,7 +11,7 @@ const pickerComponents = {
 
 export type FormPickerProps = {
 	/** the styles to pass to the underlying form component */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	type: keyof typeof pickerComponents;
 

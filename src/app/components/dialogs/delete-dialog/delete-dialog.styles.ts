@@ -14,4 +14,4 @@ export const deleteDialogStyles = {
 		display: 'inline-block',
 		color: 'error.main',
 	},
-} satisfies SxStyleObj;
+} satisfies Mui.SxStyleObj;

@@ -1,3 +1,5 @@
+import type { Utils } from '~/shared/types/utils';
+
 export const objectEntries = <Keys extends PropertyKey, Type>(
 	object: Record<Keys, Type>
 ) => Object.entries(object) as [Keys, Type][];
@@ -16,7 +18,7 @@ export const omit = <
 >(
 	object: Type,
 	keys: Key | Key[]
-): Prettify<Omit<Type, Key>> => {
+): Utils.prettify<Omit<Type, Key>> => {
 	const keyArray = Array.isArray(keys) ? keys : [keys];
 	return objectEntries<Key, unknown>(object).reduce<Omit<Type, Key>>(
 		(obj, [key, value]) => {
@@ -33,7 +35,7 @@ export const pick = <
 >(
 	object: Type,
 	keys: Key | Key[]
-): Prettify<Pick<Type, Key>> => {
+): Utils.prettify<Pick<Type, Key>> => {
 	const keyArray = Array.isArray(keys) ? keys : [keys];
 	return objectEntries<Key, unknown>(object).reduce<Pick<Type, Key>>(
 		(obj, [key, value]) => {

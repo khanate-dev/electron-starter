@@ -71,5 +71,5 @@ export const getBackgroundImageStyles = (
 			fill: ({ palette }) =>
 				darken(palette.secondary.main, offsets[palette.mode].more),
 		},
-	} satisfies SxStyleObj;
+	} satisfies Mui.SxStyleObj;
 };

@@ -3,7 +3,7 @@ import { Box, Stack } from '@mui/material';
 import { isDayjs } from 'dayjs';
 
 import { useStatus } from '~/app/hooks/status';
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 import { getImageUrl } from '~/app/helpers/image';
 import { FormField } from '~/app/components/forms/form-field';
 import { FormImage } from '~/app/components/forms/form-image';
@@ -11,6 +11,7 @@ import { CustomButton } from '~/app/components/controls/custom-button';
 
 import { formPageStyles as styles } from './schema-form.styles';
 
+import type { FormEventHandler } from 'react';
 import type { Dayjs } from 'dayjs';
 import type { z } from 'zod';
 import type { FieldAction } from '~/app/components/app/field-actions';
@@ -43,7 +44,7 @@ type AgnosticSchemaFormProps<
 	schema: FormSchema<Zod, Keys, WorkingObj, Fields>;
 
 	/** the styles to apply to the form container */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the id to use for the form element */
 	formId?: string;
@@ -52,7 +53,7 @@ type AgnosticSchemaFormProps<
 	fieldSize?: TextFieldProps['size'];
 
 	/** the label to show on the submit button */
-	submitLabel?: ReactNode;
+	submitLabel?: React.Node;
 
 	/** the actions to show on form fields */
 	actions?: Partial<Record<Keys, FieldAction[]>>;
@@ -219,28 +220,31 @@ export const SchemaForm = <
 	const pictureRequired =
 		typeof picture === 'string' ? picture === 'required' : picture?.required;
 
-	const handleSubmit: SubmitHandler = asyncWrapper('submit', async (event) => {
-		event.preventDefault();
+	const handleSubmit: FormEventHandler<HTMLFormElement> = asyncWrapper(
+		'submit',
+		async (event) => {
+			event.preventDefault();
 
-		const formData = new FormData();
+			const formData = new FormData();
 
-		for (const field of fields) {
-			const value = field.zod.parse(form[field.name]) as string;
-			formData.append(
-				field.name.toString(),
-				isDayjs(value) ? value.toISOString() : value
-			);
+			for (const field of fields) {
+				const value = field.zod.parse(form[field.name]) as string;
+				formData.append(
+					field.name.toString(),
+					isDayjs(value) ? value.toISOString() : value
+				);
+			}
+
+			if (image !== null) formData.append('picture', image);
+			else if (pictureRequired) throw new Error('image required!');
+
+			const message = await onSubmit(formData);
+			if (!message) return;
+			dispatch({ type: 'reset' });
+			setImage(null);
+			return message;
 		}
-
-		if (image !== null) formData.append('picture', image);
-		else if (pictureRequired) throw new Error('image required!');
-
-		const message = await onSubmit(formData);
-		if (!message) return;
-		dispatch({ type: 'reset' });
-		setImage(null);
-		return message;
-	});
+	);
 
 	return (
 		<Box

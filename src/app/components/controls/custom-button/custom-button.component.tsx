@@ -1,6 +1,6 @@
 import { Button, IconButton } from '@mui/material';
 
-import { csx, getLoadingStyles } from '~/shared/helpers/style';
+import { csx, getLoadingStyles } from '~/app/helpers/style';
 import { CustomTooltip } from '~/app/components/feedback/custom-tooltip';
 import { excludeString } from '~/shared/helpers/type';
 
@@ -13,10 +13,10 @@ import type {
 
 type ButtonBaseProps = {
 	/** the styles to apply to the MUI Button or IconButton component */
-	sx?: SxProp;
+	sx?: Mui.SxProp;
 
 	/** the icon for the button */
-	icon?: ReactNode | undefined;
+	icon?: React.Node | undefined;
 
 	/** the function to call when the button is clicked */
 	onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -48,13 +48,13 @@ export type IconButtonProps = {
 	isIcon: true;
 
 	/** the icon for the button */
-	icon: ReactNode;
+	icon: React.Node;
 
 	/** the button's label */
-	label?: ReactNode;
+	label?: React.Node;
 
 	/** the class to pass to Mui tooltip */
-	tooltipStyles?: SxProp;
+	tooltipStyles?: Mui.SxProp;
 
 	/** the color of the button */
 	color?: MuiIconButtonProps['color'];
@@ -81,7 +81,7 @@ export type FullButtonProps = {
 	tooltipStyles?: undefined;
 
 	/** the button's label */
-	label: ReactNode;
+	label: React.Node;
 
 	/** the color of the button */
 	color?: ButtonProps['color'];

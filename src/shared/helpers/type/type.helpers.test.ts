@@ -8,9 +8,11 @@ import {
 	readableTypeOf,
 } from './type.helpers';
 
+import type { Utils } from '~/shared/types/utils';
+
 const isNumber = (value: unknown): value is number => typeof value === 'number';
 
-const assertNumber: AssertFunction<number> = (value) => {
+const assertNumber: Utils.assertFunction<number> = (value) => {
 	const type = readableTypeOf(value);
 	if (type !== 'number') throw new Error(`Expected number, received ${type}`);
 };

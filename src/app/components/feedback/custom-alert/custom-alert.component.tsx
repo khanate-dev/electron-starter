@@ -1,12 +1,12 @@
 import { Alert, alpha } from '@mui/material';
 
-import { csx } from '~/shared/helpers/style';
+import { csx } from '~/app/helpers/style';
 
 import type { AlertProps } from '@mui/material';
 
 export type CustomAlertProps = {
 	/** the message to show on the alert */
-	message: ReactNode;
+	message: React.Node;
 
 	/** is the alert currently hidden? */
 	hidden?: boolean;
