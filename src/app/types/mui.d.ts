@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
-import type { PaletteColor, PaletteColorOptions, Theme, SxProps } from '@mui/material';
+import type {
+	PaletteColor,
+	PaletteColorOptions,
+	Theme,
+	SxProps,
+} from '@mui/material';
 import type { SystemStyleObject } from '@mui/system';
 
 declare module '@mui/material' {
@@ -26,5 +31,18 @@ export declare global {
 
 		/** global type helper for valid style objects. use it with `satisfies` */
 		type SxStyleObj<T extends string = string> = Record<T, Mui.SxStyle>;
+
+		/** global union type of app theme color names  */
+		type ThemeColor = Extract<
+			keyof Theme['palette'],
+			| 'primary'
+			| 'secondary'
+			| 'error'
+			| 'success'
+			| 'info'
+			| 'warning'
+			| 'wimetrixPrimary'
+			| 'wimetrixSecondary'
+		>;
 	}
 }

@@ -28,7 +28,7 @@ export const csx = (...input: CsxInput[]): Mui.SxProp => {
 
 export const getOppositeColor = (
 	{ palette }: Theme,
-	color: App.ThemeColor = 'primary'
+	color: Mui.ThemeColor = 'primary'
 ) => palette[color][palette.mode === 'light' ? 'dark' : 'light'];
 
 const transitionAnimation = keyframes({
@@ -51,7 +51,7 @@ const loadingAnimation = keyframes({
 	},
 });
 
-export const getLoadingStyles = (color: App.ThemeColor): Mui.SxStyle => ({
+export const getLoadingStyles = (color: Mui.ThemeColor): Mui.SxStyle => ({
 	color: `${color}.dark`,
 	background: ({ palette }) =>
 		`repeating-linear-gradient(${[
