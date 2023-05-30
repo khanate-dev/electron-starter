@@ -41,7 +41,7 @@ type Listener<T> = T extends (...args: infer Args extends any[]) => infer R
 		: never
 	: never;
 
-type ExcludingNonFuncs<T> = T extends
+type ExcludeNonFuncs<T> = T extends
 	| Record<string, unknown>
 	| Invoker<T>
 	| Sender<T>
@@ -62,7 +62,7 @@ type Render<
 	Prefix extends string = ''
 > = Utils.prettify<
 	RemoveEmptyObjects<{
-		[K in keyof T as T[K] extends ExcludingNonFuncs<T[K]>
+		[K in keyof T as T[K] extends ExcludeNonFuncs<T[K]>
 			? K
 			: never]: T[K] extends Record<string, unknown>
 			? Render<T[K], AppendPrefix<K, Prefix>>
@@ -113,7 +113,7 @@ type Main<
 	Prefix extends string = ''
 > = Utils.prettify<
 	RemoveEmptyObjects<{
-		[K in keyof T as T[K] extends ExcludingNonFuncs<T[K]>
+		[K in keyof T as T[K] extends ExcludeNonFuncs<T[K]>
 			? K
 			: never]: T[K] extends Record<string, unknown>
 			? Main<T[K], AppendPrefix<K, Prefix>>

@@ -40,12 +40,6 @@ export namespace Utils {
 	/** global type helper to be able to use arrow functions for assertions */
 	export type assertFunction<Type> = (value: unknown) => asserts value is Type;
 
-	/** global type helper to be able to use arrow functions for array assertions */
-	export type assertArrayFunction<Type> = (
-		value: unknown,
-		onlyCheckFirst?: boolean
-	) => asserts value is Type;
-
 	/** global type helper to prettify complex object types */
 	export type prettify<T> = {
 		[K in keyof T]: T[K];
