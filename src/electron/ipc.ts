@@ -3,7 +3,7 @@ import os from 'os';
 
 import { SerialPort } from 'serialport';
 
-import { main } from '~/shared/ipc-spec';
+import { ipcMain } from '~/shared/ipc-spec';
 
 import type { BrowserWindow } from 'electron';
 
@@ -21,9 +21,9 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	});
 	reader.open();
 
-	main.app.closeApplication('appCloseApplication', () => app.exit());
+	ipcMain.on('appCloseApplication', () => app.exit());
 
-	main.barCode.connect('barCodeConnect', async () => {
+	ipcMain.handle('barCodeConnect', async () => {
 		if (reader.isPaused()) {
 			reader.resume();
 			return;
@@ -36,7 +36,7 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 		});
 	});
 
-	main.barCode.disconnect('barCodeDisconnect', async () => {
+	ipcMain.handle('barCodeDisconnect', async () => {
 		if (!reader.isOpen || reader.closing) return;
 		return new Promise<void>((resolve, reject) => {
 			reader.close((error) => {
@@ -48,6 +48,6 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	reader.on('data', (data) => {
 		const dataString = data.toString('utf-8');
 		const newBarCodeScan = parseInt(dataString);
-		main.barCode.listen('barCodeListen', mainWindow, newBarCodeScan);
+		ipcMain.send('barCodeListen', mainWindow, newBarCodeScan);
 	});
 };

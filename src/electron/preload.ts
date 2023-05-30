@@ -1,28 +1,27 @@
 import { contextBridge } from 'electron';
 
-import { renderer } from '~/shared/ipc-spec';
+import { ipcApiKey, ipcRenderer } from '~/shared/ipc-spec';
 
 import type { IpcApi } from '~/shared/ipc-spec';
 
 const ipcApi: IpcApi = {
 	app: {
 		environment: process.env.DEV ? 'development' : 'production',
-		closeApplication: () =>
-			renderer.app.closeApplication('appCloseApplication'),
+		closeApplication() {
+			ipcRenderer.send('appCloseApplication');
+		},
 	},
 	barCode: {
-		connect: async () => {
-			return renderer.barCode.connect('barCodeConnect');
+		async connect() {
+			return ipcRenderer.invoke('barCodeConnect');
 		},
-		disconnect: async () => {
-			return renderer.barCode.disconnect('barCodeDisconnect');
+		async disconnect() {
+			return ipcRenderer.invoke('barCodeDisconnect');
 		},
-		listen: (callback) => {
-			renderer.barCode.listen('barCodeListen', (_event, value) => {
-				callback(value);
-			});
+		listen(callback) {
+			ipcRenderer.on('barCodeListen', (_event, value) => callback(value));
 		},
 	},
 };
 
-contextBridge.exposeInMainWorld('ipc', ipcApi);
+contextBridge.exposeInMainWorld(ipcApiKey, ipcApi);

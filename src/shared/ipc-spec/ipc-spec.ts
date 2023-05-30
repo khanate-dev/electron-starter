@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
-import { ipcRenderer, ipcMain } from 'electron';
+import {
+	ipcRenderer as electronIpcRenderer,
+	ipcMain as electronIpcMain,
+} from 'electron';
 
 import type { BrowserWindow } from 'electron';
 import type { Utils } from '~/shared/types/utils';
@@ -16,16 +19,25 @@ export type IpcApi = {
 	};
 };
 
+export const ipcApiKey = 'ipc';
+
+// -----------------------
+// Exporting the main and renderer ipc APIs with correct types
+// Should not need to manually modify
+// -----------------------
+
+type ApiGlobal = {
+	[k in typeof ipcApiKey]: IpcApi;
+};
+
 declare global {
 	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/no-empty-interface
-	interface Window {
-		ipc: IpcApi;
-	}
+	interface Window extends ApiGlobal {}
 }
 
-type Invoker<T> = T extends (...args: any[]) => Promise<any> ? T : never;
+type invoker<T> = T extends (...args: any[]) => Promise<any> ? T : never;
 
-type Sender<T> = T extends (...args: infer Args extends any[]) => infer R
+type sender<T> = T extends (...args: infer Args extends any[]) => infer R
 	? Utils.equal<R, void> extends true
 		? Args extends [(...args: any[]) => void]
 			? never
@@ -33,7 +45,7 @@ type Sender<T> = T extends (...args: infer Args extends any[]) => infer R
 		: never
 	: never;
 
-type Listener<T> = T extends (...args: infer Args extends any[]) => infer R
+type listener<T> = T extends (...args: infer Args extends any[]) => infer R
 	? Utils.equal<R, void> extends true
 		? Args extends [(...args: any[]) => void]
 			? T
@@ -41,128 +53,112 @@ type Listener<T> = T extends (...args: infer Args extends any[]) => infer R
 		: never
 	: never;
 
-type ExcludeNonFuncs<T> = T extends
-	| Record<string, unknown>
-	| Invoker<T>
-	| Sender<T>
-	| Listener<T>
-	? T
-	: never;
+type appendPrefix<
+	Str extends PropertyKey,
+	Prefix extends string
+> = Prefix extends '' ? Str : `${Prefix}${Capitalize<Str & string>}`;
 
-type AppendPrefix<T extends PropertyKey, S extends string> = S extends ''
-	? T
-	: `${S}${Capitalize<T & string>}`;
-
-type RemoveEmptyObjects<T extends Record<string, unknown>> = {
-	[k in keyof T as T[k] extends Record<string, never> ? never : k]: T[k];
-};
-
-type Render<
-	T extends Record<string, unknown>,
-	Prefix extends string = ''
+type flatIpcApi<
+	T = IpcApi,
+	Prefix extends string = '',
+	K extends keyof T = keyof T
 > = Utils.prettify<
-	RemoveEmptyObjects<{
-		[K in keyof T as T[K] extends ExcludeNonFuncs<T[K]>
-			? K
-			: never]: T[K] extends Record<string, unknown>
-			? Render<T[K], AppendPrefix<K, Prefix>>
-			: T[K] extends Invoker<T[K]>
-			? (
-					channel: AppendPrefix<K, Prefix>,
-					...args: Parameters<T[K]>
-			  ) => ReturnType<T[K]>
-			: T[K] extends Sender<T[K]>
-			? (channel: AppendPrefix<K, Prefix>, ...args: Parameters<T[K]>) => void
-			: T[K] extends Listener<T[K]>
-			? Parameters<T[K]> extends [
-					(...args: infer ListenerArgs extends any[]) => void
-			  ]
-				? (
-						channel: AppendPrefix<K, Prefix>,
-						listener: (
-							event: Electron.IpcRendererEvent,
-							...args: ListenerArgs
-						) => void
-				  ) => void
-				: never
-			: never;
-	}>
+	Utils.unionToIntersection<
+		K extends K
+			? T[K] extends Record<string, unknown>
+				? flatIpcApi<T[K], appendPrefix<K, Prefix>>
+				: { [k in K as appendPrefix<K, Prefix>]: T[k] }
+			: never
+	>
 >;
 
-export const renderer: Render<IpcApi> = {
-	app: {
-		closeApplication(channel) {
-			ipcRenderer.send(channel);
-		},
+type senderFlatApi = {
+	[k in keyof flatIpcApi as flatIpcApi[k] extends sender<flatIpcApi[k]>
+		? k
+		: never]: flatIpcApi[k];
+};
+
+type invokerFlatApi = {
+	[k in keyof flatIpcApi as flatIpcApi[k] extends invoker<flatIpcApi[k]>
+		? k
+		: never]: flatIpcApi[k];
+};
+
+type listenerFlatApi = {
+	[k in keyof flatIpcApi as flatIpcApi[k] extends listener<flatIpcApi[k]>
+		? k
+		: never]: flatIpcApi[k];
+};
+
+type renderListenerArgs<T extends keyof listenerFlatApi> = Parameters<
+	Parameters<listenerFlatApi[T]>[0]
+> extends infer args extends any[]
+	? args
+	: [];
+
+type IpcRenderer = {
+	send<T extends keyof senderFlatApi>(
+		channel: T,
+		...args: Parameters<senderFlatApi[T]>
+	): void;
+	invoke<T extends keyof invokerFlatApi>(
+		channel: T,
+		...args: Parameters<invokerFlatApi[T]>
+	): Promise<Awaited<ReturnType<invokerFlatApi[T]>>>;
+	on<
+		T extends keyof listenerFlatApi,
+		ListenerArgs extends any[] = renderListenerArgs<T>
+	>(
+		channel: T,
+		listener: (event: Electron.IpcRendererEvent, ...args: ListenerArgs) => void
+	): void;
+};
+
+export const ipcRenderer: IpcRenderer = {
+	send(channel, ...args) {
+		electronIpcRenderer.send(channel, ...args);
 	},
-	barCode: {
-		async connect(channel) {
-			return ipcRenderer.invoke(channel);
-		},
-		async disconnect(channel) {
-			return ipcRenderer.invoke(channel);
-		},
-		listen(channel, listener) {
-			return ipcRenderer.on(channel, listener);
-		},
+	async invoke(channel, ...args) {
+		return electronIpcRenderer.invoke(channel, ...args);
+	},
+	on(channel, listener) {
+		return electronIpcRenderer.on(channel, listener as never);
 	},
 };
 
-type Main<
-	T extends Record<string, unknown>,
-	Prefix extends string = ''
-> = Utils.prettify<
-	RemoveEmptyObjects<{
-		[K in keyof T as T[K] extends ExcludeNonFuncs<T[K]>
-			? K
-			: never]: T[K] extends Record<string, unknown>
-			? Main<T[K], AppendPrefix<K, Prefix>>
-			: T[K] extends Invoker<T[K]>
-			? (
-					channel: AppendPrefix<K, Prefix>,
-					callback: (
-						event: Electron.IpcMainInvokeEvent,
-						...args: Parameters<T[K]>
-					) => ReturnType<T[K]>
-			  ) => void
-			: T[K] extends Sender<T[K]>
-			? (
-					channel: AppendPrefix<K, Prefix>,
-					handler: (
-						event: Electron.IpcMainEvent,
-						...args: Parameters<T[K]>
-					) => void,
-					...args: Parameters<T[K]>
-			  ) => void
-			: T[K] extends Listener<T[K]>
-			? Parameters<T[K]> extends [
-					(...args: infer ListenerArgs extends any[]) => void
-			  ]
-				? (
-						channel: AppendPrefix<K, Prefix>,
-						window: BrowserWindow,
-						...args: ListenerArgs
-				  ) => void
-				: never
-			: never;
-	}>
->;
+type IpcMain = {
+	on<
+		T extends keyof senderFlatApi,
+		HandlerArgs extends any[] = Parameters<senderFlatApi[T]>
+	>(
+		channel: T,
+		handler: (event: Electron.IpcMainEvent, ...args: HandlerArgs) => void
+	): void;
+	handle<
+		T extends keyof invokerFlatApi,
+		CallbackArgs extends any[] = Parameters<invokerFlatApi[T]>
+	>(
+		channel: T,
+		callback: (
+			event: Electron.IpcMainInvokeEvent,
+			...args: CallbackArgs
+		) => Promise<Awaited<ReturnType<invokerFlatApi[T]>>>
+	): void;
+	send<T extends keyof listenerFlatApi>(
+		channel: T,
+		window: BrowserWindow,
+		...args: renderListenerArgs<T>
+	): void;
+};
 
-export const main: Main<IpcApi> = {
-	app: {
-		closeApplication(channel, handler, ...args) {
-			ipcMain.on(channel, (event) => handler(event, ...args));
-		},
+export const ipcMain: IpcMain = {
+	on(channel, handler) {
+		electronIpcMain.on(channel, handler as never);
 	},
-	barCode: {
-		connect(channel, callback) {
-			return ipcMain.handle(channel, callback);
-		},
-		disconnect(channel, callback) {
-			return ipcMain.handle(channel, callback);
-		},
-		listen(channel, window, ...args) {
-			window.webContents.send(channel, ...args);
-		},
+	handle(channel, callback) {
+		return electronIpcMain.handle(channel, callback as never);
+	},
+	send(channel, window, ...args) {
+		window.webContents.send(channel, ...args);
 	},
 };
