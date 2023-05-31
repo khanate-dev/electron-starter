@@ -4,57 +4,49 @@ import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 
+import { electronConfig } from '~/electron/electron.config';
+
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
 import type { ForgeConfig } from '@electron-forge/shared-types';
 
-const id = 'cbl-garment-tracking';
-const name = 'CBL Garment Tracking';
-const description = 'Garment Tracking Desktop Application For CBL';
-const icoIcon = './src/app/assets/favicon/icon.ico';
-const pngIcon = './src/app/assets/favicon.png';
-const repository = {
-	owner: 'WiMetrixDev',
-	name: 'cbl-garment-tracking',
-};
-
 const config: ForgeConfig = {
 	packagerConfig: {
-		icon: icoIcon,
-		name: id,
-		executableName: id,
+		icon: electronConfig.icoIcon,
+		name: electronConfig.id,
+		executableName: electronConfig.id,
 	},
 	rebuildConfig: {},
 	makers: [
 		new MakerSquirrel({
-			name: id,
-			description,
-			exe: name,
-			setupExe: id,
-			setupIcon: icoIcon,
+			name: electronConfig.id,
+			description: electronConfig.description,
+			exe: electronConfig.name,
+			setupExe: electronConfig.id,
+			setupIcon: electronConfig.icoIcon,
 		}),
 		new MakerZIP({}, ['darwin']),
 		new MakerRpm({
 			options: {
-				name: id,
-				icon: pngIcon,
+				name: electronConfig.id,
+				icon: electronConfig.pngIcon,
 				categories: ['Office', 'Utility'],
-				genericName: name,
-				description,
-				productName: name,
-				productDescription: description,
+				genericName: electronConfig.name,
+				description: electronConfig.description,
+				productName: electronConfig.name,
+				productDescription: electronConfig.description,
 			},
 		}),
 		new MakerDeb({
 			options: {
-				name: id,
-				icon: pngIcon,
+				name: electronConfig.id,
+				icon: electronConfig.pngIcon,
 				categories: ['Office', 'Utility'],
-				genericName: name,
-				description,
-				productName: name,
-				productDescription: description,
+				genericName: electronConfig.name,
+				description: electronConfig.description,
+				productName: electronConfig.name,
+				productDescription: electronConfig.description,
 				section: 'javascript',
 			},
 		}),
@@ -63,7 +55,7 @@ const config: ForgeConfig = {
 		{
 			name: '@electron-forge/publisher-github',
 			config: {
-				repository,
+				repository: electronConfig.repository,
 			},
 		},
 	],
@@ -83,9 +75,7 @@ const config: ForgeConfig = {
 					},
 				],
 			},
-			devContentSecurityPolicy: process.env.DEV
-				? undefined
-				: `default-src 'self' 'unsafe-inline' data:; script-src 'self'; connect-src http: https: ws:`,
+			devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self'; connect-src http: https: ws:`,
 		}),
 	],
 };

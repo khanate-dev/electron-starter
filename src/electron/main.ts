@@ -1,4 +1,3 @@
-import path from 'path';
 import { app, BrowserWindow } from 'electron';
 
 import installExtension, {
@@ -6,6 +5,7 @@ import installExtension, {
 } from 'electron-devtools-assembler';
 
 import { setupIpc } from './ipc';
+import { electronConfig } from './electron.config';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) app.quit();
@@ -18,17 +18,8 @@ const createWindow = () => {
 		minWidth: 700,
 		minHeight: 500,
 		resizable: true,
-		backgroundColor: '#F4F4FE',
 		autoHideMenuBar: true,
-		icon: path.join(
-			app.getAppPath(),
-			'src',
-			'app',
-			'assets',
-			'favicon',
-			'favicon.png'
-		),
-		title: 'Garment Tracking',
+		title: electronConfig.name,
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
