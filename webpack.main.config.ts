@@ -18,8 +18,8 @@ export const mainConfig: Configuration = {
 			'~': path.join(__dirname, 'src'),
 		},
 	},
-	// ! This is needed for webpack to not mess up `serialport`
+	// ? https://github.com/serialport/node-serialport/issues/2464#issuecomment-1516887882
 	externals: {
-		serialport: 'commonjs2 serialport',
+		serialport: 'serialport',
 	},
 };
