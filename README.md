@@ -4,14 +4,14 @@ React Electron desktop application for CBL Garment Tracking
 
 ## Building Blocks
 
-- Electron with Electron Forge
-- React
-- Typescript
-- React Router
-- Material UI 5
-- Formatting with prettier
-- Linting with eslint
-- npm for package management
+- `Electron` with `Electron Forge`
+- `React`
+- `Typescript`
+- `React Router`
+- `MUI 5`
+- Formatting with `Prettier`
+- Linting with `ESLint`
+- `npm` for package management
 
 ---
 
