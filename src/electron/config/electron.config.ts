@@ -9,4 +9,6 @@ export const electronConfig = {
 		owner: 'WiMetrixDev',
 		name: 'cbl-garment-tracking',
 	},
+	isDev: Boolean(process.env.DEV),
+	env: process.env.DEV ? 'development' : 'production',
 } as const;
