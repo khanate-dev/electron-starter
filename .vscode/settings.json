@@ -8,5 +8,5 @@
 		"**/Thumbs.db": true,
 		"dist/**/*": true
 	},
-	"cSpell.words": ["prebuilds"]
+	"cSpell.words": ["asar", "prebuilds"]
 }

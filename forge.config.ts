@@ -5,6 +5,7 @@ import { spawn } from 'child_process';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
+import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 
 import { electronConfig } from './src/electron/config';
 import { mainConfig } from './webpack.main.config';
@@ -17,6 +18,7 @@ const config: ForgeConfig = {
 		icon: electronConfig.icoIcon,
 		name: electronConfig.id,
 		executableName: electronConfig.id,
+		asar: true,
 	},
 	rebuildConfig: {},
 	makers: [
@@ -66,6 +68,7 @@ const config: ForgeConfig = {
 			},
 			devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data:; script-src 'self'; connect-src http: https: ws:`,
 		}),
+		new AutoUnpackNativesPlugin({}),
 	],
 	// ? https://github.com/serialport/node-serialport/issues/2464#issuecomment-1516887882
 	hooks: {
@@ -76,13 +79,13 @@ const config: ForgeConfig = {
 
 				fs.renameSync(oldPackageJson, newPackageJson);
 
-				const commands = [
+				const args = [
 					'install',
 					'--no-package-lock',
 					'--no-save',
 					'serialport',
 				];
-				const npmInstall = spawn('npm', commands, {
+				const npmInstall = spawn('npm', args, {
 					cwd: buildPath,
 					stdio: 'inherit',
 					shell: true,
