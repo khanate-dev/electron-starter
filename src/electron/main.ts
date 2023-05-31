@@ -30,18 +30,16 @@ const createWindow = () => {
 	// and load the index.html of the app.
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-	if (!app.isPackaged) {
+	if (electronConfig.isDev) {
 		installExtension(REACT_DEVELOPER_TOOLS)
 			.then(() => {
 				const win = BrowserWindow.getFocusedWindow();
-				if (win) {
-					win.webContents.on('did-frame-finish-load', () => {
-						win.webContents.once('devtools-opened', () => {
-							win.webContents.focus();
-						});
-						win.webContents.openDevTools({ mode: 'detach' });
+				win?.webContents.on('did-frame-finish-load', () => {
+					win.webContents.once('devtools-opened', () => {
+						win.webContents.focus();
 					});
-				}
+					win.webContents.openDevTools({ mode: 'detach' });
+				});
 			})
 			.catch((err) => {
 				console.warn('Could Not Load React DevTools:', err);
@@ -68,4 +66,21 @@ app.on('activate', () => {
 	// On OS X it's common to re-create a window in the app when the
 	// dock icon is clicked and there are no other windows open.
 	if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
+app.on('web-contents-created', (_, contents) => {
+	// ? https://www.electronjs.org/docs/latest/tutorial/security#12-verify-webview-options-before-creation
+	contents.on('will-attach-webview', (event) => {
+		event.preventDefault();
+	});
+
+	// ? https://www.electronjs.org/docs/latest/tutorial/security#13-disable-or-limit-navigation
+	contents.on('will-navigate', (event) => {
+		event.preventDefault();
+	});
+
+	// ? https://www.electronjs.org/docs/latest/tutorial/security#14-disable-or-limit-creation-of-new-windows
+	contents.setWindowOpenHandler(() => {
+		return { action: 'deny' };
+	});
 });
