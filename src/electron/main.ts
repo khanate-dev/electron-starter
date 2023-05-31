@@ -1,6 +1,10 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 
+import installExtension, {
+	REACT_DEVELOPER_TOOLS,
+} from 'electron-devtools-assembler';
+
 import { setupIpc } from './ipc';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -35,7 +39,23 @@ const createWindow = () => {
 	// and load the index.html of the app.
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-	if (!app.isPackaged) mainWindow.webContents.openDevTools({ mode: 'detach' });
+	if (!app.isPackaged) {
+		installExtension(REACT_DEVELOPER_TOOLS)
+			.then(() => {
+				const win = BrowserWindow.getFocusedWindow();
+				if (win) {
+					win.webContents.on('did-frame-finish-load', () => {
+						win.webContents.once('devtools-opened', () => {
+							win.webContents.focus();
+						});
+						win.webContents.openDevTools({ mode: 'detach' });
+					});
+				}
+			})
+			.catch((err) => {
+				console.warn('Could Not Load React DevTools:', err);
+			});
+	}
 
 	// Setup IPC handlers and listeners.
 	setupIpc(mainWindow);
