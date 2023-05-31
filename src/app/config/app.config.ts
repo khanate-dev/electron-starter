@@ -1,4 +1,4 @@
-export const environment = window.ipc.app.environment;
+export const environment = window.ipc.app.env;
 
 export const apiEndpoint = {
 	development: 'http://10.0.0.9:8888/api',

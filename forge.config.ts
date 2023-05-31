@@ -1,7 +1,5 @@
-import { MakerSquirrel } from '@electron-forge/maker-squirrel';
-import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
-import { MakerRpm } from '@electron-forge/maker-rpm';
+import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 
 import { electronConfig } from './src/electron/config';
@@ -24,18 +22,6 @@ const config: ForgeConfig = {
 			exe: electronConfig.name,
 			setupExe: electronConfig.id,
 			setupIcon: electronConfig.icoIcon,
-		}),
-		new MakerZIP({}, ['darwin']),
-		new MakerRpm({
-			options: {
-				name: electronConfig.id,
-				icon: electronConfig.pngIcon,
-				categories: ['Office', 'Utility'],
-				genericName: electronConfig.name,
-				description: electronConfig.description,
-				productName: electronConfig.name,
-				productDescription: electronConfig.description,
-			},
 		}),
 		new MakerDeb({
 			options: {
