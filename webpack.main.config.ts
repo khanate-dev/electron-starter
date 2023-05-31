@@ -19,5 +19,7 @@ export const mainConfig: Configuration = {
 		},
 	},
 	// ! This is needed for webpack to not mess up `serialport`
-	externals: 'serialport',
+	externals: {
+		serialport: 'commonjs2 serialport',
+	},
 };
