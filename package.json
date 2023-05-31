@@ -61,6 +61,7 @@
 		"@vitest/ui": "^0.31.1",
 		"css-loader": "^6.8.1",
 		"electron": "^25.0.0",
+		"electron-devtools-assembler": "^1.2.0",
 		"electron-icon-builder": "^2.0.1",
 		"eslint": "^8.0.1",
 		"eslint-config-prettier": "^8.8.0",
