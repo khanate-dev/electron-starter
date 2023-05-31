@@ -4,13 +4,12 @@ import {
 	ipcMain as electronIpcMain,
 } from 'electron';
 
-import type { BrowserWindow } from 'electron';
+import type { BrowserWindow, App } from 'electron';
 import type { Utils } from '~/shared/types/utils';
 
 export type IpcApi = {
-	app: {
-		environment: 'development' | 'production';
-		closeApplication: () => void;
+	app: Pick<App, 'exit'> & {
+		env: 'development' | 'production';
 	};
 	barCode: {
 		connect: () => Promise<void>;
@@ -151,12 +150,27 @@ type IpcMain = {
 	): void;
 };
 
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
+
+// ? https://www.electronjs.org/docs/latest/tutorial/security#17-validate-the-sender-of-all-ipc-messages
+const validateSender = (
+	event: Electron.IpcMainEvent | Electron.IpcMainInvokeEvent
+): boolean => {
+	return event.senderFrame.url === MAIN_WINDOW_WEBPACK_ENTRY;
+};
+
 export const ipcMain: IpcMain = {
 	on(channel, handler) {
-		electronIpcMain.on(channel, handler as never);
+		electronIpcMain.on(channel, (event, ...args) => {
+			if (!validateSender(event)) return;
+			handler(event, ...(args as never));
+		});
 	},
 	handle(channel, callback) {
-		return electronIpcMain.handle(channel, callback as never);
+		return electronIpcMain.handle(channel, (event, ...args) => {
+			if (!validateSender(event)) return;
+			callback(event, ...(args as never));
+		});
 	},
 	send(channel, window, ...args) {
 		window.webContents.send(channel, ...args);

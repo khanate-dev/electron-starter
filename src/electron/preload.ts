@@ -2,13 +2,15 @@ import { contextBridge } from 'electron';
 
 import { ipcApiKey, ipcRenderer } from '~/shared/ipc-spec';
 
+import { electronConfig } from './config';
+
 import type { IpcApi } from '~/shared/ipc-spec';
 
 const ipcApi: IpcApi = {
 	app: {
-		environment: process.env.DEV ? 'development' : 'production',
-		closeApplication() {
-			ipcRenderer.send('appCloseApplication');
+		env: electronConfig.env,
+		exit() {
+			ipcRenderer.send('appExit');
 		},
 	},
 	barCode: {

@@ -21,7 +21,7 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	});
 	reader.open();
 
-	ipcMain.on('appCloseApplication', () => app.exit());
+	ipcMain.on('appExit', (_, exitCode) => app.exit(exitCode));
 
 	ipcMain.handle('barCodeConnect', async () => {
 		if (reader.isPaused()) {
