@@ -25,5 +25,5 @@ export const rendererConfig: Configuration = {
 			'~': path.join(__dirname, 'src'),
 		},
 	},
-	devtool: 'source-map',
+	devtool: 'inline-source-map',
 };
