@@ -167,9 +167,13 @@ export const ipcMain: IpcMain = {
 		});
 	},
 	handle(channel, callback) {
-		return electronIpcMain.handle(channel, (event, ...args) => {
-			if (!validateSender(event)) return;
-			callback(event, ...(args as never));
+		electronIpcMain.handle(channel, async (event, ...args) => {
+			if (!validateSender(event)) {
+				throw new Error(
+					'Unauthorized! Invocations are limited to the main_window'
+				);
+			}
+			return callback(event, ...(args as never));
 		});
 	},
 	send(channel, window, ...args) {

@@ -50,7 +50,7 @@ export const Example = () => {
 		});
 
 		return () => {
-			window.ipc.barCode.disconnect();
+			window.ipc.barCode.disconnect().catch(() => false);
 		};
 	}, []);
 

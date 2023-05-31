@@ -19,17 +19,16 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 		autoOpen: false,
 		baudRate: 9600,
 	});
-	reader.open();
 
 	ipcMain.on('appExit', (_, exitCode) => app.exit(exitCode));
 
 	ipcMain.handle('barCodeConnect', async () => {
-		if (reader.isPaused()) {
-			reader.resume();
-			return;
-		}
-		if (reader.isOpen || reader.opening) return;
 		return new Promise<void>((resolve, reject) => {
+			if (reader.isPaused()) {
+				reader.resume();
+				return;
+			}
+			if (reader.isOpen || reader.opening) return;
 			reader.open((error) => {
 				error ? reject(error) : resolve();
 			});
@@ -37,8 +36,8 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	});
 
 	ipcMain.handle('barCodeDisconnect', async () => {
-		if (!reader.isOpen || reader.closing) return;
 		return new Promise<void>((resolve, reject) => {
+			if (!reader.isOpen || reader.closing) return;
 			reader.close((error) => {
 				error ? reject(error) : resolve();
 			});
