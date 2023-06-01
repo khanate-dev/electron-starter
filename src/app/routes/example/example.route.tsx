@@ -15,6 +15,7 @@ import { ThemeSwitch } from '~/app/components/controls/theme-switch';
 import { LOGIN_HEADER_HEIGHT } from '~/app/config';
 import { dayjsUtc } from '~/shared/helpers/date';
 import { getCatchMessage } from '~/shared/errors';
+import { CustomButton } from '~/app/components/controls/custom-button';
 
 const headerLogoSx = {
 	width: 'auto',
@@ -29,6 +30,7 @@ export const Example = () => {
 		| { type: 'connecting' }
 		| { type: 'connected'; reading?: { at: string; data: number } }
 	>({ type: 'connecting' });
+	const [counter, setCounter] = useState(0);
 
 	useEffect(() => {
 		window.ipc.barCode
@@ -177,6 +179,11 @@ export const Example = () => {
 							<code>{val.message}</code>
 						</Typography>
 					)}
+
+					<CustomButton
+						label={`Click Me! ${counter}`}
+						onClick={() => setCounter(counter + 1)}
+					/>
 
 					<WiMetrixLogo
 						width={150}
