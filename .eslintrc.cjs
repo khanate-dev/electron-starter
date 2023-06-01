@@ -1,3 +1,8 @@
+const noParentImport = {
+	group: ['../*'],
+	message: 'Do not use parent imports',
+};
+
 /** @type {import('eslint').Linter.Config} */
 const config = {
 	env: {
@@ -58,12 +63,7 @@ const config = {
 		'no-restricted-imports': [
 			'warn',
 			{
-				patterns: [
-					{
-						group: ['../*'],
-						message: 'Do not use parent imports',
-					},
-				],
+				patterns: [noParentImport],
 			},
 		],
 		'no-restricted-syntax': [
@@ -294,13 +294,14 @@ const config = {
 					'warn',
 					{
 						patterns: [
-							{
-								group: ['../*'],
-								message: 'Do not use parent imports',
-							},
+							noParentImport,
 							{
 								group: ['~/electron/*'],
-								message: 'Do not use electron modules in app',
+								message: 'Do not use electron modules in renderer',
+							},
+							{
+								group: ['electron/*', 'serialport/*'],
+								message: 'Not available in the renderer',
 							},
 						],
 					},
@@ -314,13 +315,17 @@ const config = {
 					'warn',
 					{
 						patterns: [
-							{
-								group: ['../*'],
-								message: 'Do not use parent imports',
-							},
+							noParentImport,
 							{
 								group: ['~/app/*'],
 								message: 'Do not use app modules in electron',
+							},
+						],
+						paths: [
+							{
+								name: 'electron',
+								importNames: ['ipcRenderer', 'ipcMain'],
+								message: 'Please import ipc helper from `~/shared/ipc-spec`.',
 							},
 						],
 					},
