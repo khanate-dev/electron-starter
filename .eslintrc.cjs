@@ -291,7 +291,7 @@ const config = {
 			rules: {
 				'import/no-nodejs-modules': 'error',
 				'no-restricted-imports': [
-					'warn',
+					'error',
 					{
 						patterns: [
 							noParentImport,
@@ -312,7 +312,7 @@ const config = {
 			files: ['./src/electron/**/*'],
 			rules: {
 				'no-restricted-imports': [
-					'warn',
+					'error',
 					{
 						patterns: [
 							noParentImport,
