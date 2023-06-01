@@ -23,7 +23,10 @@ const createWindow = () => {
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
+			sandbox: true,
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+			// ? https://github.com/doyensec/electronegativity/wiki/AUXCLICK_JS_CHECK
+			disableBlinkFeatures: 'Auxclick',
 		},
 	});
 
@@ -45,6 +48,14 @@ const createWindow = () => {
 				console.warn('Could Not Load React DevTools:', err);
 			});
 	}
+
+	// ? https://github.com/doyensec/electronegativity/wiki/PERMISSION_REQUEST_HANDLER_GLOBAL_CHECK
+	mainWindow.webContents.session.setPermissionRequestHandler(
+		(_, permission, callback) => {
+			const allowed: (typeof permission)[] = ['clipboard-read', 'fullscreen'];
+			callback(allowed.includes(permission));
+		}
+	);
 
 	// Setup IPC handlers and listeners.
 	setupIpc(mainWindow);
