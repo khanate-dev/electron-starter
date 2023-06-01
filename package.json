@@ -14,9 +14,6 @@
 		"typecheck": "vitest typecheck",
 		"lint": "eslint . --fix",
 		"format": "prettier --write .",
-		"eslint": "eslint",
-		"prettier": "prettier",
-		"tsc": "tsc",
 		"generate-icons": "tsx ./scripts/generate-icons.ts",
 		"generate-favicons": "electron-icon-builder --input=./src/app/assets/favicon/favicon.png --output=./src/app/assets/favicon",
 		"audit": "electronegativity -i ./"
