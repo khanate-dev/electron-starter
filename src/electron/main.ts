@@ -86,8 +86,8 @@ app.on('web-contents-created', (_, contents) => {
 	});
 
 	// ? https://www.electronjs.org/docs/latest/tutorial/security#13-disable-or-limit-navigation
-	contents.on('will-navigate', (event) => {
-		event.preventDefault();
+	contents.on('will-navigate', (event, url) => {
+		if (url !== MAIN_WINDOW_WEBPACK_ENTRY) event.preventDefault();
 	});
 
 	// ? https://www.electronjs.org/docs/latest/tutorial/security#14-disable-or-limit-creation-of-new-windows
