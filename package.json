@@ -18,7 +18,8 @@
 		"prettier": "prettier",
 		"tsc": "tsc",
 		"generate-icons": "tsx ./scripts/generate-icons.ts",
-		"generate-favicons": "electron-icon-builder --input=./src/app/assets/favicon/favicon.png --output=./src/app/assets/favicon"
+		"generate-favicons": "electron-icon-builder --input=./src/app/assets/favicon/favicon.png --output=./src/app/assets/favicon",
+		"audit": "electronegativity -i ./"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.0",
@@ -36,6 +37,7 @@
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {
+		"@doyensec/electronegativity": "^1.10.3",
 		"@electron-forge/cli": "^6.1.1",
 		"@electron-forge/maker-deb": "^6.1.1",
 		"@electron-forge/maker-rpm": "^6.1.1",
