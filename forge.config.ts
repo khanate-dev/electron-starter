@@ -6,6 +6,7 @@ import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
+import { PublisherGithub } from '@electron-forge/publisher-github';
 
 import { electronConfig } from './src/electron/config';
 import { mainConfig } from './webpack.main.config';
@@ -43,12 +44,9 @@ const config: ForgeConfig = {
 		}),
 	],
 	publishers: [
-		{
-			name: '@electron-forge/publisher-github',
-			config: {
-				repository: electronConfig.repository,
-			},
-		},
+		new PublisherGithub({
+			repository: electronConfig.repository,
+		}),
 	],
 	plugins: [
 		new WebpackPlugin({
