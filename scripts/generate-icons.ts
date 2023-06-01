@@ -105,11 +105,11 @@ const generateIcons = async (folder?: string) => {
 		console.info(
 			`${colors.blue}Linting generated components...${colors.reset}`
 		);
-		spawnSync('npm', ['run', 'eslint', targetFolder, '--', '--fix']);
+		spawnSync('pnpm', ['eslint', targetFolder, '--fix']);
 		console.info(
 			`${colors.blue}Prettifying generated components...${colors.reset}`
 		);
-		spawnSync('npm', ['run', 'prettier', targetFolder, '--', '--write']);
+		spawnSync('pnpm', ['prettier', targetFolder, '--write']);
 	});
 };
 

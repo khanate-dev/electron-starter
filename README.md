@@ -11,7 +11,7 @@ React Electron desktop application for CBL Garment Tracking
 - `MUI 5`
 - Formatting with `Prettier`
 - Linting with `ESLint`
-- `npm` for package management
+- `pnpm` for package management
 
 ---
 
