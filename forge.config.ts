@@ -50,6 +50,7 @@ const config: ForgeConfig = {
 	],
 	plugins: [
 		new WebpackPlugin({
+			devServer: { liveReload: false },
 			mainConfig,
 			renderer: {
 				config: rendererConfig,
@@ -60,6 +61,10 @@ const config: ForgeConfig = {
 						name: 'main_window',
 						preload: {
 							js: './src/electron/preload.ts',
+							config: {
+								...rendererConfig,
+								plugins: [],
+							},
 						},
 					},
 				],

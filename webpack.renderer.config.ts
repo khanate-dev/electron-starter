@@ -1,4 +1,3 @@
-/* eslint-disable require-unicode-regexp */
 import path from 'path';
 
 import { rules } from './webpack.rules';
@@ -7,12 +6,12 @@ import { plugins } from './webpack.plugins';
 import type { Configuration } from 'webpack';
 
 rules.push({
-	test: /\.css$/,
+	test: /\.css$/u,
 	use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
 });
 
 rules.push({
-	test: /\.(woff|woff2|eot|ttf|otf|png)$/i,
+	test: /\.(woff|woff2|eot|ttf|otf|png)$/iu,
 	type: 'asset/resource',
 });
 
