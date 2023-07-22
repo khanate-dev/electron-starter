@@ -1,3 +1,4 @@
+import { Cancel as CancelIcon } from '@mui/icons-material';
 import {
 	Dialog,
 	DialogActions,
@@ -5,37 +6,35 @@ import {
 	DialogTitle,
 	Typography,
 } from '@mui/material';
-import { Cancel as CancelIcon } from '@mui/icons-material';
 
-import { csx } from '~/app/helpers/style';
 import { CustomButton } from '~/app/components/controls/custom-button';
+import { csx } from '~/app/helpers/style';
 
 import { getGeneralDialogStyles } from './general-dialog.styles';
 
 import type { DialogProps } from '@mui/material';
+import type { ReactNode } from 'react';
 import type { FullButtonProps } from '~/app/components/controls/custom-button';
+import type { Mui } from '~/app/types/mui';
 
 export type GeneralDialogAction = FullButtonProps;
 
-export type GeneralDialogProps = {
-	children: React.Node;
-
-	/** the styles to pass to the Dialog container */
-	sx?: Mui.SxProp;
+export type GeneralDialogProps = Mui.propsWithSx<{
+	children: ReactNode;
 
 	/** the accent color for the dialog. used for default color for header and buttons */
 	accent?: 'primary' | 'secondary' | 'error' | 'success' | 'info' | 'warning';
 
 	/** the styles to apply to the dialog components */
 	styles?: Partial<
-		Record<'container' | 'title' | 'content' | 'actions', Mui.SxProp>
+		Record<'container' | 'title' | 'content' | 'actions', Mui.sxProp>
 	>;
 
 	/** the callback function when the dialog closes */
 	onClose: () => void;
 
 	/** the title to show on the dialog header */
-	title: React.Node;
+	title: ReactNode;
 
 	/** the actions to show for the dialog */
 	actions?: GeneralDialogAction[];
@@ -54,7 +53,7 @@ export type GeneralDialogProps = {
 
 	/** should the dialog have a close action button? */
 	hasCloseAction?: boolean;
-};
+}>;
 
 export const GeneralDialog = ({
 	children,

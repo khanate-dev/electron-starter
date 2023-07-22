@@ -4,10 +4,9 @@ import { csx } from '~/app/helpers/style';
 
 import { getWiMetrixLogoStyles } from './wimetrix-logo.styles';
 
-export type WiMetrixLogoProps = {
-	/** the styles to apply to the SVG element */
-	sx?: Mui.SxProp;
+import type { Mui } from '~/app/types/mui';
 
+export type WiMetrixLogoProps = Mui.propsWithSx<{
 	/** the logo's background. @default 'light' */
 	background?: 'light' | 'dark';
 
@@ -28,7 +27,7 @@ export type WiMetrixLogoProps = {
 
 	/** should the powered by heading be shown? */
 	showPoweredBy?: boolean;
-};
+}>;
 
 export const WiMetrixLogo = ({
 	sx,

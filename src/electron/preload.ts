@@ -21,7 +21,7 @@ const ipcApi: IpcApi = {
 			return ipcRenderer.invoke('barCodeDisconnect');
 		},
 		listen(callback) {
-			ipcRenderer.on('barCodeListen', (_event, value) => callback(value));
+			ipcRenderer.on('barCodeListen', (_event, value) => { callback(value); });
 		},
 	},
 };

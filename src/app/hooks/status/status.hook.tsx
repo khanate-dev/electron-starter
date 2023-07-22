@@ -6,6 +6,8 @@ import { csx } from '~/app/helpers/style';
 import { getCatchMessage } from '~/shared/errors';
 import { createGroupedOptionalSchema } from '~/shared/helpers/schema';
 
+import type { Mui } from '~/app/types/mui';
+
 const hiddenStatusTypes = ['idle', 'submitting', 'loading'] as const;
 type HiddenStatusType = (typeof hiddenStatusTypes)[number];
 
@@ -31,7 +33,7 @@ const statusActionSchema = z
 		z.strictObject({
 			type: z.literal('error'),
 			message: z.unknown(),
-		})
+		}),
 	)
 	.or(
 		z
@@ -46,9 +48,9 @@ const statusActionSchema = z
 						ephemeral: z.boolean(),
 						/** the duration of the message. @default `2500ms` */
 						duration: z.number().optional(),
-					})
-				)
-			)
+					}),
+				),
+			),
 	);
 
 export type StatusAction = z.infer<typeof statusActionSchema>;
@@ -74,13 +76,10 @@ export const isStatusAction = (value: unknown): value is StatusAction => {
 	return statusActionSchema.safeParse(value).success;
 };
 
-type StatusParams = {
-	/** the styles to apply to the alert */
-	sx?: Mui.SxProp;
-
+type StatusParams = Mui.propsWithSx<{
 	/** the key to add to the status. @default `status-hook-jsx` */
 	key?: string;
-};
+}>;
 
 export const useStatus = (params?: StatusParams) => {
 	const [status, dispatch] = useReducer(reducer, { type: 'idle' });
@@ -89,8 +88,11 @@ export const useStatus = (params?: StatusParams) => {
 	const isBusy = status.type === 'loading' || status.type === 'submitting';
 
 	const updateStatus = (value: StatusAction) => {
-		if (value.type !== 'error' && !isHiddenStatus(value) && value.ephemeral)
-			setTimeout(() => dispatch({ type: 'idle' }), value.duration ?? 2500);
+		if (value.type !== 'error' && !isHiddenStatus(value) && value.ephemeral) {
+			setTimeout(() => {
+				dispatch({ type: 'idle' });
+			}, value.duration ?? 2500);
+		}
 
 		dispatch(value);
 	};
@@ -106,7 +108,7 @@ export const useStatus = (params?: StatusParams) => {
 	const asyncWrapper =
 		<Params extends any[]>(
 			type: 'load' | 'submit',
-			asyncFunction: (...args: Params) => Promise<StatusAction | string | void>
+			asyncFunction: (...args: Params) => Promise<StatusAction | string | void>,
 		) =>
 		async (...args: Params): Promise<void> => {
 			updateStatus({ type: type === 'load' ? 'loading' : 'submitting' });
@@ -145,7 +147,9 @@ export const useStatus = (params?: StatusParams) => {
 				message={isShowing ? status.message : null}
 				severity={isShowing ? status.type : 'error'}
 				hidden={!isShowing}
-				onClose={() => dispatch({ type: 'idle' })}
+				onClose={() => {
+					dispatch({ type: 'idle' });
+				}}
 			/>
 		),
 		asyncWrapper,

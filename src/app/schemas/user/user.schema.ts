@@ -1,12 +1,14 @@
 import { z } from 'zod';
 
+import { USER_TYPES } from '~/app/config';
+import { FormSchema, ViewSchema } from '~/app/schemas';
 import {
 	createZodDbSchema,
 	dbIdSchema,
 	imageUpdatedAtSchema,
 } from '~/shared/helpers/schema';
-import { FormSchema, ViewSchema } from '~/app/schemas';
-import { USER_TYPES } from '~/app/config';
+
+import type { App } from '~/app/types/app';
 
 export type UserType = (typeof USER_TYPES)[number];
 
@@ -23,7 +25,7 @@ export const [userSansMetaZodSchema, userZodSchema] = createZodDbSchema(
 		userType: z.enum(USER_TYPES),
 		imageUpdatedAt: imageUpdatedAtSchema,
 	},
-	'userID'
+	'userID',
 );
 
 export type UserSansMeta = z.infer<typeof userSansMetaZodSchema>;
@@ -39,8 +41,8 @@ export type UserSansPassword = z.infer<typeof userSansPasswordZodSchema>;
 export const getUserLabel = (val: User) => val.userName;
 
 export const getUserDropdownOptions = (
-	list: User[]
-): App.DropdownOption<App.DbId>[] => {
+	list: User[],
+): App.dropdownOption<App.dbId>[] => {
 	return list.map((row) => ({
 		value: row.userID,
 		label: getUserLabel(row),

@@ -1,16 +1,17 @@
 import type { Theme } from '@mui/material';
+import type { Mui } from '~/app/types/mui';
 import type { WiMetrixLogoProps } from './wimetrix-logo.component';
 
 const getColor = (
 	theme: Theme,
-	color: Exclude<WiMetrixLogoProps['color'], undefined>
+	color: Exclude<WiMetrixLogoProps['color'], undefined>,
 ) =>
 	({
 		primary: theme.palette.wimetrixPrimary.main,
 		secondary: theme.palette.wimetrixSecondary.main,
 		white: theme.palette.common.white,
 		black: theme.palette.common.black,
-	}[color]);
+	})[color];
 
 export const getWiMetrixLogoStyles = ({
 	width,
@@ -31,5 +32,5 @@ export const getWiMetrixLogoStyles = ({
 		secondary: {
 			fill: (theme) => getColor(theme, secondary),
 		},
-	} satisfies Mui.SxStyleObj;
+	} satisfies Mui.sxStyleObj;
 };

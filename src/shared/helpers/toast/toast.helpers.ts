@@ -28,4 +28,4 @@ export const promiseToast = (
 	});
 };
 
-export const removeToast = (id: string) => toast.dismiss(id);
+export const removeToast = (id: string) => { toast.dismiss(id); };

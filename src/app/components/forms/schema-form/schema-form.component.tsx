@@ -1,18 +1,19 @@
-import { useState, useReducer } from 'react';
 import { Box, Stack } from '@mui/material';
 import { isDayjs } from 'dayjs';
+import { useReducer, useState } from 'react';
 
-import { useStatus } from '~/app/hooks/status';
-import { csx } from '~/app/helpers/style';
-import { getImageUrl } from '~/app/helpers/image';
+import { CustomButton } from '~/app/components/controls/custom-button';
 import { FormField } from '~/app/components/forms/form-field';
 import { FormImage } from '~/app/components/forms/form-image';
-import { CustomButton } from '~/app/components/controls/custom-button';
+import { getImageUrl } from '~/app/helpers/image';
+import { csx } from '~/app/helpers/style';
+import { useStatus } from '~/app/hooks/status';
 
 import { formPageStyles as styles } from './schema-form.styles';
 
-import type { FormEventHandler } from 'react';
+import type { TextFieldProps } from '@mui/material';
 import type { Dayjs } from 'dayjs';
+import type { FormEventHandler, ReactNode } from 'react';
 import type { z } from 'zod';
 import type { FieldAction } from '~/app/components/app/field-actions';
 import type {
@@ -22,7 +23,7 @@ import type {
 	FormSchemaField,
 	FormSchemaLists,
 } from '~/app/schemas';
-import type { TextFieldProps } from '@mui/material';
+import type { Mui } from '~/app/types/mui';
 
 type AgnosticSchemaFormProps<
 	Zod extends z.ZodObject<Record<string, FormFieldZodType>, 'strict'>,
@@ -38,13 +39,10 @@ type AgnosticSchemaFormProps<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
-> = {
+	},
+> = Mui.propsWithSx<{
 	/** the schema to use */
 	schema: FormSchema<Zod, Keys, WorkingObj, Fields>;
-
-	/** the styles to apply to the form container */
-	sx?: Mui.SxProp;
 
 	/** the id to use for the form element */
 	formId?: string;
@@ -53,7 +51,7 @@ type AgnosticSchemaFormProps<
 	fieldSize?: TextFieldProps['size'];
 
 	/** the label to show on the submit button */
-	submitLabel?: React.Node;
+	submitLabel?: ReactNode;
 
 	/** the actions to show on form fields */
 	actions?: Partial<Record<Keys, FieldAction[]>>;
@@ -62,7 +60,7 @@ type AgnosticSchemaFormProps<
 	onCancel?: () => void;
 
 	/** the callback for form submission. returning a string from the promise will show it as a success message. */
-	onSubmit: (formData: FormData) => Promise<void | string>;
+	onSubmit: (formData: FormData) => Promise<void | undefined | string>;
 
 	/** is the current form for updation? */
 	isUpdate: boolean;
@@ -72,7 +70,7 @@ type AgnosticSchemaFormProps<
 
 	/** should the form be disabled? */
 	disabled?: boolean;
-};
+}>;
 
 export type AddSchemaFormProps<
 	Zod extends z.ZodObject<Record<string, FormFieldZodType>, 'strict'>,
@@ -88,7 +86,7 @@ export type AddSchemaFormProps<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 > = AgnosticSchemaFormProps<Zod, Keys, WorkingObj, Fields> & {
 	/** is the current form for updation? */
 	isUpdate: false;
@@ -114,7 +112,7 @@ export type UpdateSchemaFormProps<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 > = AgnosticSchemaFormProps<Zod, Keys, WorkingObj, Fields> & {
 	/** is the current form for updation? */
 	isUpdate: true;
@@ -149,7 +147,7 @@ export type SchemaFormProps<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 > =
 	| UpdateSchemaFormProps<Zod, Keys, WorkingObj, Fields>
 	| AddSchemaFormProps<Zod, Keys, WorkingObj, Fields>;
@@ -176,7 +174,7 @@ export const SchemaForm = <
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 >({
 	schema,
 	sx,
@@ -206,7 +204,7 @@ export const SchemaForm = <
 			const { key: field, value } = action;
 			return { ...state, [field]: value };
 		},
-		schema.defaultZod.parse(defaultValues ?? {}) as WorkingObj
+		schema.defaultZod.parse(defaultValues ?? {}) as WorkingObj,
 	);
 	const [image, setImage] = useState<null | File>(null);
 
@@ -231,7 +229,7 @@ export const SchemaForm = <
 				const value = field.zod.parse(form[field.name]) as string;
 				formData.append(
 					field.name.toString(),
-					isDayjs(value) ? value.toISOString() : value
+					isDayjs(value) ? value.toISOString() : value,
 				);
 			}
 
@@ -243,7 +241,7 @@ export const SchemaForm = <
 			dispatch({ type: 'reset' });
 			setImage(null);
 			return message;
-		}
+		},
 	);
 
 	return (
@@ -263,7 +261,9 @@ export const SchemaForm = <
 							: undefined
 					}
 					onChange={setImage}
-					onError={(message) => updateStatus({ type: 'error', message })}
+					onError={(message) => {
+						updateStatus({ type: 'error', message });
+					}}
 				/>
 			)}
 
@@ -277,14 +277,15 @@ export const SchemaForm = <
 							size={fieldSize}
 							disabled={disabled}
 							actions={actions?.[field.name]}
-							options={(lists?.[field.name] ?? []) as never}
-							onChange={(value) =>
+							// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+							options={(lists?.[field.name as never] as never) ?? []}
+							onChange={(value) => {
 								dispatch({
 									type: 'update',
 									key: field.name,
 									value: value as WorkingObj[keyof WorkingObj],
-								})
-							}
+								});
+							}}
 						/>
 					))}
 				</Box>

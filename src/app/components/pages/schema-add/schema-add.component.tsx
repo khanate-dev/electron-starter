@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { PageContainer } from '~/app/components/containers/page-container';
 import { SchemaForm } from '~/app/components/forms/schema-form';
 
+import type { z } from 'zod';
 import type { AddSchemaFormProps } from '~/app/components/forms/schema-form';
 import type {
 	BaseSelectionType,
 	FormFieldZodType,
 	FormSchemaField,
 } from '~/app/schemas';
-import type { z } from 'zod';
 
 export type SchemaAddProps<
 	Zod extends z.ZodObject<Record<string, FormFieldZodType>, 'strict'>,
@@ -25,10 +25,10 @@ export type SchemaAddProps<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 > = {
 	/** the endpoint functions to use */
-	endpoint: (body: FormData) => Promise<void>;
+	endpoint: (body: FormData) => Promise<unknown>;
 } & Pick<
 	AddSchemaFormProps<Zod, Keys, WorkingObj, Fields>,
 	| 'schema'
@@ -56,9 +56,9 @@ export const SchemaAdd = <
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 >(
-	props: SchemaAddProps<Zod, Keys, WorkingObj, Fields>
+	props: SchemaAddProps<Zod, Keys, WorkingObj, Fields>,
 ) => {
 	const navigate = useNavigate();
 
@@ -70,10 +70,12 @@ export const SchemaAdd = <
 			<SchemaForm
 				{...props}
 				isUpdate={false}
-				onCancel={() => navigate(-1)}
+				onCancel={() => {
+					navigate(-1);
+				}}
 				onSubmit={async (data) => {
 					await props.endpoint(data);
-					return navigate(-1);
+					navigate(-1);
 				}}
 			/>
 		</PageContainer>

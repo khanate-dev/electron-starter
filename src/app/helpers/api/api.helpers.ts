@@ -1,15 +1,15 @@
 import { z } from 'zod';
 
 import { disableAuth, isFetchMocked } from '~/app/config';
+import { logout } from '~/app/contexts/auth';
 import { getSetting } from '~/app/helpers/settings';
-import { dbDataSorter } from '~/shared/helpers/schema';
 import {
 	ApiError,
 	AuthError,
 	ConnectionError,
 	getCatchMessage,
 } from '~/shared/errors';
-import { logout } from '~/app/contexts/user';
+import { dbDataSorter } from '~/shared/helpers/schema';
 
 import type { timestampSchema } from '~/shared/helpers/schema';
 import type { Utils } from '~/shared/types/utils';
@@ -31,7 +31,7 @@ const apiRequest = async <Response = unknown>(
 	apiPath: string,
 	method: 'GET' | 'PATCH' | 'PUT' | 'POST' | 'DELETE',
 	body?: Obj | Obj[] | FormData,
-	isPublic: boolean = false
+	isPublic: boolean = false,
 ): Promise<Response> => {
 	try {
 		if (!isFetchMocked && !navigator.onLine)
@@ -87,7 +87,7 @@ export const getRequest = async <Schema extends z.ZodSchema = z.ZodUnknown>(
 		shouldSort?: z.infer<Schema> extends z.infer<typeof timestampSchema>[]
 			? boolean
 			: undefined;
-	}
+	},
 ): Promise<z.infer<Schema>> => {
 	const response = apiRequest(apiPath, 'GET', undefined, options?.isPublic);
 	if (!options?.schema) return response;
@@ -107,10 +107,10 @@ export const getRequest = async <Schema extends z.ZodSchema = z.ZodUnknown>(
  * @param body the body of the request
  * @param isPublic is the request to a public endpoint? auth header will be excluded if true
  */
-export const patchRequest = async <Response = void>(
+export const patchRequest = async <Response = unknown>(
 	apiPath: string,
 	body: Obj | FormData,
-	isPublic?: boolean
+	isPublic?: boolean,
 ) => apiRequest<Response>(apiPath, 'PATCH', body, isPublic);
 
 /**
@@ -119,10 +119,10 @@ export const patchRequest = async <Response = void>(
  * @param body the body of the request
  * @param isPublic is the request to a public endpoint? auth header will be excluded if true
  */
-export const putRequest = async <Response = void>(
+export const putRequest = async <Response = unknown>(
 	apiPath: string,
 	body: Obj | FormData,
-	isPublic?: boolean
+	isPublic?: boolean,
 ) => apiRequest<Response>(apiPath, 'PUT', body, isPublic);
 
 /**
@@ -131,10 +131,10 @@ export const putRequest = async <Response = void>(
  * @param body the body of the request
  * @param isPublic is the request to a public endpoint? auth header will be excluded if true
  */
-export const postRequest = async <Response = void>(
+export const postRequest = async <Response = unknown>(
 	apiPath: string,
 	body: Obj | Obj[] | FormData,
-	isPublic?: boolean
+	isPublic?: boolean,
 ) => apiRequest<Response>(apiPath, 'POST', body, isPublic);
 
 export type BulkResponse<Type extends Obj = Obj> = {
@@ -151,7 +151,7 @@ export type BulkResponse<Type extends Obj = Obj> = {
 export const bulkPostRequest = async <Type extends Obj>(
 	apiPath: string,
 	requests: Type[],
-	isPublic?: boolean
+	isPublic?: boolean,
 ) => {
 	const response: BulkResponse<Type> = {
 		successful: [],
@@ -165,9 +165,9 @@ export const bulkPostRequest = async <Type extends Obj>(
 					response.failed.push({
 						...row,
 						error: getCatchMessage(error),
-					})
+					}),
 				);
-		})
+		}),
 	);
 	return response;
 };
@@ -177,7 +177,7 @@ export const bulkPostRequest = async <Type extends Obj>(
  * @param apiPath the path of the api request
  * @param isPublic is the request to a public endpoint? auth header will be excluded if true
  */
-export const deleteRequest = async <Response = void>(
+export const deleteRequest = async <Response = unknown>(
 	apiPath: string,
-	isPublic?: boolean
+	isPublic?: boolean,
 ) => apiRequest<Response>(apiPath, 'DELETE', undefined, isPublic);

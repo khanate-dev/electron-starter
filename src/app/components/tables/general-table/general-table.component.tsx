@@ -134,7 +134,7 @@ export const GeneralTable = <Type extends Obj>({
 						label={action.label ?? humanizeToken(action.name)}
 						isIcon={!fullActionButtons}
 						disabled={isBusy || action.disabled}
-						onClick={() => onClick(row)}
+						onClick={() => { onClick(row); }}
 					/>
 				),
 				hidden,
@@ -175,7 +175,7 @@ export const GeneralTable = <Type extends Obj>({
 											<Box
 												component='span'
 												data-active={sorting.column === column.id}
-												onClick={() => updateSorting(column.id)}
+												onClick={() => { updateSorting(column.id); }}
 											>
 												{sorting.column !== column.id ||
 												sorting.direction !== 'descending' ? (
@@ -247,7 +247,7 @@ export const GeneralTable = <Type extends Obj>({
 										count={totalRows}
 										rowsPerPage={pageSize}
 										page={currentPage}
-										onPageChange={(_event, page) => setCurrentPage(page)}
+										onPageChange={(_event, page) => { setCurrentPage(page); }}
 										onRowsPerPageChange={({ target }) => {
 											const newSize = Number(target.value);
 											if (!PAGINATION_SIZES.includes(newSize)) return;

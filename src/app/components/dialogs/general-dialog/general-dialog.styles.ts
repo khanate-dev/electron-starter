@@ -1,5 +1,6 @@
 import { alpha } from '@mui/material';
 
+import type { Mui } from '~/app/types/mui';
 import type { GeneralDialogProps } from './general-dialog.component';
 
 export const getGeneralDialogStyles = ({
@@ -100,4 +101,4 @@ export const getGeneralDialogStyles = ({
 			padding: '10px 20px',
 			lineHeight: 1.2,
 		},
-	} satisfies Mui.SxStyleObj);
+	}) satisfies Mui.sxStyleObj;

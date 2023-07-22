@@ -1,16 +1,16 @@
+import { Divider, IconButton, Popover, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Divider, Popover, Typography, IconButton, Stack } from '@mui/material';
 import { z } from 'zod';
 
+import { CustomButton } from '~/app/components/controls/custom-button';
+import { SchemaForm } from '~/app/components/forms/schema-form';
+import { AppIcon } from '~/app/components/media/app-icon';
+import { CustomAvatar } from '~/app/components/media/custom-avatar';
+import { logout, useUser } from '~/app/contexts/auth';
 import { resetUserPassword } from '~/app/endpoints/user';
+import { getImageUrl } from '~/app/helpers/image';
 import { FormSchema } from '~/app/schemas';
 import { userZodSchema } from '~/app/schemas/user';
-import { logout, useUser } from '~/app/contexts/user';
-import { getImageUrl } from '~/app/helpers/image';
-import { CustomAvatar } from '~/app/components/media/custom-avatar';
-import { SchemaForm } from '~/app/components/forms/schema-form';
-import { CustomButton } from '~/app/components/controls/custom-button';
-import { AppIcon } from '~/app/components/media/app-icon';
 
 const resetSchema = new FormSchema({
 	name: 'password-reset',
@@ -64,7 +64,7 @@ export const UserProfile = () => {
 
 			<IconButton
 				aria-describedby='user-popover'
-				onClick={(event) => setAnchor(event.currentTarget)}
+				onClick={(event) => { setAnchor(event.currentTarget); }}
 			>
 				<CustomAvatar
 					src={getImageUrl('user', user.userName, user.imageUpdatedAt)}
@@ -79,7 +79,7 @@ export const UserProfile = () => {
 				anchorEl={anchor}
 				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 				transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-				onClose={() => setAnchor(null)}
+				onClose={() => { setAnchor(null); }}
 			>
 				<Stack
 					sx={{
@@ -122,7 +122,7 @@ export const UserProfile = () => {
 						}}
 						onSubmit={async (data) => {
 							await resetUserPassword(user.userID, data);
-							setTimeout(() => setAnchor(null), 500);
+							setTimeout(() => { setAnchor(null); }, 500);
 							return 'password reset successful!';
 						}}
 					/>

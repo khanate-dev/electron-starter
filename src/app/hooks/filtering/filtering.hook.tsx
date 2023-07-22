@@ -1,21 +1,21 @@
-import { useState } from 'react';
 import { Box, Grid as Stack } from '@mui/material';
+import { useState } from 'react';
 
-import { objectValues } from '~/shared/helpers/object';
 import { SearchBar } from '~/app/components/controls/search-bar';
+import { objectValues } from '~/shared/helpers/object';
 
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
 type FilterResponse<Type extends Obj> = {
 	searchString: string;
 	setSearchString: Dispatch<SetStateAction<string>>;
 	filteredData: Type[];
-	filterJsx: React.Node;
+	filterJsx: ReactNode;
 };
 
 export const useFiltering = <Type extends Obj>(
 	data: Type[],
-	disabled?: boolean
+	disabled?: boolean,
 ): FilterResponse<Type> => {
 	const [searchString, setSearchString] = useState('');
 
@@ -40,8 +40,8 @@ export const useFiltering = <Type extends Obj>(
 							: String(value ?? '')
 						)
 							.toLowerCase()
-							.includes(searchString.toLowerCase())
-					)
+							.includes(searchString.toLowerCase()),
+					),
 		  )
 		: data;
 

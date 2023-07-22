@@ -1,5 +1,7 @@
 import type { ButtonProps, TableCellProps } from '@mui/material';
+import type { ReactNode } from 'react';
 import type { Sorting } from '~/app/hooks/sorting';
+import type { Mui } from '~/app/types/mui';
 
 export const generalTableCommonStyles = [
 	'container',
@@ -16,7 +18,7 @@ export const generalTableCommonStyles = [
 export type GeneralTableCommonStyle = (typeof generalTableCommonStyles)[number];
 
 export type GeneralTableStyles = Partial<
-	Record<GeneralTableCommonStyle, Mui.SxProp>
+	Record<GeneralTableCommonStyle, Mui.sxProp>
 >;
 
 export type GeneralTableColumn<Type extends Obj> = {
@@ -24,16 +26,16 @@ export type GeneralTableColumn<Type extends Obj> = {
 	id: string;
 
 	/** the styles to apply to the header cell */
-	headerSx?: Mui.SxProp;
+	headerSx?: Mui.sxProp;
 
 	/** the styles to apply to the body row cell */
-	bodySx?: Mui.SxProp;
+	bodySx?: Mui.sxProp;
 
 	/** the content to show in the header cell */
-	headerContent: React.Node;
+	headerContent: ReactNode;
 
 	/** the content to show in the body row cell */
-	getBodyContent: (row: Type, index: number) => React.Node;
+	getBodyContent: (row: Type, index: number) => ReactNode;
 
 	/** should the column be shown on the table? */
 	hidden?: boolean;
@@ -57,15 +59,12 @@ export type GeneralTableColumn<Type extends Obj> = {
 	isRowNumber?: boolean;
 };
 
-export type GeneralTableAction<Type extends Obj> = {
+export type GeneralTableAction<Type extends Obj> = Mui.propsWithSx<{
 	/** the id of the action */
 	name: string;
 
 	/** the label of the action */
-	label?: React.Node;
-
-	/** the styles to apply to the MUI Button or IconButton component */
-	sx?: Mui.SxProp;
+	label?: ReactNode;
 
 	/** the callback function for the the action in table header. header will be rendered as action if this is provided. */
 	onHeaderClick?: () => void;
@@ -74,7 +73,7 @@ export type GeneralTableAction<Type extends Obj> = {
 	onClick: (row: Type) => void;
 
 	/** the ico nto show on the action button */
-	icon: React.Node;
+	icon: ReactNode;
 
 	/** the color of the button */
 	color?: ButtonProps['color'];
@@ -84,7 +83,7 @@ export type GeneralTableAction<Type extends Obj> = {
 
 	/** should the action be hidden? */
 	hidden?: boolean;
-};
+}>;
 
 export type GeneralTableProps<Type extends Obj> = {
 	/** the details of the table columns */

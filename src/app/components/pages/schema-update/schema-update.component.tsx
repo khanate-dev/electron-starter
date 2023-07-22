@@ -1,16 +1,17 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { getParamId } from '~/shared/helpers/route';
 import { PageContainer } from '~/app/components/containers/page-container';
 import { SchemaForm } from '~/app/components/forms/schema-form';
+import { getParamId } from '~/shared/helpers/route';
 
+import type { z } from 'zod';
 import type { UpdateSchemaFormProps } from '~/app/components/forms/schema-form';
 import type {
 	BaseSelectionType,
 	FormFieldZodType,
 	FormSchemaField,
 } from '~/app/schemas';
-import type { z } from 'zod';
+import type { App } from '~/app/types/app';
 
 export type SchemaUpdateProps<
 	Zod extends z.ZodObject<Record<string, FormFieldZodType>, 'strict'>,
@@ -26,10 +27,10 @@ export type SchemaUpdateProps<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 > = {
 	/** the endpoint functions to use */
-	endpoint: (id: App.DbId, body: FormData) => Promise<void>;
+	endpoint: (id: App.dbId, body: FormData) => Promise<unknown>;
 } & Pick<
 	UpdateSchemaFormProps<Zod, Keys, WorkingObj, Fields>,
 	| 'schema'
@@ -57,9 +58,9 @@ export const SchemaUpdate = <
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 >(
-	props: SchemaUpdateProps<Zod, Keys, WorkingObj, Fields>
+	props: SchemaUpdateProps<Zod, Keys, WorkingObj, Fields>,
 ) => {
 	const params = useParams();
 	const navigate = useNavigate();
@@ -72,10 +73,12 @@ export const SchemaUpdate = <
 			<SchemaForm
 				{...props}
 				isUpdate
-				onCancel={() => navigate(-1)}
+				onCancel={() => {
+					navigate(-1);
+				}}
 				onSubmit={async (data) => {
 					await props.endpoint(getParamId(params), data);
-					return navigate(-1);
+					navigate(-1);
 				}}
 			/>
 		</PageContainer>

@@ -1,21 +1,19 @@
-import { useState } from 'react';
-import {
-	IconButton,
-	TextField,
-	InputAdornment,
-	Autocomplete,
-} from '@mui/material';
 import {
 	Visibility as HidePasswordIcon,
 	VisibilityOff as ShowPasswordIcon,
 } from '@mui/icons-material';
+import {
+	Autocomplete,
+	IconButton,
+	InputAdornment,
+	TextField,
+} from '@mui/material';
+import { useState } from 'react';
 
 import type { TextFieldProps } from '@mui/material';
+import type { Mui } from '~/app/types/mui';
 
-export type FormTextfieldProps = {
-	/** the styles to pass to the underlying form component */
-	sx?: Mui.SxProp;
-
+export type FormTextfieldProps = Mui.propsWithSx<{
 	/** the type of the `input` tag */
 	type?: TextFieldProps['type'];
 
@@ -45,7 +43,7 @@ export type FormTextfieldProps = {
 
 	/** is the dropdown a required field? */
 	required?: boolean;
-};
+}>;
 
 export const FormTextfield = ({
 	sx,
@@ -80,14 +78,18 @@ export const FormTextfield = ({
 							<IconButton
 								edge='end'
 								size='large'
-								onClick={() => setIsSecretVisible((prev) => !prev)}
+								onClick={() => {
+									setIsSecretVisible((prev) => !prev);
+								}}
 							>
 								{isSecretVisible ? <HidePasswordIcon /> : <ShowPasswordIcon />}
 							</IconButton>
 						</InputAdornment>
 					) : undefined,
 				}}
-				onChange={({ target }) => onChange(target.value)}
+				onChange={({ target }) => {
+					onChange(target.value);
+				}}
 			/>
 		);
 	}
@@ -107,7 +109,9 @@ export const FormTextfield = ({
 				/>
 			)}
 			freeSolo
-			onInputChange={(_, val) => onChange(String(val))}
+			onInputChange={(_, val) => {
+				onChange(String(val));
+			}}
 		/>
 	);
 };

@@ -1,12 +1,12 @@
+import { AppBar, Box, Stack, Toolbar } from '@mui/material';
 import { Outlet, redirect, useLoaderData } from 'react-router-dom';
-import { Box, Stack, Toolbar, AppBar } from '@mui/material';
 
-import { UserProvider } from '~/app/contexts/user';
-import { Sidebar } from '~/app/components/panels/sidebar';
-import { Breadcrumbs } from '~/app/components/navigation/breadcrumbs';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
-import { ThemeSwitch } from '~/app/components/controls/theme-switch';
 import { UserProfile } from '~/app/components/app/user-profile';
+import { ThemeSwitch } from '~/app/components/controls/theme-switch';
+import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
+import { Breadcrumbs } from '~/app/components/navigation/breadcrumbs';
+import { Sidebar } from '~/app/components/panels/sidebar';
+import { AuthProvider } from '~/app/contexts/auth';
 import { getSetting } from '~/app/helpers/settings';
 
 import { homeStyles as styles } from './dashboard.styles';
@@ -22,7 +22,7 @@ const loader = () => {
 export const Dashboard = () => {
 	const user = useLoaderData() as LoggedInUser;
 	return (
-		<UserProvider user={user}>
+		<AuthProvider user={user}>
 			<Sidebar />
 
 			<Box sx={styles.container}>
@@ -55,7 +55,7 @@ export const Dashboard = () => {
 					<Outlet />
 				</Box>
 			</Box>
-		</UserProvider>
+		</AuthProvider>
 	);
 };
 

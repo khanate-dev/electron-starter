@@ -3,10 +3,11 @@ import { Alert, alpha } from '@mui/material';
 import { csx } from '~/app/helpers/style';
 
 import type { AlertProps } from '@mui/material';
+import type { ReactNode } from 'react';
 
 export type CustomAlertProps = {
 	/** the message to show on the alert */
-	message: React.Node;
+	message: ReactNode;
 
 	/** is the alert currently hidden? */
 	hidden?: boolean;
@@ -68,7 +69,7 @@ export const CustomAlert = ({
 					padding: 0,
 					margin: 0,
 					borderWidth: 0,
-				}
+				},
 			)}
 			{...alertProps}
 		>

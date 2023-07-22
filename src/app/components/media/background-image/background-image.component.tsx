@@ -4,13 +4,12 @@ import { csx } from '~/app/helpers/style';
 
 import { getBackgroundImageStyles } from './background-image.styles';
 
-export type BackgroundImageProps = {
-	/** the styles to apply to the SVG element */
-	sx?: Mui.SxProp;
+import type { Mui } from '~/app/types/mui';
 
+export type BackgroundImageProps = Mui.propsWithSx<{
 	/** the opacity to set on the SVG element */
 	opacity?: number;
-};
+}>;
 
 export const BackgroundImage = ({ sx, opacity }: BackgroundImageProps) => {
 	const styles = getBackgroundImageStyles(opacity);

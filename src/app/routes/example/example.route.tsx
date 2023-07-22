@@ -35,9 +35,9 @@ export const Example = () => {
 	useEffect(() => {
 		window.ipc.barCode
 			.connect()
-			.then(() => setVal({ type: 'connected' }))
+			.then(() => { setVal({ type: 'connected' }); })
 			.catch((error) =>
-				setVal({ type: 'error', message: getCatchMessage(error) })
+				{ setVal({ type: 'error', message: getCatchMessage(error) }); }
 			);
 
 		window.ipc.barCode.listen((data) => {
@@ -182,7 +182,7 @@ export const Example = () => {
 
 					<CustomButton
 						label={`Click Me! ${counter}`}
-						onClick={() => setCounter(counter + 1)}
+						onClick={() => { setCounter(counter + 1); }}
 					/>
 
 					<WiMetrixLogo

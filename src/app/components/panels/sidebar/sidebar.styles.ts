@@ -1,10 +1,12 @@
 import { keyframes } from '@mui/material';
 
 import {
-	DRAWER_WIDTH,
-	DRAWER_MINIMIZED_WIDTH,
 	APP_HEADER_HEIGHT,
+	DRAWER_MINIMIZED_WIDTH,
+	DRAWER_WIDTH,
 } from '~/app/config';
+
+import type { Mui } from '~/app/types/mui';
 
 const showSmallLogo = keyframes({
 	from: {
@@ -116,4 +118,4 @@ export const sidebarStyles = {
 			},
 		},
 	},
-} satisfies Mui.SxStyleObj;
+} satisfies Mui.sxStyleObj;

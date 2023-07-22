@@ -1,32 +1,32 @@
-import { useState } from 'react';
-import {
-	Typography,
-	IconButton,
-	List,
-	Box,
-	Pagination as MuiPagination,
-	ListItemButton,
-	Stack,
-} from '@mui/material';
 import {
 	ArrowLeft,
 	ArrowRight,
-	Remove as MinimizeIcon,
 	Add as MaximizeIcon,
+	Remove as MinimizeIcon,
 } from '@mui/icons-material';
+import {
+	Box,
+	IconButton,
+	List,
+	ListItemButton,
+	Pagination as MuiPagination,
+	Stack,
+	Typography,
+} from '@mui/material';
+import { useState } from 'react';
 
+import { Dropzone } from '~/app/components/controls/dropzone';
+import { SearchBar } from '~/app/components/controls/search-bar';
+import { csx } from '~/app/helpers/style';
 import { usePagination } from '~/app/hooks/pagination';
 import { humanizeToken } from '~/shared/helpers/string';
-import { csx } from '~/app/helpers/style';
-import { SearchBar } from '~/app/components/controls/search-bar';
-import { Dropzone } from '~/app/components/controls/dropzone';
 
 import { getOptionPanelStyles } from './option-panel.styles';
 
-export type OptionPanelProps<Type extends Obj> = {
-	/** the styles to apply to the container */
-	sx?: Mui.SxProp;
+import type { ReactNode } from 'react';
+import type { Mui } from '~/app/types/mui';
 
+export type OptionPanelProps<Type extends Obj> = Mui.propsWithSx<{
 	/** the list of items to show */
 	list: Type[];
 
@@ -36,8 +36,8 @@ export type OptionPanelProps<Type extends Obj> = {
 	/** the function to call when a panel item is picked */
 	onPick: (item: Type) => void;
 
-	children: React.Node;
-};
+	children: ReactNode;
+}>;
 
 export const OptionPanel = <Type extends Obj>({
 	sx,
@@ -60,8 +60,8 @@ export const OptionPanel = <Type extends Obj>({
 	const filteredList = search
 		? list.filter((row) =>
 				keys.some(({ key }) =>
-					String(row[key]).toLowerCase().includes(search.toLowerCase())
-				)
+					String(row[key]).toLowerCase().includes(search.toLowerCase()),
+				),
 		  )
 		: list;
 
@@ -82,7 +82,9 @@ export const OptionPanel = <Type extends Obj>({
 					sx={[styles.button, styles.minimizeButton]}
 					color='primary'
 					size='large'
-					onClick={() => setIsMinimized((prev) => !prev)}
+					onClick={() => {
+						setIsMinimized((prev) => !prev);
+					}}
 				>
 					{isMinimized ? (
 						<ArrowRight fontSize='inherit' />
@@ -95,7 +97,7 @@ export const OptionPanel = <Type extends Obj>({
 					sx={csx(
 						styles.controls,
 						totalPages === 1 && styles.noPagination,
-						hideControls && styles.controlsHidden
+						hideControls && styles.controlsHidden,
 					)}
 				>
 					<SearchBar
@@ -115,7 +117,9 @@ export const OptionPanel = <Type extends Obj>({
 							size='small'
 							hideNextButton
 							hidePrevButton
-							onChange={(_event, page) => setCurrentPage(page)}
+							onChange={(_event, page) => {
+								setCurrentPage(page);
+							}}
 						/>
 					)}
 				</Stack>
@@ -123,7 +127,9 @@ export const OptionPanel = <Type extends Obj>({
 				<IconButton
 					sx={[styles.button, styles.controlsMinimize]}
 					disableRipple
-					onClick={() => setHideControls((prev) => !prev)}
+					onClick={() => {
+						setHideControls((prev) => !prev);
+					}}
 				>
 					{hideControls ? <MaximizeIcon /> : <MinimizeIcon />}
 				</IconButton>
@@ -151,10 +157,15 @@ export const OptionPanel = <Type extends Obj>({
 								key={index}
 								sx={styles.optionItem}
 								draggable={true}
-								onClick={() => onPick(row)}
-								onDragStart={(event) =>
-									event.dataTransfer.setData('index', String(list.indexOf(row)))
-								}
+								onClick={() => {
+									onPick(row);
+								}}
+								onDragStart={(event) => {
+									event.dataTransfer.setData(
+										'index',
+										String(list.indexOf(row)),
+									);
+								}}
 							>
 								{content}
 							</ListItemButton>

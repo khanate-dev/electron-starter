@@ -36,7 +36,7 @@ export const CustomAvatar = ({
 				sx
 			)}
 		>
-			{showFallback && avatarProps.alt?.[0] && avatarProps.alt[0].toUpperCase()}
+			{showFallback && avatarProps.alt?.[0]?.toUpperCase()}
 		</Avatar>
 	);
 };

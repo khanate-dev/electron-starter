@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import type { App } from '~/app/types/app';
+
 export const _localIdSchema = z
 	.number()
 	.int()
@@ -12,12 +14,12 @@ export const _localIdSchema = z
  * id is found by finding the last id and incrementing it by 1
  * @param list the existing list of data
  */
-export const createLocalId = <T extends App.WithLocalId<Obj>>(
+export const createLocalId = <T extends App.withLocalId<Obj>>(
 	list: T[]
-): App._LocalId => {
+): App.localId => {
 	const lastId = Math.max(
 		...list.map((row) => row._localId as unknown as number),
 		0
 	);
-	return (lastId + 1) as App._LocalId;
+	return (lastId + 1) as App.localId;
 };

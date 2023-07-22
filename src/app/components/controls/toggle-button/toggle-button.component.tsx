@@ -46,7 +46,7 @@ export const ToggleButton = <
 			value={value}
 			exclusive={groupProps.exclusive ?? true}
 			color={groupProps.color ?? 'primary'}
-			onChange={(event, newValue) => onChange(newValue as Values, event)}
+			onChange={(event, newValue) => { onChange(newValue as Values, event); }}
 		>
 			{passedOptions.map((passedOption) => {
 				let label: string;

@@ -1,7 +1,8 @@
-import { DateTimePicker, DatePicker, TimePicker } from '@mui/x-date-pickers';
+import { DatePicker, DateTimePicker, TimePicker } from '@mui/x-date-pickers';
 
-import type { Dayjs } from 'dayjs';
 import type { TextFieldProps } from '@mui/material';
+import type { Dayjs } from 'dayjs';
+import type { Mui } from '~/app/types/mui';
 
 const pickerComponents = {
 	datetime: DateTimePicker,
@@ -9,10 +10,7 @@ const pickerComponents = {
 	time: TimePicker,
 };
 
-export type FormPickerProps = {
-	/** the styles to pass to the underlying form component */
-	sx?: Mui.SxProp;
-
+export type FormPickerProps = Mui.propsWithSx<{
 	type: keyof typeof pickerComponents;
 
 	/** the current selection value */
@@ -35,7 +33,7 @@ export type FormPickerProps = {
 
 	/** is the dropdown a required field? */
 	required?: boolean;
-};
+}>;
 
 export const FormPicker = ({
 	sx,

@@ -38,7 +38,7 @@ export const Register = () => {
 					zIndex: 15,
 					fontSize: '1.2em',
 				}}
-				onClick={() => setIsShowingUsers(true)}
+				onClick={() => { setIsShowingUsers(true); }}
 			/>
 
 			{isShowingUsers && (
@@ -46,7 +46,7 @@ export const Register = () => {
 					title='User List'
 					schema={userViewSchema}
 					data={users}
-					onClose={() => setIsShowingUsers(!isShowingUsers)}
+					onClose={() => { setIsShowingUsers(!isShowingUsers); }}
 				/>
 			)}
 

@@ -1,13 +1,12 @@
 import { Autocomplete, TextField } from '@mui/material';
 
 import type { AutocompleteProps, TextFieldProps } from '@mui/material';
+import type { App } from '~/app/types/app';
+import type { Mui } from '~/app/types/mui';
 
-export type FormDropdownProps<Type extends App.DropdownType> = {
-	/** the styles to pass to the underlying form component */
-	sx?: Mui.SxProp;
-
+export type FormDropdownProps<Type extends App.dropdownType> = Mui.propsWithSx<{
 	/** the configuration object for current form field */
-	options: App.DropdownOption<Type>[];
+	options: App.dropdownOption<Type>[];
 
 	/** the size of the form field */
 	size: TextFieldProps['size'];
@@ -23,30 +22,31 @@ export type FormDropdownProps<Type extends App.DropdownType> = {
 
 	/** is the dropdown a required field? */
 	required?: boolean;
-} & (
-	| {
-			/** is the dropdown a multi-select */
-			isMultiSelect?: false;
+}> &
+	(
+		| {
+				/** is the dropdown a multi-select */
+				isMultiSelect?: false;
 
-			/** the current selection value */
-			value: Type | null;
+				/** the current selection value */
+				value: Type | null;
 
-			/** the callback function for selection change */
-			onChange: (value: Type | null) => void;
-	  }
-	| {
-			/** is the dropdown a multi-select */
-			isMultiSelect: true;
+				/** the callback function for selection change */
+				onChange: (value: Type | null) => void;
+		  }
+		| {
+				/** is the dropdown a multi-select */
+				isMultiSelect: true;
 
-			/** the current selection value */
-			value: Type[];
+				/** the current selection value */
+				value: Type[];
 
-			/** the callback function for selection change event */
-			onChange: (value: Type[]) => void;
-	  }
-);
+				/** the callback function for selection change event */
+				onChange: (value: Type[]) => void;
+		  }
+	);
 
-export const FormDropdown = <Type extends App.DropdownType>({
+export const FormDropdown = <Type extends App.dropdownType>({
 	label,
 	options,
 	value,
@@ -77,7 +77,9 @@ export const FormDropdown = <Type extends App.DropdownType>({
 				value={options.filter((row) => value.includes(row.value))}
 				multiple
 				disableCloseOnSelect
-				onChange={(_, changed) => onChange(changed.map((row) => row.value))}
+				onChange={(_, changed) => {
+					onChange(changed.map((row) => row.value));
+				}}
 			/>
 		);
 	}
@@ -86,7 +88,9 @@ export const FormDropdown = <Type extends App.DropdownType>({
 		<Autocomplete
 			{...sharedProps}
 			value={options.find((row) => value === row.value) ?? null}
-			onChange={(_, changed) => onChange(changed?.value ?? null)}
+			onChange={(_, changed) => {
+				onChange(changed?.value ?? null);
+			}}
 		/>
 	);
 };

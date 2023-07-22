@@ -51,8 +51,8 @@ export const SidebarItem = ({ listItem, isMinimized }: SidebarItemProps) => {
 			disableFocusListener={!isMinimized}
 			disableTouchListener={!isMinimized}
 			open={isMinimized && isTooltip}
-			onOpen={() => setIsTooltip(true)}
-			onClose={() => setIsTooltip(false)}
+			onOpen={() => { setIsTooltip(true); }}
+			onClose={() => { setIsTooltip(false); }}
 		>
 			{path ? (
 				<AppLink

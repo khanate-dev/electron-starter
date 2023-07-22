@@ -1,19 +1,19 @@
-import { IconButton } from '@mui/material';
 import {
-	WbSunny as LightModeIcon,
 	NightsStay as DarkModeIcon,
+	WbSunny as LightModeIcon,
 } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 
-import { useDarkMode, toggleDarkMode } from '~/app/contexts/dark-mode';
+import { toggleDarkMode, useDarkMode } from '~/app/contexts/dark-mode';
 import { csx } from '~/app/helpers/style';
+
+import type { Mui } from '~/app/types/mui';
 
 const buttonSize = 40;
 const padding = 5;
 const iconSize = buttonSize - padding * 2;
 
-export type ThemeSwitchProps = {
-	sx?: Mui.SxProp;
-};
+export type ThemeSwitchProps = Mui.propsWithSx;
 
 export const ThemeSwitch = ({ sx }: ThemeSwitchProps) => {
 	const isDarkMode = useDarkMode();
@@ -63,7 +63,7 @@ export const ThemeSwitch = ({ sx }: ThemeSwitchProps) => {
 						transform: 'scale(1.1)',
 					},
 				},
-				sx
+				sx,
 			)}
 			onClick={toggleDarkMode}
 		>

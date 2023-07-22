@@ -1,3 +1,5 @@
+import type { Mui } from '~/app/types/mui';
+
 export const formTableStyles = {
 	form: {
 		flexGrow: 1,
@@ -42,4 +44,4 @@ export const formTableStyles = {
 	button: {
 		minWidth: 125,
 	},
-} satisfies Mui.SxStyleObj;
+} satisfies Mui.sxStyleObj;

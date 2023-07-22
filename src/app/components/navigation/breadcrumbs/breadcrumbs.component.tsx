@@ -1,16 +1,19 @@
-import { useLocation, NavLink } from 'react-router-dom';
-import { Box, Breadcrumbs as MuiBreadcrumbs, Typography } from '@mui/material';
 import { HomeRounded } from '@mui/icons-material';
+import { Box, Breadcrumbs as MuiBreadcrumbs, Typography } from '@mui/material';
+import { NavLink, useLocation } from 'react-router-dom';
 
-import { humanizeToken } from '~/shared/helpers/string';
 import { AppIcon } from '~/app/components/media/app-icon';
+import { humanizeToken } from '~/shared/helpers/string';
 
 import { breadcrumbsStyles as styles } from './breadcrumbs.styles';
 
+import type { ReactNode } from 'react';
+import type { Mui } from '~/app/types/mui';
+
 type BaseCrumbProps = {
 	to?: string;
-	sx: Mui.SxStyle;
-	children: React.Node;
+	sx: Mui.sxStyle;
+	children: ReactNode;
 };
 type CrumbProps =
 	| ({ to?: undefined } & BaseCrumbProps)

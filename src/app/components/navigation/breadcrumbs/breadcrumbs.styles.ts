@@ -1,5 +1,7 @@
 import { alpha } from '@mui/material';
 
+import type { Mui } from '~/app/types/mui';
+
 export const breadcrumbsStyles = {
 	container: {
 		'& > .MuiBreadcrumbs-ol': {
@@ -33,7 +35,7 @@ export const breadcrumbsStyles = {
 				{
 					duration: transitions.duration.shortest,
 					easing: transitions.easing.easeInOut,
-				}
+				},
 			),
 		'a&': {
 			backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.1),
@@ -53,4 +55,4 @@ export const breadcrumbsStyles = {
 			},
 		},
 	},
-} satisfies Mui.SxStyleObj;
+} satisfies Mui.sxStyleObj;

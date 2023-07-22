@@ -116,7 +116,7 @@ export const CustomAutocomplete = <
 			);
 		}}
 		onChange={(event, value, reason, details) =>
-			onChange(value as never, event, reason, details)
+			{ onChange(value as never, event, reason, details); }
 		}
 	/>
 );

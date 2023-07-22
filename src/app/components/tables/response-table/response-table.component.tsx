@@ -1,18 +1,20 @@
-import { Box, Stack, Typography } from '@mui/material';
 import {
 	HighlightOffRounded as ErrorIcon,
 	TaskAltRounded as SuccessIcon,
 } from '@mui/icons-material';
+import { Box, Stack, Typography } from '@mui/material';
 
-import { pluralize } from '~/shared/helpers/string';
 import { CustomAlert } from '~/app/components/feedback/custom-alert';
-import { GeneralTable } from '~/app/components/tables/general-table';
 import { InfoTooltip } from '~/app/components/feedback/info-tooltip';
+import { GeneralTable } from '~/app/components/tables/general-table';
 import { schemaToGeneralTableColumns } from '~/shared/helpers/schema';
+import { pluralize } from '~/shared/helpers/string';
 
-import type { FormSchema, FormSchemaLists, ViewSchema } from '~/app/schemas';
-import type { BulkResponse } from '~/app/helpers/api';
 import type { z } from 'zod';
+import type { BulkResponse } from '~/app/helpers/api';
+import type { FormSchema, FormSchemaLists, ViewSchema } from '~/app/schemas';
+import type { App } from '~/app/types/app';
+import type { Mui } from '~/app/types/mui';
 
 const alertStyle = {
 	gap: 0.5,
@@ -28,10 +30,10 @@ const alertStyle = {
 		backgroundColor: 'action.selected',
 		textTransform: 'none',
 	},
-} satisfies Mui.SxStyle;
+} satisfies Mui.sxStyle;
 
 export type ResponseTableProps<
-	T extends FormSchema<any, any, any, any> | ViewSchema<any, any, any, any>
+	T extends FormSchema<any, any, any, any> | ViewSchema<any, any, any, any>,
 > = {
 	/** the schema to show the response for */
 	schema: T;
@@ -39,7 +41,7 @@ export type ResponseTableProps<
 	/** the response data to use */
 	response: T extends FormSchema<any, any, any, any>
 		?
-				| BulkResponse<App.WithLocalId<z.infer<T['zod']>>>
+				| BulkResponse<App.withLocalId<z.infer<T['zod']>>>
 				| BulkResponse<z.infer<T['zod']>>
 		: BulkResponse<z.infer<T['zod']>>;
 } & (T extends FormSchema<any, any, any, any>
@@ -47,7 +49,7 @@ export type ResponseTableProps<
 	: { lists?: never });
 
 export const ResponseTable = <
-	T extends FormSchema<any, any, any, any> | ViewSchema<any, any, any, any>
+	T extends FormSchema<any, any, any, any> | ViewSchema<any, any, any, any>,
 >({
 	schema,
 	response,
@@ -55,7 +57,7 @@ export const ResponseTable = <
 }: ResponseTableProps<T>) => {
 	const columns = schemaToGeneralTableColumns(
 		schema.fields as never,
-		lists as never
+		lists as never,
 	);
 
 	const { successful, failed } = response as BulkResponse;

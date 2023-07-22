@@ -1,14 +1,12 @@
 import { Box, Stack, alpha } from '@mui/material';
 
-import { csx, getOppositeColor } from '~/app/helpers/style';
 import { CustomTooltip } from '~/app/components/feedback/custom-tooltip';
+import { csx, getOppositeColor } from '~/app/helpers/style';
 
 import type { TextFieldProps } from '@mui/material';
+import type { Mui } from '~/app/types/mui';
 
-export type FormReadonlyProps = {
-	/** the styles to pass to the underlying form component */
-	sx?: Mui.SxProp;
-
+export type FormReadonlyProps = Mui.propsWithSx<{
 	/** the size of the form field */
 	size: TextFieldProps['size'];
 
@@ -20,7 +18,7 @@ export type FormReadonlyProps = {
 
 	/** should the field show tooltip on hover?  */
 	hasTooltip?: boolean;
-};
+}>;
 
 export const FormReadonly = ({
 	sx,
@@ -73,7 +71,7 @@ export const FormReadonly = ({
 						padding: 0,
 					},
 				},
-				sx
+				sx,
 			)}
 		>
 			{Boolean(label) && (

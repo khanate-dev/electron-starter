@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useNavigate, useNavigation, useRevalidator } from 'react-router-dom';
 
 import { PageContainer } from '~/app/components/containers/page-container';
-import { ViewTable } from '~/app/components/tables/view-table';
 import { DeleteDialog } from '~/app/components/dialogs/delete-dialog';
+import { ViewTable } from '~/app/components/tables/view-table';
 
-import type { PageContainerProps } from '~/app/components/containers/page-container';
 import type { AnyZodObject, z } from 'zod';
+import type { PageContainerProps } from '~/app/components/containers/page-container';
 import type { ViewSchema, ViewSchemaField } from '~/app/schemas';
+import type { App } from '~/app/types/app';
 
 export type SchemaViewProps<
 	Zod extends AnyZodObject,
@@ -16,7 +17,7 @@ export type SchemaViewProps<
 	},
 	PK extends keyof Zod['shape'],
 	ID extends keyof Zod['shape'],
-	Row extends z.infer<Zod>
+	Row extends z.infer<Zod>,
 > = Pick<PageContainerProps, 'controls' | 'navigation'> & {
 	/** the schema for the current page */
 	schema: ViewSchema<Zod, Fields, PK, ID>;
@@ -31,7 +32,7 @@ export type SchemaViewProps<
 	onReload?: () => void;
 
 	/** the endpoint for the delete row operation. delete operation is only rendered if provided. */
-	deleteEndpoint?: (id: App.DbId) => Promise<void>;
+	deleteEndpoint?: (id: App.dbId) => Promise<unknown>;
 
 	/** does the page have an update route? */
 	hasUpdate?: boolean;
@@ -50,7 +51,7 @@ export type SchemaViewProps<
 };
 
 type ToDelete = {
-	id: App.DbId;
+	id: App.dbId;
 	label: string;
 };
 
@@ -61,7 +62,7 @@ export const SchemaView = <
 	},
 	PK extends keyof Zod['shape'],
 	ID extends keyof Zod['shape'],
-	Row extends z.infer<Zod>
+	Row extends z.infer<Zod>,
 >({
 	schema,
 	title,
@@ -99,19 +100,22 @@ export const SchemaView = <
 				hasExport={!noExport}
 				actions={{
 					view: hasDetails
-						? (state) =>
-								navigate(`details/${state[schema.primaryKey] as App.DbId}`)
+						? (state) => {
+								navigate(`details/${state[schema.primaryKey] as App.dbId}`);
+						  }
 						: undefined,
 					update: hasUpdate
-						? (state) =>
-								navigate(`update/${state[schema.primaryKey] as App.DbId}`)
+						? (state) => {
+								navigate(`update/${state[schema.primaryKey] as App.dbId}`);
+						  }
 						: undefined,
 					delete: deleteEndpoint
-						? (state) =>
+						? (state) => {
 								setToDelete({
-									id: state[schema.primaryKey] as App.DbId,
+									id: state[schema.primaryKey] as App.dbId,
 									label: state[schema.identifier] as string,
-								})
+								});
+						  }
 						: undefined,
 				}}
 				hasPagination
@@ -122,11 +126,15 @@ export const SchemaView = <
 					target={schema.label}
 					id={toDelete.id}
 					label={toDelete.label}
-					onCancel={() => setToDelete(null)}
+					onCancel={() => {
+						setToDelete(null);
+					}}
 					onDelete={async () => {
 						await deleteEndpoint(toDelete.id);
 						onReload?.() ?? revalidator.revalidate();
-						setTimeout(() => setToDelete(null), 1500);
+						setTimeout(() => {
+							setToDelete(null);
+						}, 1500);
 					}}
 				/>
 			)}

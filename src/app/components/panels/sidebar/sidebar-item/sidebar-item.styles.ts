@@ -1,3 +1,5 @@
+import type { Mui } from '~/app/types/mui';
+
 export const sidebarItemStyles = {
 	tooltip: {
 		padding: '5px 15px',
@@ -60,4 +62,4 @@ export const sidebarItemStyles = {
 			textOverflow: 'ellipsis',
 		},
 	},
-} satisfies Mui.SxStyleObj;
+} satisfies Mui.sxStyleObj;

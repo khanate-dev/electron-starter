@@ -2,15 +2,17 @@ import { z } from 'zod';
 
 import { apiEndpoint } from '~/app/config';
 import {
-	loggedInUserZodSchema,
-	userSansPasswordZodSchema,
-} from '~/app/schemas/user';
-import {
 	deleteRequest,
 	getRequest,
 	postRequest,
 	putRequest,
 } from '~/app/helpers/api';
+import {
+	loggedInUserZodSchema,
+	userSansPasswordZodSchema,
+} from '~/app/schemas/user';
+
+import type { App } from '~/app/types/app';
 
 const prefix = `${apiEndpoint}/user`;
 
@@ -21,7 +23,7 @@ export const getUsers = async () => {
 	});
 };
 
-export const getUserById = async (userId: App.DbId) => {
+export const getUserById = async (userId: App.dbId) => {
 	return getRequest(`${prefix}/get/${userId}`, {
 		schema: userSansPasswordZodSchema,
 	});
@@ -34,7 +36,7 @@ export const addUser = async (body: FormData) => {
 	return postRequest(`${prefix}/insert`, body);
 };
 
-export const resetUserPassword = async (userId: App.DbId, body: FormData) => {
+export const resetUserPassword = async (userId: App.dbId, body: FormData) => {
 	if (body.get('password') !== body.get('confirmPassword'))
 		throw new Error("The two passwords don't match!");
 
@@ -46,10 +48,10 @@ export const login = async (data: FormData) => {
 	return loggedInUserZodSchema.parse(response);
 };
 
-export const updateUser = async (userId: App.DbId, body: FormData) => {
+export const updateUser = async (userId: App.dbId, body: FormData) => {
 	return putRequest(`${prefix}/update/${userId}`, body);
 };
 
-export const deleteUser = async (userId: App.DbId) => {
+export const deleteUser = async (userId: App.dbId) => {
 	return deleteRequest(`${prefix}/delete/${userId}`);
 };

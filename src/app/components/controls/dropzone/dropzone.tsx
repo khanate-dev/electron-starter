@@ -1,17 +1,17 @@
-import { useState } from 'react';
 import { Box, Stack, alpha } from '@mui/material';
+import { useState } from 'react';
 
 import { csx } from '~/app/helpers/style';
 
-export type DropzoneProps = {
-	/** the styles to apply on the container */
-	sx?: Mui.SxProp;
+import type { ReactNode } from 'react';
+import type { Mui } from '~/app/types/mui';
 
+export type DropzoneProps = Mui.propsWithSx<{
 	/** the function to call when data or files are dropped */
 	onDrop: (dataTransfer: DataTransfer) => void;
 
-	children?: React.Node;
-};
+	children?: ReactNode;
+}>;
 
 export const Dropzone = ({ sx, onDrop, children }: DropzoneProps) => {
 	const [dropping, setDropping] = useState(false);
@@ -24,10 +24,14 @@ export const Dropzone = ({ sx, onDrop, children }: DropzoneProps) => {
 					position: 'relative',
 					gap: 1,
 				},
-				sx
+				sx,
 			)}
-			onDragEnter={() => setDropping(true)}
-			onDragOver={(event) => event.preventDefault()}
+			onDragEnter={() => {
+				setDropping(true);
+			}}
+			onDragOver={(event) => {
+				event.preventDefault();
+			}}
 			onDrop={(event) => {
 				event.preventDefault();
 				onDrop(event.dataTransfer);
@@ -63,7 +67,9 @@ export const Dropzone = ({ sx, onDrop, children }: DropzoneProps) => {
 								].join(', ')})`
 						: 'transparent',
 				}}
-				onDragLeave={() => setDropping(false)}
+				onDragLeave={() => {
+					setDropping(false);
+				}}
 			>
 				Drop Here
 			</Box>

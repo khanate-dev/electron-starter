@@ -1,3 +1,5 @@
+import type { Mui } from '~/app/types/mui';
+
 export const deleteDialogStyles = {
 	content: {
 		gap: '5px',
@@ -14,4 +16,4 @@ export const deleteDialogStyles = {
 		display: 'inline-block',
 		color: 'error.main',
 	},
-} satisfies Mui.SxStyleObj;
+} satisfies Mui.sxStyleObj;

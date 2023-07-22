@@ -1,22 +1,20 @@
 import { Button, IconButton } from '@mui/material';
 
-import { csx, getLoadingStyles } from '~/app/helpers/style';
 import { CustomTooltip } from '~/app/components/feedback/custom-tooltip';
+import { csx, getLoadingStyles } from '~/app/helpers/style';
 import { excludeString } from '~/shared/helpers/type';
 
-import type { MouseEventHandler } from 'react';
 import type {
 	ButtonProps,
 	IconButtonProps as MuiIconButtonProps,
 	TooltipProps,
 } from '@mui/material';
+import type { MouseEventHandler, ReactNode } from 'react';
+import type { Mui } from '~/app/types/mui';
 
-type ButtonBaseProps = {
-	/** the styles to apply to the MUI Button or IconButton component */
-	sx?: Mui.SxProp;
-
+type ButtonBaseProps = Mui.propsWithSx<{
 	/** the icon for the button */
-	icon?: React.Node | undefined;
+	icon?: ReactNode | undefined;
 
 	/** the function to call when the button is clicked */
 	onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -41,20 +39,20 @@ type ButtonBaseProps = {
 
 	/** is the button currently in a loading state */
 	isBusy?: boolean;
-};
+}>;
 
 export type IconButtonProps = {
 	/** should the button use a MUI IconButton? */
 	isIcon: true;
 
 	/** the icon for the button */
-	icon: React.Node;
+	icon: ReactNode;
 
 	/** the button's label */
-	label?: React.Node;
+	label?: ReactNode;
 
 	/** the class to pass to Mui tooltip */
-	tooltipStyles?: Mui.SxProp;
+	tooltipStyles?: Mui.sxProp;
 
 	/** the color of the button */
 	color?: MuiIconButtonProps['color'];
@@ -81,7 +79,7 @@ export type FullButtonProps = {
 	tooltipStyles?: undefined;
 
 	/** the button's label */
-	label: React.Node;
+	label: ReactNode;
 
 	/** the color of the button */
 	color?: ButtonProps['color'];
@@ -127,7 +125,7 @@ export const CustomButton = ({
 	const sxProp = csx(
 		Boolean(isBusy) &&
 			getLoadingStyles(
-				excludeString(color, ['inherit', 'default']) ?? 'primary'
+				excludeString(color, ['inherit', 'default']) ?? 'primary',
 			),
 		!label && {
 			'& > .MuiButton-startIcon': {
@@ -137,7 +135,7 @@ export const CustomButton = ({
 				marginLeft: 0,
 			},
 		},
-		parentSx
+		parentSx,
 	);
 
 	if (!isIcon) {

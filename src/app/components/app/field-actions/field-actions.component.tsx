@@ -1,14 +1,16 @@
-import { Stack } from '@mui/material';
 import {
 	FlashOn as ActionIcon,
-	Visibility as ViewIcon,
 	Add as AddIcon,
-	Edit as UpdateIcon,
 	Delete as DeleteIcon,
+	Edit as UpdateIcon,
+	Visibility as ViewIcon,
 } from '@mui/icons-material';
+import { Stack } from '@mui/material';
 
 import { CustomButton } from '~/app/components/controls/custom-button';
 import { csx } from '~/app/helpers/style';
+
+import type { Mui } from '~/app/types/mui';
 
 const icons = {
 	add: <AddIcon />,
@@ -28,10 +30,7 @@ export type FieldAction = {
 	onClick: () => void;
 };
 
-export type FieldActionsProps = {
-	/** the styles to apply to the container */
-	sx?: Mui.SxProp;
-
+export type FieldActionsProps = Mui.propsWithSx<{
 	/** the list of actions to render */
 	actions: FieldAction[];
 
@@ -40,7 +39,7 @@ export type FieldActionsProps = {
 
 	/** should the actions use a full button instead of icon buttons? */
 	fullButtons?: boolean;
-};
+}>;
 
 export const FieldActions = ({
 	sx,

@@ -4,10 +4,9 @@ import { csx } from '~/app/helpers/style';
 
 import { getAppLogoStyles } from './app-logo.styles';
 
-export type AppLogoProps = {
-	/** the styles to apply to the svg element */
-	sx?: Mui.SxProp;
+import type { Mui } from '~/app/types/mui';
 
+export type AppLogoProps = Mui.propsWithSx<{
 	/**  color override. if provided, logo will be single colored */
 	color?: 'primary' | 'secondary' | 'white' | 'black';
 
@@ -19,7 +18,7 @@ export type AppLogoProps = {
 
 	/** the logo's height */
 	isIcon?: boolean;
-};
+}>;
 
 export const AppLogo = ({ sx, color, width, height, isIcon }: AppLogoProps) => {
 	const styles = getAppLogoStyles({ width, height, color });

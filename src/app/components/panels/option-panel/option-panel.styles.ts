@@ -3,8 +3,9 @@ import { alpha, darken, lighten } from '@mui/material';
 import { getOppositeColor } from '~/app/helpers/style';
 
 import type { Theme } from '@mui/material';
+import type { Mui } from '~/app/types/mui';
 
-const sharedStyles: Mui.SxStyle = {
+const sharedStyles: Mui.sxStyle = {
 	backgroundColor: ({ palette }) => alpha(palette.primary[palette.mode], 0.3),
 	borderWidth: 2,
 	borderStyle: 'solid',
@@ -15,12 +16,12 @@ const sharedStyles: Mui.SxStyle = {
 		theme.transitions.create(['border', 'background-color']),
 };
 
-const sharedHoverStyles: Mui.SxStyle = {
+const sharedHoverStyles: Mui.sxStyle = {
 	backgroundColor: ({ palette }) => alpha(palette.primary[palette.mode], 0.6),
 	borderColor: 'primary.main',
 };
 
-const sharedFocusStyles: Mui.SxStyle = {
+const sharedFocusStyles: Mui.sxStyle = {
 	backgroundColor: ({ palette }) => alpha(palette.primary[palette.mode], 0.7),
 	borderColor: getOppositeColor,
 };
@@ -270,4 +271,4 @@ export const getOptionPanelStyles = (isMinimized: boolean) =>
 			gap: 1,
 			overflow: 'hidden',
 		},
-	} satisfies Mui.SxStyleObj);
+	}) satisfies Mui.sxStyleObj;

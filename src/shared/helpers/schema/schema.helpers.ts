@@ -1,19 +1,20 @@
-import { z } from 'zod';
 import { isDayjs } from 'dayjs';
 import { isValidElement } from 'react';
+import { z } from 'zod';
 
-import { omit } from '~/shared/helpers/object';
 import { dayjsFormatPatterns, dayjsUtc } from '~/shared/helpers/date';
+import { omit } from '~/shared/helpers/object';
 
 import type { GeneralTableColumn } from '~/app/components/tables/general-table';
 import type { BulkResponse } from '~/app/helpers/api';
+import type { App } from '~/app/types/app';
 
 export const dbIdSchema = z.number().int().positive().finite().brand('DbKey');
 
 export type ZodDbId = typeof dbIdSchema;
 
 export const dayjsSchema = z.instanceof(
-	dayjsUtc as unknown as typeof dayjsUtc.Dayjs
+	dayjsUtc as unknown as typeof dayjsUtc.Dayjs,
 );
 
 export type ZodDayjs = typeof dayjsSchema;
@@ -46,9 +47,9 @@ type OptionalGroup<T extends Record<string, unknown>> =
 	| { [K in keyof T]?: never };
 
 export const createGroupedOptionalSchema = <
-	Schema extends z.ZodObject<any, any, any, any>
+	Schema extends z.ZodObject<any, any, any, any>,
 >(
-	schema: Schema
+	schema: Schema,
 ): z.Schema<OptionalGroup<z.infer<Schema>>> => {
 	return schema.or(
 		z.object(
@@ -57,9 +58,9 @@ export const createGroupedOptionalSchema = <
 					acc[key] = z.undefined();
 					return acc;
 				},
-				{} as Record<string, z.ZodUndefined>
-			)
-		)
+				{} as Record<string, z.ZodUndefined>,
+			),
+		),
 	);
 };
 
@@ -71,9 +72,9 @@ export type DefaultBulkResponseObj = z.ZodObject<
 >;
 
 export const createBulkResponseSchema = <
-	Schema extends z.ZodObject<any, any, any, any> = DefaultBulkResponseObj
+	Schema extends z.ZodObject<any, any, any, any> = DefaultBulkResponseObj,
 >(
-	input?: Schema
+	input?: Schema,
 ): z.Schema<BulkResponse<z.infer<Schema>>> => {
 	const schema = input ?? z.object({}).catchall(z.unknown());
 	const errorSchema = schema.extend({ error: z.string() });
@@ -86,15 +87,15 @@ export const createBulkResponseSchema = <
 
 export const dbDataSorter = <Type extends z.infer<typeof timestampSchema>>(
 	a: Type,
-	b: Type
+	b: Type,
 ): number => b.createdAt.diff(a.createdAt);
 
 export const createZodDbSchema = <
 	Schema extends Record<string, z.ZodTypeAny>,
-	Key extends keyof Schema
+	Key extends keyof Schema,
 >(
 	schema: Schema,
-	key: Key
+	key: Key,
 ) => {
 	const sansKeySchema = omit(schema, key);
 	const sansMetaZodSchema = z.strictObject(sansKeySchema);
@@ -126,8 +127,8 @@ export const schemaToGeneralTableColumns = <T extends Record<string, Field>>(
 	lists?: {
 		[K in keyof T as T[K]['type'] extends 'selection'
 			? K
-			: never]: App.DropdownOption<z.infer<T[K]['zod']>>[];
-	}
+			: never]: App.dropdownOption<z.infer<T[K]['zod']>>[];
+	},
 ) => {
 	return Object.values(fields).map<
 		GeneralTableColumn<Record<keyof T, unknown>>
@@ -139,7 +140,7 @@ export const schemaToGeneralTableColumns = <T extends Record<string, Field>>(
 			if (isDayjs(value)) {
 				if (!['date', 'time', 'datetime'].includes(field.type)) return '';
 				return value.format(
-					dayjsFormatPatterns[field.type as keyof typeof dayjsFormatPatterns]
+					dayjsFormatPatterns[field.type as keyof typeof dayjsFormatPatterns],
 				);
 			}
 			if (isValidElement(value)) return value;

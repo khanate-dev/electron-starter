@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Search as SearchIcon } from '@mui/icons-material';
 import {
 	Box,
 	InputAdornment,
@@ -7,14 +7,13 @@ import {
 	darken,
 	lighten,
 } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
+import { useEffect, useState } from 'react';
 
 import { csx, getOppositeColor } from '~/app/helpers/style';
 
-export type SearchBarProps = {
-	/** the styles to apply on the InputBase component */
-	sx?: Mui.SxProp;
+import type { Mui } from '~/app/types/mui';
 
+export type SearchBarProps = Mui.propsWithSx<{
 	/** the total rows in current view */
 	totalRows?: number;
 
@@ -26,7 +25,7 @@ export type SearchBarProps = {
 
 	/** should the search bar not be wrapped in a MUI grid component? */
 	noContainer?: boolean;
-};
+}>;
 
 export const SearchBar = ({
 	sx,
@@ -41,7 +40,9 @@ export const SearchBar = ({
 		const timeoutId = setTimeout(() => {
 			onChange(value);
 		}, 250);
-		return () => clearTimeout(timeoutId);
+		return () => {
+			clearTimeout(timeoutId);
+		};
 	}, [value, onChange]);
 
 	const content = (
@@ -103,7 +104,7 @@ export const SearchBar = ({
 							color: getOppositeColor,
 						},
 					},
-					sx
+					sx,
 				)}
 				startAdornment={
 					<InputAdornment position='start'>
@@ -113,7 +114,9 @@ export const SearchBar = ({
 						/>
 					</InputAdornment>
 				}
-				onChange={({ target }) => setValue(target.value)}
+				onChange={({ target }) => {
+					setValue(target.value);
+				}}
 			/>
 		</>
 	);

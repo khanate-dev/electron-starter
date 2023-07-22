@@ -1,15 +1,16 @@
 import { z } from 'zod';
 
-import { humanizeToken } from '~/shared/helpers/string';
 import { getCatchMessage } from '~/shared/errors';
+import { humanizeToken } from '~/shared/helpers/string';
 
+import type { InputHTMLAttributes, ReactNode } from 'react';
+import type { App } from '~/app/types/app';
 import type {
 	ZodDatetime,
 	ZodDbId,
 	ZodNumberSelection,
 	ZodStringSelection,
 } from '~/shared/helpers/schema';
-import type { InputHTMLAttributes } from 'react';
 import type { Utils } from '~/shared/types/utils';
 
 export type FormSchemaLists<
@@ -26,7 +27,7 @@ export type FormSchemaLists<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 > = Utils.filteredKeys<
 	Fields,
 	{ type: 'selection' } | { hasSuggestions: true }
@@ -36,7 +37,7 @@ export type FormSchemaLists<
 			/** the object containing option lists for dropdown element, if any */
 			lists: {
 				[K in Utils.filteredKeys<Fields, { type: 'selection' }>]: K extends Keys
-					? App.DropdownOption<
+					? App.dropdownOption<
 							Zod['shape'][K] extends z.ZodArray<infer U, 'atleastone' | 'many'>
 								? U extends BaseSelectionType
 									? z.infer<U>
@@ -107,7 +108,7 @@ type AgnosticSchemaField<T extends FormFieldZodType> = {
 
 type StringSchemaField<
 	Zod extends StringType,
-	WorkingObj extends Obj
+	WorkingObj extends Obj,
 > = AgnosticSchemaField<Zod> & {
 	type: 'string';
 
@@ -125,7 +126,7 @@ type StringSchemaField<
 
 type IntSchemaField<
 	Zod extends NumberType,
-	WorkingObj extends Obj
+	WorkingObj extends Obj,
 > = AgnosticSchemaField<Zod> & {
 	type: 'int';
 
@@ -140,7 +141,7 @@ type IntSchemaField<
 
 type FloatSchemaField<
 	Zod extends NumberType,
-	WorkingObj extends Obj
+	WorkingObj extends Obj,
 > = AgnosticSchemaField<Zod> & {
 	type: 'float';
 
@@ -163,7 +164,7 @@ export type SelectionSchemaField<
 	Type = Zod extends z.ZodArray<any>
 		? z.infer<Zod>[number]
 		: Exclude<z.infer<Zod>, null>,
-	Options = Type extends App.DropdownType ? App.DropdownOption<Type> : never
+	Options = Type extends App.dropdownType ? App.dropdownOption<Type> : never,
 > = AgnosticSchemaField<Zod> & {
 	type: 'selection';
 
@@ -180,7 +181,7 @@ type ReadonlySchemaField<Zod extends FormFieldZodType> = Omit<
 	AgnosticSchemaField<Zod>,
 	'isSortable'
 > & { type: 'readonly' } & (Zod extends z.AnyZodObject | z.ZodArray<any>
-		? { getValue: (row: z.infer<Zod>) => React.Node }
+		? { getValue: (row: z.infer<Zod>) => ReactNode }
 		: { getValue?: undefined });
 
 type DateSchemaField<Zod extends DateType> = AgnosticSchemaField<Zod> & {
@@ -193,7 +194,7 @@ type BooleanSchemaField<Zod extends BooleanType> = AgnosticSchemaField<Zod> & {
 
 export type FormSchemaField<
 	Zod extends FormFieldZodType,
-	WorkingObj extends Obj
+	WorkingObj extends Obj,
 > = Zod extends StringType
 	? StringSchemaField<Zod, WorkingObj> | ReadonlySchemaField<Zod>
 	: Zod extends SelectionType
@@ -227,7 +228,7 @@ type FormSchemaConstructor<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 > = {
 	/** schema's name */
 	name: string;
@@ -244,7 +245,7 @@ type FormSchemaConstructor<
 
 const transformSchema = <T extends z.ZodSchema, D extends boolean>(
 	input: T,
-	isDefault?: D
+	isDefault?: D,
 ): D extends true ? z.ZodCatch<T> : T => {
 	let zod;
 	let def = null;
@@ -297,7 +298,7 @@ export class FormSchema<
 	},
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
-	}
+	},
 > {
 	/** schema's name */
 	name: string;
@@ -341,97 +342,100 @@ export class FormSchema<
 		this.label = schema.label ?? humanizeToken(schema.name);
 		this.fields = (
 			Object.entries(schema.fields) as [Keys, (typeof schema.fields)[Keys]][]
-		).reduce<typeof this.fields>((obj, [key, field]) => {
-			try {
-				const fz = schema.zod.shape[key] as unknown as Zod['shape'][Keys];
-				const zod = transformSchema(fz);
-				zodObject[key] = zod as Zod['shape'][Keys];
-				defaultZodObject[key] = transformSchema(fz, true) as z.ZodCatch<
-					Zod['shape'][Keys]
-				>;
+		).reduce<typeof this.fields>(
+			(obj, [key, field]) => {
+				try {
+					const fz = schema.zod.shape[key] as unknown as Zod['shape'][Keys];
+					const zod = transformSchema(fz);
+					zodObject[key] = zod as Zod['shape'][Keys];
+					defaultZodObject[key] = transformSchema(fz, true) as z.ZodCatch<
+						Zod['shape'][Keys]
+					>;
 
-				obj[key] = {
-					...field,
-					name: key,
-					label: field.label ?? humanizeToken(String(key)),
-					zod,
-				} as (typeof obj)[typeof key];
+					obj[key] = {
+						...field,
+						name: key,
+						label: field.label ?? humanizeToken(String(key)),
+						zod,
+					} as (typeof obj)[typeof key];
 
-				if (
-					field.type !== 'string' &&
-					field.type !== 'int' &&
-					field.type !== 'float'
-				)
-					return obj;
+					if (
+						field.type !== 'string' &&
+						field.type !== 'int' &&
+						field.type !== 'float'
+					)
+						return obj;
 
-				let inputProps: undefined | InputHTMLAttributes<HTMLInputElement>;
-				switch (field.type) {
-					case 'string': {
-						let minLength = undefined;
-						let maxLength = undefined;
-						if (fz instanceof z.ZodString) {
-							minLength = fz.minLength ?? undefined;
-							maxLength = fz.maxLength ?? undefined;
-						} else if (fz instanceof z.ZodNullable) {
-							const inner = fz.unwrap();
-							if (!(inner instanceof z.ZodString))
+					let inputProps: undefined | InputHTMLAttributes<HTMLInputElement>;
+					switch (field.type) {
+						case 'string': {
+							let minLength = undefined;
+							let maxLength = undefined;
+							if (fz instanceof z.ZodString) {
+								minLength = fz.minLength ?? undefined;
+								maxLength = fz.maxLength ?? undefined;
+							} else if (fz instanceof z.ZodNullable) {
+								const inner = fz.unwrap();
+								if (!(inner instanceof z.ZodString))
+									throw new Error(`${key.toString()} must be a string schema`);
+								minLength = inner.minLength ?? undefined;
+								maxLength = inner.maxLength ?? undefined;
+								if (minLength !== undefined || maxLength !== undefined)
+									inputProps = { min: minLength, max: maxLength };
+							} else {
 								throw new Error(`${key.toString()} must be a string schema`);
-							minLength = inner.minLength ?? undefined;
-							maxLength = inner.maxLength ?? undefined;
+							}
 							if (minLength !== undefined || maxLength !== undefined)
-								inputProps = { min: minLength, max: maxLength };
-						} else {
-							throw new Error(`${key.toString()} must be a string schema`);
+								inputProps = { minLength, maxLength };
+							break;
 						}
-						if (minLength !== undefined || maxLength !== undefined)
-							inputProps = { minLength, maxLength };
-						break;
-					}
-					default: {
-						let min = undefined;
-						let max = undefined;
-						if (fz instanceof z.ZodNumber) {
-							min = fz.minValue ?? undefined;
-							max = fz.maxValue ?? undefined;
-						} else if (fz instanceof z.ZodNullable) {
-							const inner = fz.unwrap();
-							if (!(inner instanceof z.ZodNumber))
+						default: {
+							let min = undefined;
+							let max = undefined;
+							if (fz instanceof z.ZodNumber) {
+								min = fz.minValue ?? undefined;
+								max = fz.maxValue ?? undefined;
+							} else if (fz instanceof z.ZodNullable) {
+								const inner = fz.unwrap();
+								if (!(inner instanceof z.ZodNumber))
+									throw new Error(`${key.toString()} must be a number schema`);
+								min = inner.minValue ?? undefined;
+								max = inner.maxValue ?? undefined;
+								if (min !== undefined || max !== undefined)
+									inputProps = { min, max };
+							} else {
 								throw new Error(`${key.toString()} must be a number schema`);
-							min = inner.minValue ?? undefined;
-							max = inner.maxValue ?? undefined;
+							}
 							if (min !== undefined || max !== undefined)
 								inputProps = { min, max };
-						} else {
-							throw new Error(`${key.toString()} must be a number schema`);
+							break;
 						}
-						if (min !== undefined || max !== undefined)
-							inputProps = { min, max };
-						break;
 					}
+					if (!inputProps) return obj;
+					if (typeof field.inputProps === 'function') {
+						const passed = field.inputProps;
+						obj[key] = {
+							...obj[key],
+							inputProps: (state: WorkingObj) => {
+								const returned = passed(state);
+								return { ...returned, ...inputProps };
+							},
+						};
+					} else {
+						obj[key] = {
+							...obj[key],
+							inputProps: { ...field.inputProps, ...inputProps },
+						};
+					}
+					return obj;
+				} catch (error) {
+					throw new Error(
+						`invalid ${this.name} form schema: ${getCatchMessage(error)}`,
+					);
 				}
-				if (!inputProps) return obj;
-				if (typeof field.inputProps === 'function') {
-					const passed = field.inputProps;
-					obj[key] = {
-						...obj[key],
-						inputProps: (state: WorkingObj) => {
-							const returned = passed(state);
-							return { ...returned, ...inputProps };
-						},
-					};
-				} else {
-					obj[key] = {
-						...obj[key],
-						inputProps: { ...field.inputProps, ...inputProps },
-					};
-				}
-				return obj;
-			} catch (error) {
-				throw new Error(
-					`invalid ${this.name} form schema: ${getCatchMessage(error)}`
-				);
-			}
-		}, {} as typeof this.fields);
+			},
+			{} as typeof this.fields,
+		);
 		this.fieldsArray = Object.values(this.fields);
 		this.zod = z.strictObject(zodObject) as unknown as Zod;
 		this.defaultZod = z.object(defaultZodObject).strip();

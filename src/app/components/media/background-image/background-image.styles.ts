@@ -1,9 +1,10 @@
-import { lighten, darken, alpha } from '@mui/material';
+import { alpha, darken, lighten } from '@mui/material';
 
+import type { Mui } from '~/app/types/mui';
 import type { BackgroundImageProps } from './background-image.component';
 
 export const getBackgroundImageStyles = (
-	opacity: BackgroundImageProps['opacity']
+	opacity: BackgroundImageProps['opacity'],
 ) => {
 	const offsets = {
 		light: {
@@ -71,5 +72,5 @@ export const getBackgroundImageStyles = (
 			fill: ({ palette }) =>
 				darken(palette.secondary.main, offsets[palette.mode].more),
 		},
-	} satisfies Mui.SxStyleObj;
+	} satisfies Mui.sxStyleObj;
 };

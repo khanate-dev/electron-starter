@@ -1,24 +1,24 @@
+import { Link } from '@mui/material';
 import { forwardRef } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
-import { Link } from '@mui/material';
 
 import { humanizeToken } from '~/shared/helpers/string';
 
-import type { Ref } from 'react';
 import type { LinkProps } from '@mui/material';
+import type { ReactNode, Ref } from 'react';
 
 export type AppLinkProps = {
 	/** the relative route for this link */
 	to: string;
 
 	/** the label of the link */
-	label?: React.Node;
+	label?: ReactNode;
 } & LinkProps;
 
 export const AppLink = forwardRef(
 	(
 		{ sx, to, label, children, ...linkProps }: AppLinkProps,
-		ref: Ref<HTMLAnchorElement>
+		ref: Ref<HTMLAnchorElement>,
 	) => {
 		return (
 			<Link
@@ -33,7 +33,7 @@ export const AppLink = forwardRef(
 				{children ?? label ?? humanizeToken(to.replace(/\//gu, ' ').trim())}
 			</Link>
 		);
-	}
+	},
 );
 
 AppLink.displayName = 'AppLink';

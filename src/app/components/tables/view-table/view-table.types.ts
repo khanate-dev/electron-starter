@@ -1,3 +1,4 @@
+import type { AnyZodObject, z } from 'zod';
 import type { FieldAction } from '~/app/components/app/field-actions';
 import type {
 	GeneralTableAction,
@@ -5,10 +6,10 @@ import type {
 	GeneralTableStyles,
 } from '~/app/components/tables/general-table';
 import type { ViewSchema, ViewSchemaField } from '~/app/schemas';
-import type { AnyZodObject, z } from 'zod';
+import type { Mui } from '~/app/types/mui';
 
 export type ViewTableStyles = {
-	actionHeader?: Mui.SxProp;
+	actionHeader?: Mui.sxProp;
 } & GeneralTableStyles;
 
 type InheritedProps<Type extends Obj> = Pick<
@@ -29,7 +30,7 @@ export type ViewTableProps<
 		[K in keyof Zod['shape']]?: ViewSchemaField<Zod['shape'][K]>;
 	},
 	PK extends keyof Zod['shape'],
-	ID extends keyof Zod['shape']
+	ID extends keyof Zod['shape'],
 > = {
 	/** the schema to use for the table */
 	schema: ViewSchema<Zod, Fields, PK, ID>;

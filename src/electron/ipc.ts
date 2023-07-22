@@ -20,7 +20,9 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 		baudRate: 9600,
 	});
 
-	ipcMain.on('appExit', (_, exitCode) => app.exit(exitCode));
+	ipcMain.on('appExit', (_, exitCode) => {
+		app.exit(exitCode);
+	});
 
 	ipcMain.handle('barCodeConnect', async () => {
 		return new Promise<void>((resolve, reject) => {
@@ -45,7 +47,9 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	});
 
 	reader.on('data', (data) => {
-		const dataString = data.toString('utf-8');
+		const dataString = (
+			data as { toString(encoding: string): string }
+		).toString('utf-8');
 		const newBarCodeScan = parseInt(dataString);
 		ipcMain.send('barCodeListen', mainWindow, newBarCodeScan);
 	});

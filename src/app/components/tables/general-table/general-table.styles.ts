@@ -1,6 +1,7 @@
-import { lighten, darken, alpha } from '@mui/material';
+import { alpha, darken, lighten } from '@mui/material';
 
 import type { Theme } from '@mui/material';
+import type { Mui } from '~/app/types/mui';
 
 const getBorderColor = ({ palette }: Theme) => {
 	switch (palette.mode) {
@@ -14,7 +15,7 @@ const getBorderColor = ({ palette }: Theme) => {
 const offsetColor = (
 	{ palette }: Theme,
 	coefficient: number,
-	shade: 'primary' | 'secondary' | 'success' = 'primary'
+	shade: 'primary' | 'secondary' | 'success' = 'primary',
 ) => {
 	const colorAdjust = palette.mode === 'light' ? lighten : alpha;
 	const offsetCoefficient =
@@ -288,4 +289,4 @@ export const generalTableStyles = {
 			},
 		},
 	},
-} satisfies Mui.SxStyleObj;
+} satisfies Mui.sxStyleObj;

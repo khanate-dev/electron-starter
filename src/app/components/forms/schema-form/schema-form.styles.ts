@@ -1,3 +1,5 @@
+import type { Mui } from '~/app/types/mui';
+
 export const formPageStyles = {
 	form: {
 		flexGrow: 1,
@@ -31,4 +33,4 @@ export const formPageStyles = {
 		gap: 2,
 		justifyContent: 'center',
 	},
-} satisfies Mui.SxStyleObj;
+} satisfies Mui.sxStyleObj;

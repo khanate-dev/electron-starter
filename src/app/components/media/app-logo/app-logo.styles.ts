@@ -1,16 +1,17 @@
 import type { Theme } from '@mui/material';
+import type { Mui } from '~/app/types/mui';
 import type { AppLogoProps } from './app-logo.component';
 
 const getColor = (
 	theme: Theme,
-	color: Exclude<AppLogoProps['color'], undefined>
+	color: Exclude<AppLogoProps['color'], undefined>,
 ) =>
 	({
 		primary: theme.palette.primary.main,
 		secondary: theme.palette.secondary.main,
 		white: theme.palette.common.white,
 		black: theme.palette.common.black,
-	}[color]);
+	})[color];
 
 export const getAppLogoStyles = ({
 	width,
@@ -31,5 +32,5 @@ export const getAppLogoStyles = ({
 		secondary: {
 			fill: (theme) => getColor(theme, secondary),
 		},
-	} satisfies Mui.SxStyleObj;
+	} satisfies Mui.sxStyleObj;
 };

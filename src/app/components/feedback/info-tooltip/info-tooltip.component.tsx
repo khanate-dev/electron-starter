@@ -19,7 +19,7 @@ export const InfoTooltip = ({
 			sx={csx({ textAlign: 'center' }, sx)}
 			open={open}
 			PopperComponent={(popperProps) => (
-				<ClickAwayListener onClickAway={() => setOpen(false)}>
+				<ClickAwayListener onClickAway={() => { setOpen(false); }}>
 					<Popper {...popperProps} />
 				</ClickAwayListener>
 			)}
@@ -33,7 +33,7 @@ export const InfoTooltip = ({
 		>
 			<IconButton
 				sx={{ padding: 0 }}
-				onClick={() => setOpen(!open)}
+				onClick={() => { setOpen(!open); }}
 			>
 				<InfoIcon color='info' />
 			</IconButton>

@@ -1,35 +1,36 @@
-import { Box } from '@mui/material';
 import {
+	Add as AddIcon,
 	Delete as DeleteIcon,
 	FileCopy as DuplicateIcon,
-	Add as AddIcon,
 	Send as SubmitIcon,
 } from '@mui/icons-material';
-import { z } from 'zod';
+import { Box } from '@mui/material';
 import { useState } from 'react';
+import { z } from 'zod';
 
-import { csx } from '~/app/helpers/style';
-import { _localIdSchema, createLocalId } from '~/shared/helpers/data';
-import { FormField } from '~/app/components/forms/form-field';
 import { CustomButton } from '~/app/components/controls/custom-button';
-import { GeneralTable } from '~/app/components/tables/general-table';
 import { GeneralDialog } from '~/app/components/dialogs/general-dialog';
+import { FormField } from '~/app/components/forms/form-field';
+import { GeneralTable } from '~/app/components/tables/general-table';
 import { ResponseTable } from '~/app/components/tables/response-table';
+import { csx } from '~/app/helpers/style';
 import { isStatusAction, useStatus } from '~/app/hooks/status';
+import { _localIdSchema, createLocalId } from '~/shared/helpers/data';
 
 import { formTableStyles as styles } from './form-table.styles';
 
 import type {
-	GeneralTableColumn,
 	GeneralTableAction,
+	GeneralTableColumn,
 } from '~/app/components/tables/general-table';
-import type { FormTableProps } from './form-table.types';
+import type { BulkResponse } from '~/app/helpers/api';
 import type {
 	BaseSelectionType,
 	FormFieldZodType,
 	FormSchemaField,
 } from '~/app/schemas';
-import type { BulkResponse } from '~/app/helpers/api';
+import type { App } from '~/app/types/app';
+import type { FormTableProps } from './form-table.types';
 
 export const FormTable = <
 	Zod extends z.ZodObject<Record<string, FormFieldZodType>, 'strict'>,
@@ -46,7 +47,7 @@ export const FormTable = <
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
 	},
-	Type extends App.WithLocalId<WorkingObj>
+	Type extends App.withLocalId<WorkingObj>,
 >({
 	schema,
 	formId,
@@ -65,7 +66,7 @@ export const FormTable = <
 	disableSorting,
 }: FormTableProps<Zod, Keys, WorkingObj, Fields, Type>) => {
 	const [response, setResponse] = useState<null | BulkResponse<
-		App.WithLocalId<z.infer<Zod>>
+		App.withLocalId<z.infer<Zod>>
 	>>(null);
 
 	const {
@@ -100,7 +101,8 @@ export const FormTable = <
 				actions={actions?.field?.[field.name]}
 				disableActions={actions?.disabled}
 				fullButtonActions={actions?.fullButtons}
-				options={(lists?.[field.name] ?? []) as never}
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				options={(lists?.[field.name as never] ?? []) as never}
 				sx={csx(
 					passedStyles?.formField,
 					field.type === 'boolean' && passedStyles?.formCheckbox,
@@ -110,7 +112,7 @@ export const FormTable = <
 						field.type === 'int' ||
 						field.type === 'float') &&
 						passedStyles?.formTextField,
-					styles.textField
+					styles.textField,
 				)}
 				formValues={
 					data.find((current) => row._localId === current._localId) as Type
@@ -118,7 +120,7 @@ export const FormTable = <
 				noLabel
 				onChange={(value) => {
 					const affected = data.find(
-						({ _localId }) => _localId === row._localId
+						({ _localId }) => _localId === row._localId,
 					);
 					if (!affected) return;
 					const key = field.name;
@@ -153,8 +155,10 @@ export const FormTable = <
 				color={'success'}
 				disabled={actions.disabled || props?.disabled}
 				isBusy={isBusy}
-				onClick={() => addRow()}
-			/>
+				onClick={() => {
+					addRow();
+				}}
+			/>,
 		);
 	}
 
@@ -170,7 +174,7 @@ export const FormTable = <
 				type='submit'
 				disabled={actions.disabled || props?.disabled || !data.length}
 				isBusy={isBusy}
-			/>
+			/>,
 		);
 	}
 
@@ -199,7 +203,7 @@ export const FormTable = <
 
 				onChange(
 					data.filter((curr) => curr !== affected),
-					{ reason: 'delete', affected }
+					{ reason: 'delete', affected },
 				);
 			},
 			color: 'error',
@@ -221,16 +225,20 @@ export const FormTable = <
 					event.preventDefault();
 					updateStatus({ type: 'loading' });
 					const parseSchema = z.array(
-						schema.zod.extend({ _localId: _localIdSchema }).strip()
+						schema.zod.extend({ _localId: _localIdSchema }).strip(),
 					);
 					const res = await onSubmit(parseSchema.parse(data) as never);
-					if (isStatusAction(res)) return updateStatus(res);
+					if (isStatusAction(res)) {
+						updateStatus(res);
+						return;
+					}
 					if (typeof res === 'string') {
-						return updateStatus({
+						updateStatus({
 							type: 'success',
 							message: res,
 							ephemeral: true,
 						});
+						return;
 					}
 					if (res) setResponse(res);
 					updateStatus({ type: 'idle' });
@@ -257,7 +265,9 @@ export const FormTable = <
 					sx={{ height: '90vh' }}
 					title={`${schema.label} Response`}
 					maxWidth='lg'
-					onClose={() => setResponse(null)}
+					onClose={() => {
+						setResponse(null);
+					}}
 				>
 					<ResponseTable
 						schema={schema}

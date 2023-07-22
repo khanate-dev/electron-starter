@@ -3,11 +3,9 @@ import { Checkbox, FormControlLabel, alpha } from '@mui/material';
 import { csx, getOppositeColor } from '~/app/helpers/style';
 
 import type { CheckboxProps } from '@mui/material';
+import type { Mui } from '~/app/types/mui';
 
-export type FormCheckboxProps = {
-	/** the styles to pass to the underlying form component */
-	sx?: Mui.SxProp;
-
+export type FormCheckboxProps = Mui.propsWithSx<{
 	/** the size of the form field */
 	size: CheckboxProps['size'];
 
@@ -28,7 +26,7 @@ export type FormCheckboxProps = {
 
 	/** is the form field in disabled state? */
 	disabled?: boolean;
-};
+}>;
 
 export const FormCheckbox = ({
 	sx: passedSx,
@@ -62,9 +60,11 @@ export const FormCheckbox = ({
 					flexGrow: 0,
 					flexShrink: 0,
 					marginInline: 'auto',
-				}
+				},
 			)}
-			onChange={() => onChange(!value)}
+			onChange={() => {
+				onChange(!value);
+			}}
 		/>
 	);
 
@@ -90,7 +90,7 @@ export const FormCheckbox = ({
 						borderColor: value ? getOppositeColor : 'action.active',
 					},
 				},
-				sx
+				sx,
 			)}
 		/>
 	);

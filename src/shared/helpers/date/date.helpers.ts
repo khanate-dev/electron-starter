@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import { default as dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
@@ -33,7 +33,7 @@ export const getDateOrNull = (value: unknown): null | Date => {
 
 export const compareDate = (
 	first: string | Date,
-	second: string | Date
+	second: string | Date,
 ): number => new Date(first).getTime() - new Date(second).getTime();
 
 export const dayjsFormatPatterns = {

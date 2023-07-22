@@ -1,3 +1,4 @@
+import type { z } from 'zod';
 import type { FieldAction } from '~/app/components/app/field-actions';
 import type {
 	GeneralTableAction,
@@ -14,7 +15,8 @@ import type {
 	FormSchemaField,
 	FormSchemaLists,
 } from '~/app/schemas';
-import type { z } from 'zod';
+import type { App } from '~/app/types/app';
+import type { Mui } from '~/app/types/mui';
 import type { Utils } from '~/shared/types/utils';
 
 export type FormTableFormStyles = Partial<
@@ -25,7 +27,7 @@ export type FormTableFormStyles = Partial<
 		| 'formCheckbox'
 		| 'formReadonly'
 		| 'formTextField',
-		Mui.SxProp
+		Mui.sxProp
 	>
 >;
 
@@ -46,7 +48,7 @@ export type FormTableProps<
 	Fields extends {
 		[K in Keys]: FormSchemaField<Zod['shape'][K], WorkingObj>;
 	},
-	Type extends App.WithLocalId<WorkingObj>
+	Type extends App.withLocalId<WorkingObj>,
 > = Pick<
 	GeneralTableProps<Type>,
 	| 'data'
@@ -69,7 +71,7 @@ export type FormTableProps<
 		details:
 			| { reason: 'delete-all'; affected: Type[] }
 			| { reason: 'add' | 'delete'; affected: Type }
-			| { reason: 'update'; affected: Type; key: keyof Type }
+			| { reason: 'update'; affected: Type; key: keyof Type },
 	) => void;
 
 	/**
@@ -82,9 +84,9 @@ export type FormTableProps<
 	 * - `void` the form status is set to idle
 	 */
 	onSubmit: (
-		parsedData: App.WithLocalId<z.infer<Zod>>[]
+		parsedData: App.withLocalId<z.infer<Zod>>[],
 	) => Promise<
-		void | string | StatusAction | BulkResponse<App.WithLocalId<z.infer<Zod>>>
+		void | string | StatusAction | BulkResponse<App.withLocalId<z.infer<Zod>>>
 	>;
 
 	/** the styles to apply to table components. @default {} */
