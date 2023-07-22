@@ -1,9 +1,9 @@
 import { getCatchMessage } from '~/shared/errors';
 import { createBulkResponseSchema } from '~/shared/helpers/schema';
 
-import type { DefaultBulkResponseObj } from '~/shared/helpers/schema';
-import type { BulkResponse } from '~/app/helpers/api';
 import type { z } from 'zod';
+import type { BulkResponse } from '~/app/helpers/api';
+import type { DefaultBulkResponseObj } from '~/shared/helpers/schema';
 import type { Utils } from '~/shared/types/utils';
 
 export const readableTypeOf = (value: unknown) => {
@@ -24,14 +24,14 @@ export const assertObject: Utils.assertFunction<Obj> = (value) => {
 
 export const isArray = <Type = unknown>(
 	value: unknown,
-	checker?: (value: unknown) => value is Type
+	checker?: (value: unknown) => value is Type,
 ): value is Type[] => {
 	return Array.isArray(value) && (!checker || value.every(checker));
 };
 
 type AssertArray = <Type = unknown>(
 	value: unknown,
-	checker?: Utils.assertFunction<Type>
+	checker?: Utils.assertFunction<Type>,
 ) => asserts value is Type[];
 
 export const assertArray: AssertArray = (value, checker) => {
@@ -47,10 +47,10 @@ export const assertArray: AssertArray = (value, checker) => {
 
 export const excludeString = <
 	const T extends string | undefined,
-	const U extends string
+	const U extends string,
 >(
 	input: T,
-	excludeList: U | Readonly<U[]>
+	excludeList: U | Readonly<U[]>,
 ) => {
 	return (
 		(Array.isArray(excludeList) &&
@@ -62,10 +62,10 @@ export const excludeString = <
 };
 
 export const isBulkResponse = <
-	Schema extends z.ZodObject<any, any, any, any> = DefaultBulkResponseObj
+	Schema extends z.ZodObject<any, any, any, any> = DefaultBulkResponseObj,
 >(
 	value: any,
-	schema?: Schema
+	schema?: Schema,
 ): value is BulkResponse<z.infer<Schema>> => {
 	return createBulkResponseSchema(schema).safeParse(value).success;
 };

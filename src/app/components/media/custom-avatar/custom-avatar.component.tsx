@@ -33,7 +33,7 @@ export const CustomAvatar = ({
 					fontWeight: 'bold',
 					fontSize: '1.5rem',
 				},
-				sx
+				sx,
 			)}
 		>
 			{showFallback && avatarProps.alt?.[0]?.toUpperCase()}

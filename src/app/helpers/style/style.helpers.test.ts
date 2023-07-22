@@ -36,6 +36,6 @@ describe('test cx helper', () => {
 		({ input, output }) => {
 			const response = cx(...input);
 			expect(response).toStrictEqual(output);
-		}
+		},
 	);
 });

@@ -1,11 +1,11 @@
-import path from 'path';
-import fs from 'fs';
 import { spawn } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerSquirrel } from '@electron-forge/maker-squirrel';
-import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
+import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import { PublisherGithub } from '@electron-forge/publisher-github';
 
 import { electronConfig } from './src/electron/config';
@@ -120,9 +120,9 @@ const config: ForgeConfig = {
 										'@serialport',
 										'bindings-cpp',
 										'prebuilds',
-										binaryFolder
+										binaryFolder,
 									),
-									{ recursive: true, force: true }
+									{ recursive: true, force: true },
 								);
 							});
 						}
@@ -130,7 +130,7 @@ const config: ForgeConfig = {
 						resolve();
 					} else {
 						reject(
-							new Error(`process finished with error code ${code ?? 'null'}`)
+							new Error(`process finished with error code ${code ?? 'null'}`),
 						);
 					}
 				});

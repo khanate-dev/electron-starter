@@ -4,7 +4,7 @@ import { getCatchMessage } from '~/shared/errors';
 
 export const addToast = (
 	message: unknown,
-	type: 'info' | 'error' | 'success' | 'loading' = 'error'
+	type: 'info' | 'error' | 'success' | 'loading' = 'error',
 ): string => {
 	const string = getCatchMessage(message);
 	if (type === 'info') return toast(string);
@@ -13,7 +13,7 @@ export const addToast = (
 
 export const promiseToast = (
 	promise: Promise<any>,
-	variation: 'loading' | 'submitting'
+	variation: 'loading' | 'submitting',
 ) => {
 	toast.promise(promise, {
 		loading: {
@@ -28,4 +28,6 @@ export const promiseToast = (
 	});
 };
 
-export const removeToast = (id: string) => { toast.dismiss(id); };
+export const removeToast = (id: string) => {
+	toast.dismiss(id);
+};

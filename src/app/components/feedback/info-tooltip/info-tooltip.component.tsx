@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { ClickAwayListener, IconButton, Popper } from '@mui/material';
 import { InfoOutlined as InfoIcon } from '@mui/icons-material';
+import { ClickAwayListener, IconButton, Popper } from '@mui/material';
+import { useState } from 'react';
 
-import { csx } from '~/app/helpers/style';
 import { CustomTooltip } from '~/app/components/feedback/custom-tooltip';
+import { csx } from '~/app/helpers/style';
 
 import type { CustomTooltipProps } from '~/app/components/feedback/custom-tooltip';
 
@@ -19,7 +19,11 @@ export const InfoTooltip = ({
 			sx={csx({ textAlign: 'center' }, sx)}
 			open={open}
 			PopperComponent={(popperProps) => (
-				<ClickAwayListener onClickAway={() => { setOpen(false); }}>
+				<ClickAwayListener
+					onClickAway={() => {
+						setOpen(false);
+					}}
+				>
 					<Popper {...popperProps} />
 				</ClickAwayListener>
 			)}
@@ -33,7 +37,9 @@ export const InfoTooltip = ({
 		>
 			<IconButton
 				sx={{ padding: 0 }}
-				onClick={() => { setOpen(!open); }}
+				onClick={() => {
+					setOpen(!open);
+				}}
 			>
 				<InfoIcon color='info' />
 			</IconButton>

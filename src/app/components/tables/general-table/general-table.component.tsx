@@ -1,4 +1,9 @@
 import {
+	RemoveCircleOutlineRounded as EmptyIcon,
+	ArrowDownwardRounded as SortAscendingIcon,
+	ArrowUpwardRounded as SortDescendingIcon,
+} from '@mui/icons-material';
+import {
 	Box,
 	CircularProgress,
 	Stack,
@@ -11,27 +16,22 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material';
-import {
-	ArrowUpwardRounded as SortDescendingIcon,
-	ArrowDownwardRounded as SortAscendingIcon,
-	RemoveCircleOutlineRounded as EmptyIcon,
-} from '@mui/icons-material';
 
+import { CustomButton } from '~/app/components/controls/custom-button';
 import { PAGINATION_SIZES } from '~/app/config';
+import { csx } from '~/app/helpers/style';
+import { useFiltering } from '~/app/hooks/filtering';
 import { usePagination } from '~/app/hooks/pagination';
 import { useSorting } from '~/app/hooks/sorting';
-import { useFiltering } from '~/app/hooks/filtering';
-import { csx } from '~/app/helpers/style';
 import { humanizeToken } from '~/shared/helpers/string';
-import { CustomButton } from '~/app/components/controls/custom-button';
 
-import { generalTableCommonStyles } from './general-table.types';
 import { generalTableStyles as styles } from './general-table.styles';
+import { generalTableCommonStyles } from './general-table.types';
 
 import type {
-	GeneralTableStyles,
-	GeneralTableProps,
 	GeneralTableColumn,
+	GeneralTableProps,
+	GeneralTableStyles,
 } from './general-table.types';
 
 const SMALLEST_PAGINATION = Math.min(...PAGINATION_SIZES);
@@ -57,7 +57,7 @@ export const GeneralTable = <Type extends Obj>({
 			...object,
 			[style]: csx(styles[style], passedStyles?.[style]),
 		}),
-		{} as Required<GeneralTableStyles>
+		{} as Required<GeneralTableStyles>,
 	);
 
 	const { filterJsx, filteredData } = useFiltering(passedData, !hasFiltering);
@@ -65,7 +65,7 @@ export const GeneralTable = <Type extends Obj>({
 	const { sorting, updateSorting, sortedData } = useSorting(
 		filteredData,
 		disableSorting,
-		defaultSorting
+		defaultSorting,
 	);
 
 	const {
@@ -134,12 +134,14 @@ export const GeneralTable = <Type extends Obj>({
 						label={action.label ?? humanizeToken(action.name)}
 						isIcon={!fullActionButtons}
 						disabled={isBusy || action.disabled}
-						onClick={() => { onClick(row); }}
+						onClick={() => {
+							onClick(row);
+						}}
 					/>
 				),
 				hidden,
 				isAction: true,
-			})
+			}),
 		) ?? []),
 	].filter((row) => !row.hidden);
 
@@ -166,7 +168,7 @@ export const GeneralTable = <Type extends Obj>({
 											styles.fullActionHeader,
 										column.isImage && styles.imageHeader,
 										column.isCheckbox && styles.checkboxHeader,
-										column.isRowNumber && styles.rowNumberHeader
+										column.isRowNumber && styles.rowNumberHeader,
 									)}
 								>
 									<>
@@ -175,7 +177,9 @@ export const GeneralTable = <Type extends Obj>({
 											<Box
 												component='span'
 												data-active={sorting.column === column.id}
-												onClick={() => { updateSorting(column.id); }}
+												onClick={() => {
+													updateSorting(column.id);
+												}}
 											>
 												{sorting.column !== column.id ||
 												sorting.direction !== 'descending' ? (
@@ -214,7 +218,7 @@ export const GeneralTable = <Type extends Obj>({
 											column.isAction && styles.actionCell,
 											column.isImage && styles.imageCell,
 											column.isCheckbox && styles.checkboxCell,
-											column.isRowNumber && styles.rowNumberCell
+											column.isRowNumber && styles.rowNumberCell,
 										)}
 									>
 										{column.getBodyContent(row, index)}
@@ -247,7 +251,9 @@ export const GeneralTable = <Type extends Obj>({
 										count={totalRows}
 										rowsPerPage={pageSize}
 										page={currentPage}
-										onPageChange={(_event, page) => { setCurrentPage(page); }}
+										onPageChange={(_event, page) => {
+											setCurrentPage(page);
+										}}
 										onRowsPerPageChange={({ target }) => {
 											const newSize = Number(target.value);
 											if (!PAGINATION_SIZES.includes(newSize)) return;

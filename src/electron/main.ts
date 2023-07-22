@@ -4,8 +4,8 @@ import installExtension, {
 	REACT_DEVELOPER_TOOLS,
 } from 'electron-devtools-assembler';
 
-import { setupIpc } from './ipc';
 import { electronConfig } from './config';
+import { setupIpc } from './ipc';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) app.quit();
@@ -54,7 +54,7 @@ const createWindow = () => {
 		(_, permission, callback) => {
 			const allowed: (typeof permission)[] = ['clipboard-read', 'fullscreen'];
 			callback(allowed.includes(permission));
-		}
+		},
 	);
 
 	// Setup IPC handlers and listeners.

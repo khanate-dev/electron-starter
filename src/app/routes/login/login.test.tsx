@@ -1,6 +1,6 @@
+import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
 
 import { renderWithProviders } from '~/shared/helpers/test';
 
@@ -16,7 +16,7 @@ const setup = async (
 	{ username, password, shouldClick }: SetupParams = {
 		username: '',
 		password: '',
-	}
+	},
 ) => {
 	const user = userEvent.setup();
 

@@ -1,9 +1,9 @@
 import { createHashRouter } from 'react-router-dom';
 
+import { ErrorBoundary } from '~/app/components/app/error-boundary';
+import { Providers } from '~/app/components/app/providers';
 import { Dashboard, dashboardRoutes } from '~/app/routes/dashboard';
 import { Welcome } from '~/app/routes/dashboard/welcome';
-import { Providers } from '~/app/components/app/providers';
-import { ErrorBoundary } from '~/app/components/app/error-boundary';
 import { Login } from '~/app/routes/login';
 
 import { Example } from './routes/example';

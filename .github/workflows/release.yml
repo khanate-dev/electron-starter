@@ -14,15 +14,14 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-
       - name: Checkout Code
         uses: actions/checkout@v2
 
       - name: Check or Install Node.js
         uses: actions/setup-node@v2
         with:
-         node-version-file: '.nvmrc'
-         architecture: 'x64'
+          node-version-file: '.nvmrc'
+          architecture: 'x64'
 
       - name: Install Dependencies
         run: npm i

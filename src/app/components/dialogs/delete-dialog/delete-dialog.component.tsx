@@ -1,7 +1,7 @@
-import { Typography, Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import { useStatus } from '~/app/hooks/status';
 import { GeneralDialog } from '~/app/components/dialogs/general-dialog';
+import { useStatus } from '~/app/hooks/status';
 
 import { deleteDialogStyles as styles } from './delete-dialog.styles';
 

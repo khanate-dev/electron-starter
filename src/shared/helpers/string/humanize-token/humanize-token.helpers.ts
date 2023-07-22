@@ -1,8 +1,8 @@
 import {
 	alphabet,
 	lowerAlphabet,
-	wordSeparators,
 	upperAlphabet,
+	wordSeparators,
 } from '~/shared/helpers/string';
 
 export const humanizeCases = ['lower', 'sentence', 'title', 'upper'] as const;
@@ -17,7 +17,7 @@ export type HumanizeCase = (typeof humanizeCases)[number];
  */
 export const humanizeToken = (
 	input: string,
-	casing: HumanizeCase = 'title'
+	casing: HumanizeCase = 'title',
 ): string => {
 	const string = input.trim();
 	if (!string.trim()) return '';

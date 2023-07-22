@@ -1,13 +1,13 @@
 import { BlurOn as NoIcon } from '@mui/icons-material';
 import { SvgIcon } from '@mui/material';
 
-import { objectEntries } from '~/shared/helpers/object';
 import * as icons from '~/app/components/media/icons';
+import { objectEntries } from '~/shared/helpers/object';
 import { formatToken } from '~/shared/helpers/string';
 
-import type { FormatToken } from '~/shared/helpers/string';
-import type { SVGProps } from 'react';
 import type { SvgIconProps } from '@mui/material';
+import type { SVGProps } from 'react';
+import type { FormatToken } from '~/shared/helpers/string';
 
 type IconType = (props: SVGProps<SVGSVGElement>) => JSX.Element;
 
@@ -17,16 +17,16 @@ const extractIcons = <
 		[K in keyof T]: K extends `${infer Name}Icon`
 			? FormatToken<Name, 'kebab'>
 			: never;
-	}[keyof T]
+	}[keyof T],
 >(
-	iconObject: T
+	iconObject: T,
 ) => {
 	return objectEntries(iconObject).reduce(
 		(object, [name, icon]) => ({
 			...object,
 			[formatToken(name.replace(/Icon$/u, ''), 'kebab')]: icon,
 		}),
-		{}
+		{},
 	) as { [K in Names]: IconType };
 };
 

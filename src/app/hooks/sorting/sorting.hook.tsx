@@ -10,7 +10,7 @@ export type Sorting<T extends PropertyKey> = {
 export const useSorting = <Type extends Obj, Keys extends keyof Type>(
 	data: Type[],
 	isDisabled?: boolean,
-	defaultSorting: Sorting<Keys> = { column: null, direction: 'descending' }
+	defaultSorting: Sorting<Keys> = { column: null, direction: 'descending' },
 ) => {
 	const [sorting, setSorting] = useState<Sorting<Keys>>(defaultSorting);
 

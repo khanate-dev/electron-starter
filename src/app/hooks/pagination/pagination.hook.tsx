@@ -9,7 +9,7 @@ type Size = (typeof PAGINATION_SIZES)[number];
 export const usePagination = <Type extends any>(
 	data: Type[],
 	isDisabled?: boolean,
-	isZeroBased?: boolean
+	isZeroBased?: boolean,
 ) => {
 	const firstPage = isZeroBased ? 0 : 1;
 

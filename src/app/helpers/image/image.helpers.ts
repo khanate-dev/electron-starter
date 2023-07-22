@@ -13,13 +13,13 @@ export const assertValidImage: Utils.assertFunction<File> = (file) => {
 		throw new Error('invalid image: the given value is not a valid file');
 
 	const validTypes = IMAGE_EXTENSIONS.map((type) =>
-		type.replace('.', 'image/')
+		type.replace('.', 'image/'),
 	);
 	if (!validTypes.includes(file.type)) {
 		throw new Error(
 			`invalid image: expected [${IMAGE_EXTENSIONS.join(
-				', '
-			)}], received '${file.type.replace('image/', '.')}'`
+				', ',
+			)}], received '${file.type.replace('image/', '.')}'`,
 		);
 	}
 
@@ -50,7 +50,7 @@ export const isValidImage = (file: unknown): file is File => {
 export const getImageUrl = (
 	table: string,
 	identifier: string,
-	updatedAt: Dayjs | null
+	updatedAt: Dayjs | null,
 ): string => {
 	if (!updatedAt) return '';
 	const url = new URL(`/images/${table}/${identifier}.png`, apiEndpoint);

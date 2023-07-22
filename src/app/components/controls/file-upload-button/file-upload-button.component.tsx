@@ -1,11 +1,11 @@
-import { Button, Box } from '@mui/material';
 import { DescriptionOutlined as UploadIcon } from '@mui/icons-material';
+import { Box, Button } from '@mui/material';
 
 import { getLoadingStyles } from '~/app/helpers/style';
 import { excludeString } from '~/shared/helpers/type';
 
-import type { InputHTMLAttributes, ChangeEventHandler } from 'react';
 import type { ButtonProps } from '@mui/material';
+import type { ChangeEventHandler, InputHTMLAttributes } from 'react';
 
 export type FileUploadButtonProps = {
 	/** The props to pass to pass to the file input element */
@@ -68,7 +68,7 @@ export const FileUploadButton = ({
 					isBusy
 						? getLoadingStyles(
 								excludeString(buttonProps.color, ['inherit', 'default']) ??
-									'primary'
+									'primary',
 						  )
 						: undefined
 				}

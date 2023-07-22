@@ -1,23 +1,23 @@
-import { redirect, useNavigate } from 'react-router-dom';
 import {
-	Typography,
+	AppBar,
 	Paper,
 	Stack,
-	AppBar,
 	Toolbar,
+	Typography,
 	alpha,
 } from '@mui/material';
+import { redirect, useNavigate } from 'react-router-dom';
 
-import { FormSchema } from '~/app/schemas';
-import { userZodSchema } from '~/app/schemas/user';
-import { login } from '~/app/endpoints/user';
-import { getSetting, setSetting } from '~/app/helpers/settings';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
-import { BackgroundImage } from '~/app/components/media/background-image';
+import { ThemeSwitch } from '~/app/components/controls/theme-switch';
 import { SchemaForm } from '~/app/components/forms/schema-form';
 import { AppLogo } from '~/app/components/media/app-logo';
-import { ThemeSwitch } from '~/app/components/controls/theme-switch';
+import { BackgroundImage } from '~/app/components/media/background-image';
+import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
 import { LOGIN_HEADER_HEIGHT } from '~/app/config';
+import { login } from '~/app/endpoints/user';
+import { getSetting, setSetting } from '~/app/helpers/settings';
+import { FormSchema } from '~/app/schemas';
+import { userZodSchema } from '~/app/schemas/user';
 
 const loginSchema = new FormSchema({
 	name: 'login',

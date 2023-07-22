@@ -1,18 +1,18 @@
+import { Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useLoaderData, useRevalidator } from 'react-router-dom';
-import { Typography, Paper } from '@mui/material';
 
+import { CustomButton } from '~/app/components/controls/custom-button';
+import { DetailTableDialog } from '~/app/components/dialogs/detail-table-dialog';
+import { SchemaForm } from '~/app/components/forms/schema-form';
+import { BackgroundImage } from '~/app/components/media/background-image';
+import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
+import { addUser, getUsers } from '~/app/endpoints/user';
 import {
-	userViewSchema,
 	userFormSchema,
 	userTypeDropdownOptions,
+	userViewSchema,
 } from '~/app/schemas/user';
-import { addUser, getUsers } from '~/app/endpoints/user';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
-import { DetailTableDialog } from '~/app/components/dialogs/detail-table-dialog';
-import { BackgroundImage } from '~/app/components/media/background-image';
-import { CustomButton } from '~/app/components/controls/custom-button';
-import { SchemaForm } from '~/app/components/forms/schema-form';
 
 const loader = getUsers;
 
@@ -38,7 +38,9 @@ export const Register = () => {
 					zIndex: 15,
 					fontSize: '1.2em',
 				}}
-				onClick={() => { setIsShowingUsers(true); }}
+				onClick={() => {
+					setIsShowingUsers(true);
+				}}
 			/>
 
 			{isShowingUsers && (
@@ -46,7 +48,9 @@ export const Register = () => {
 					title='User List'
 					schema={userViewSchema}
 					data={users}
-					onClose={() => { setIsShowingUsers(!isShowingUsers); }}
+					onClose={() => {
+						setIsShowingUsers(!isShowingUsers);
+					}}
 				/>
 			)}
 

@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
 
-import { deleteUser, getUsers } from '~/app/endpoints/user';
 import { SchemaView } from '~/app/components/pages/schema-view';
+import { deleteUser, getUsers } from '~/app/endpoints/user';
 import { userViewSchema as schema } from '~/app/schemas/user';
 
 const loader = getUsers;

@@ -49,7 +49,7 @@ type ViewSchemaConstructor<
 		[K in keyof Zod['shape']]?: ViewSchemaField<Zod['shape'][K]>;
 	},
 	PK extends keyof Zod['shape'],
-	ID extends keyof Zod['shape']
+	ID extends keyof Zod['shape'],
 > = {
 	/** schema's name */
 	name: string;
@@ -80,7 +80,7 @@ export class ViewSchema<
 		>;
 	},
 	PK extends keyof Zod['shape'],
-	ID extends keyof Zod['shape']
+	ID extends keyof Zod['shape'],
 > {
 	/** schema's name */
 	name: string;
@@ -135,7 +135,7 @@ export class ViewSchema<
 					zod: (this.zod.shape as Record<keyof Fields, z.ZodSchema>)[key],
 				},
 			}),
-			{} as typeof this.fields
+			{} as typeof this.fields,
 		);
 		this.fieldsArray = Object.values(this.fields);
 	}

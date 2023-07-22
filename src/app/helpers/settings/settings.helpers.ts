@@ -18,7 +18,7 @@ export const removeSetting = (key: keyof Settings): void => {
 };
 
 export const getSetting = <Key extends keyof Settings>(
-	key: Key
+	key: Key,
 ): null | Settings[Key] => {
 	try {
 		const string = localStorage.getItem(key);
@@ -32,7 +32,7 @@ export const getSetting = <Key extends keyof Settings>(
 
 export const setSetting = <Key extends keyof Settings>(
 	key: Key,
-	value: Settings[Key]
+	value: Settings[Key],
 ): void => {
 	localStorage.setItem(key, JSON.stringify(value));
 };

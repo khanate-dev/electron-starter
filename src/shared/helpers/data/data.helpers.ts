@@ -15,11 +15,11 @@ export const _localIdSchema = z
  * @param list the existing list of data
  */
 export const createLocalId = <T extends App.withLocalId<Obj>>(
-	list: T[]
+	list: T[],
 ): App.localId => {
 	const lastId = Math.max(
 		...list.map((row) => row._localId as unknown as number),
-		0
+		0,
 	);
 	return (lastId + 1) as App.localId;
 };

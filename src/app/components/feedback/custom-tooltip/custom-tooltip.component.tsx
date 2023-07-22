@@ -40,7 +40,7 @@ export const CustomTooltip = ({
 							color: 'inherit',
 						},
 					},
-					sx
+					sx,
 					// TODO fix the type error on Tooltip's sx prop
 				) as never,
 			},

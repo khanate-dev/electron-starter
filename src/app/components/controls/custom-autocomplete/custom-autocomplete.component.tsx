@@ -1,13 +1,13 @@
 import { Autocomplete, TextField } from '@mui/material';
 
 import type {
-	AutocompleteFreeSoloValueMapping,
 	AutocompleteChangeDetails,
 	AutocompleteChangeReason,
+	AutocompleteFreeSoloValueMapping,
 	AutocompleteProps,
 	AutocompleteValue,
-	TextFieldProps,
 	ChipTypeMap,
+	TextFieldProps,
 } from '@mui/material';
 
 export type CustomAutocompleteProps<
@@ -15,7 +15,7 @@ export type CustomAutocompleteProps<
 	Multiple extends boolean | undefined = false,
 	DisableClearable extends boolean | undefined = false,
 	FreeSolo extends boolean | undefined = false,
-	ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent']
+	ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
 > = Omit<
 	AutocompleteProps<Type, Multiple, DisableClearable, FreeSolo, ChipComponent>,
 	'onChange' | 'getOptionLabel' | 'renderInput'
@@ -52,7 +52,7 @@ export type CustomAutocompleteProps<
 			: Type | null | AutocompleteFreeSoloValueMapping<FreeSolo>,
 		event: React.SyntheticEvent,
 		reason: AutocompleteChangeReason,
-		details?: AutocompleteChangeDetails<Type>
+		details?: AutocompleteChangeDetails<Type>,
 	) => void;
 } & (Type extends Obj
 		? {
@@ -72,7 +72,7 @@ export const CustomAutocomplete = <
 	Multiple extends boolean | undefined = false,
 	DisableClearable extends boolean | undefined = false,
 	FreeSolo extends boolean | undefined = false,
-	ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent']
+	ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent'],
 >({
 	label,
 	form,
@@ -115,8 +115,8 @@ export const CustomAutocomplete = <
 				/>
 			);
 		}}
-		onChange={(event, value, reason, details) =>
-			{ onChange(value as never, event, reason, details); }
-		}
+		onChange={(event, value, reason, details) => {
+			onChange(value as never, event, reason, details);
+		}}
 	/>
 );

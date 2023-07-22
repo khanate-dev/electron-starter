@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { useState } from 'react';
 
-import { formatToken, humanizeToken } from '~/shared/helpers/string';
-import { csx } from '~/app/helpers/style';
-import { AppIcon } from '~/app/components/media/app-icon';
 import { CustomTooltip } from '~/app/components/feedback/custom-tooltip';
+import { AppIcon } from '~/app/components/media/app-icon';
 import { AppLink } from '~/app/components/navigation/app-link';
+import { csx } from '~/app/helpers/style';
+import { formatToken, humanizeToken } from '~/shared/helpers/string';
 
 import { sidebarItemStyles as styles } from './sidebar-item.styles';
 
@@ -51,8 +51,12 @@ export const SidebarItem = ({ listItem, isMinimized }: SidebarItemProps) => {
 			disableFocusListener={!isMinimized}
 			disableTouchListener={!isMinimized}
 			open={isMinimized && isTooltip}
-			onOpen={() => { setIsTooltip(true); }}
-			onClose={() => { setIsTooltip(false); }}
+			onOpen={() => {
+				setIsTooltip(true);
+			}}
+			onClose={() => {
+				setIsTooltip(false);
+			}}
 		>
 			{path ? (
 				<AppLink

@@ -20,6 +20,6 @@ test('testing getCatchMessage', () => {
 	expect(getCatchMessage(new AuthError('error message'))).toBe('error message');
 	expect(getCatchMessage(new ApiError('error message'))).toBe('error message');
 	expect(getCatchMessage(new ConnectionError('error message'))).toBe(
-		'error message'
+		'error message',
 	);
 });

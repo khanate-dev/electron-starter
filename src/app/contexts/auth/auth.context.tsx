@@ -12,7 +12,7 @@ const AuthContext = createContext<null | LoggedInUser>(null);
 export type AuthProviderProps = {
 	children: ReactNode;
 	user: LoggedInUser;
-}
+};
 
 export const AuthProvider = ({ user, children }: AuthProviderProps) => {
 	const navigate = useNavigate();
@@ -28,9 +28,7 @@ export const AuthProvider = ({ user, children }: AuthProviderProps) => {
 		};
 	}, [navigate]);
 
-	return (
-		<AuthContext.Provider value={user}>{children}</AuthContext.Provider>
-	);
+	return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
 };
 
 export const login = (user: LoggedInUser) => {

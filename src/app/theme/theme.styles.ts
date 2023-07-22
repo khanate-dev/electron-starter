@@ -1,4 +1,4 @@
-import { createTheme, lighten, darken } from '@mui/material';
+import { createTheme, darken, lighten } from '@mui/material';
 
 import './font.css';
 

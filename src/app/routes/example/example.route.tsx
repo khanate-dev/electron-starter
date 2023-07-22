@@ -1,21 +1,21 @@
 import {
-	Typography,
+	AppBar,
 	Paper,
 	Stack,
-	AppBar,
 	Toolbar,
+	Typography,
 	alpha,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
-import { BackgroundImage } from '~/app/components/media/background-image';
-import { AppLogo } from '~/app/components/media/app-logo';
-import { ThemeSwitch } from '~/app/components/controls/theme-switch';
-import { LOGIN_HEADER_HEIGHT } from '~/app/config';
-import { dayjsUtc } from '~/shared/helpers/date';
-import { getCatchMessage } from '~/shared/errors';
 import { CustomButton } from '~/app/components/controls/custom-button';
+import { ThemeSwitch } from '~/app/components/controls/theme-switch';
+import { AppLogo } from '~/app/components/media/app-logo';
+import { BackgroundImage } from '~/app/components/media/background-image';
+import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
+import { LOGIN_HEADER_HEIGHT } from '~/app/config';
+import { getCatchMessage } from '~/shared/errors';
+import { dayjsUtc } from '~/shared/helpers/date';
 
 const headerLogoSx = {
 	width: 'auto',
@@ -35,10 +35,12 @@ export const Example = () => {
 	useEffect(() => {
 		window.ipc.barCode
 			.connect()
-			.then(() => { setVal({ type: 'connected' }); })
-			.catch((error) =>
-				{ setVal({ type: 'error', message: getCatchMessage(error) }); }
-			);
+			.then(() => {
+				setVal({ type: 'connected' });
+			})
+			.catch((error) => {
+				setVal({ type: 'error', message: getCatchMessage(error) });
+			});
 
 		window.ipc.barCode.listen((data) => {
 			setVal((prev) =>
@@ -47,7 +49,7 @@ export const Example = () => {
 							...prev,
 							reading: { data, at: dayjsUtc().format('h:mm:ss A') },
 					  }
-					: prev
+					: prev,
 			);
 		});
 
@@ -182,7 +184,9 @@ export const Example = () => {
 
 					<CustomButton
 						label={`Click Me! ${counter}`}
-						onClick={() => { setCounter(counter + 1); }}
+						onClick={() => {
+							setCounter(counter + 1);
+						}}
 					/>
 
 					<WiMetrixLogo

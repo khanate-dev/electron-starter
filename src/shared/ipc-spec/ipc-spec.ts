@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 import {
-	ipcRenderer as electronIpcRenderer,
 	ipcMain as electronIpcMain,
+	ipcRenderer as electronIpcRenderer,
 } from 'electron';
 
-import type { BrowserWindow, App } from 'electron';
+import type { App, BrowserWindow } from 'electron';
 import type { Utils } from '~/shared/types/utils';
 
 export type IpcApi = {
@@ -54,13 +54,13 @@ type listener<T> = T extends (...args: infer Args extends any[]) => infer R
 
 type appendPrefix<
 	Str extends PropertyKey,
-	Prefix extends string
+	Prefix extends string,
 > = Prefix extends '' ? Str : `${Prefix}${Capitalize<Str & string>}`;
 
 type flatIpcApi<
 	T = IpcApi,
 	Prefix extends string = '',
-	K extends keyof T = keyof T
+	K extends keyof T = keyof T,
 > = Utils.prettify<
 	Utils.unionToIntersection<
 		K extends K
@@ -106,10 +106,10 @@ type IpcRenderer = {
 	): Promise<Awaited<ReturnType<invokerFlatApi[T]>>>;
 	on<
 		T extends keyof listenerFlatApi,
-		ListenerArgs extends any[] = renderListenerArgs<T>
+		ListenerArgs extends any[] = renderListenerArgs<T>,
 	>(
 		channel: T,
-		listener: (event: Electron.IpcRendererEvent, ...args: ListenerArgs) => void
+		listener: (event: Electron.IpcRendererEvent, ...args: ListenerArgs) => void,
 	): void;
 };
 
@@ -128,20 +128,20 @@ export const ipcRenderer: IpcRenderer = {
 type IpcMain = {
 	on<
 		T extends keyof senderFlatApi,
-		HandlerArgs extends any[] = Parameters<senderFlatApi[T]>
+		HandlerArgs extends any[] = Parameters<senderFlatApi[T]>,
 	>(
 		channel: T,
-		handler: (event: Electron.IpcMainEvent, ...args: HandlerArgs) => void
+		handler: (event: Electron.IpcMainEvent, ...args: HandlerArgs) => void,
 	): void;
 	handle<
 		T extends keyof invokerFlatApi,
-		CallbackArgs extends any[] = Parameters<invokerFlatApi[T]>
+		CallbackArgs extends any[] = Parameters<invokerFlatApi[T]>,
 	>(
 		channel: T,
 		callback: (
 			event: Electron.IpcMainInvokeEvent,
 			...args: CallbackArgs
-		) => Promise<Awaited<ReturnType<invokerFlatApi[T]>>>
+		) => Promise<Awaited<ReturnType<invokerFlatApi[T]>>>,
 	): void;
 	send<T extends keyof listenerFlatApi>(
 		channel: T,
@@ -154,7 +154,7 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
 // ? https://www.electronjs.org/docs/latest/tutorial/security#17-validate-the-sender-of-all-ipc-messages
 const validateSender = (
-	event: Electron.IpcMainEvent | Electron.IpcMainInvokeEvent
+	event: Electron.IpcMainEvent | Electron.IpcMainInvokeEvent,
 ): boolean => {
 	return event.senderFrame.url === MAIN_WINDOW_WEBPACK_ENTRY;
 };
@@ -170,7 +170,7 @@ export const ipcMain: IpcMain = {
 		electronIpcMain.handle(channel, async (event, ...args) => {
 			if (!validateSender(event)) {
 				throw new Error(
-					'Unauthorized! Invocations are limited to the main_window'
+					'Unauthorized! Invocations are limited to the main_window',
 				);
 			}
 			return callback(event, ...(args as never));

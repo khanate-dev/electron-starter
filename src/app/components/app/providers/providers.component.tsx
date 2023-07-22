@@ -1,12 +1,12 @@
-import { RouterProvider } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Toaster } from 'react-hot-toast';
 import locale from 'dayjs/locale/en';
+import { Toaster } from 'react-hot-toast';
+import { RouterProvider } from 'react-router-dom';
 
-import { getMuiTheme } from '~/app/theme';
 import { DarkModeProvider, useDarkMode } from '~/app/contexts/dark-mode';
+import { getMuiTheme } from '~/app/theme';
 
 import type { RouterProviderProps } from 'react-router-dom';
 

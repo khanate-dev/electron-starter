@@ -1,6 +1,6 @@
 /* eslint-disable import/no-default-export */
-import { defineConfig } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vitest/config';
 
 // https://vitejs.dev/config https://vitest.dev/config
 export default defineConfig({

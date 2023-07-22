@@ -64,7 +64,9 @@ export const UserProfile = () => {
 
 			<IconButton
 				aria-describedby='user-popover'
-				onClick={(event) => { setAnchor(event.currentTarget); }}
+				onClick={(event) => {
+					setAnchor(event.currentTarget);
+				}}
 			>
 				<CustomAvatar
 					src={getImageUrl('user', user.userName, user.imageUpdatedAt)}
@@ -79,7 +81,9 @@ export const UserProfile = () => {
 				anchorEl={anchor}
 				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 				transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-				onClose={() => { setAnchor(null); }}
+				onClose={() => {
+					setAnchor(null);
+				}}
 			>
 				<Stack
 					sx={{
@@ -122,7 +126,9 @@ export const UserProfile = () => {
 						}}
 						onSubmit={async (data) => {
 							await resetUserPassword(user.userID, data);
-							setTimeout(() => { setAnchor(null); }, 500);
+							setTimeout(() => {
+								setAnchor(null);
+							}, 500);
 							return 'password reset successful!';
 						}}
 					/>
