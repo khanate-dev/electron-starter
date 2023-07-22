@@ -45,7 +45,6 @@
 		"importsNotUsedAsValues": "error",
 		"ignoreDeprecations": "5.0",
 		// "verbatimModuleSyntax": true,
-
 		// language and environment
 		"jsx": "react-jsx",
 		"lib": ["dom", "dom.iterable", "esnext"],
@@ -57,5 +56,6 @@
 		// completeness
 		"skipLibCheck": true
 	},
-	"exclude": ["node_modules", "dist", "build", "public", ".webpack"]
+	"exclude": ["node_modules", "dist", "build", "public", ".webpack"],
+	"include": ["**/*", "./.*.cjs"]
 }
