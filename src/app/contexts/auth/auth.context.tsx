@@ -1,40 +1,48 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { events } from '~/app/helpers/events';
 import { removeSetting } from '~/app/helpers/settings';
 
-import type { PropsWithChildren } from 'react';
+import type { ReactNode } from 'react';
 import type { LoggedInUser } from '~/app/schemas/user';
 
-const UserContext = createContext<null | LoggedInUser>(null);
+const AuthContext = createContext<null | LoggedInUser>(null);
 
-type UserProviderProps = PropsWithChildren<{ user: LoggedInUser }>;
+export type AuthProviderProps = {
+	children: ReactNode;
+	user: LoggedInUser;
+}
 
-export const UserProvider = ({ user, children }: UserProviderProps) => {
+export const AuthProvider = ({ user, children }: AuthProviderProps) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const logout = () => {
+		const logoutListener = events.listen('logout', () => {
 			removeSetting('user');
 			navigate('/login');
+		});
+
+		return () => {
+			logoutListener.remove();
 		};
-		window.addEventListener('logout', logout);
-		return () => window.removeEventListener('logout', logout);
 	}, [navigate]);
 
-	return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+	return (
+		<AuthContext.Provider value={user}>{children}</AuthContext.Provider>
+	);
 };
 
-/** fires the logout event to trigger a logout and redirect to login screen */
+export const login = (user: LoggedInUser) => {
+	events.emit('login', user);
+};
+
 export const logout = () => {
-	const event = new Event('logout', {
-		bubbles: true,
-	});
-	window.dispatchEvent(event);
+	events.emit('logout');
 };
 
 export const useUser = (): LoggedInUser => {
-	const user = useContext(UserContext);
+	const user = useContext(AuthContext);
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (user === undefined)
 		throw new Error('useUser must be used within a UserProvider');
