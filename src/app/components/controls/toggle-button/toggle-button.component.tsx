@@ -1,6 +1,6 @@
 import {
-	ToggleButtonGroup,
 	ToggleButton as MuiToggleButton,
+	ToggleButtonGroup,
 } from '@mui/material';
 
 import { humanizeToken } from '~/shared/helpers/string';
@@ -19,7 +19,7 @@ export type ToggleButtonObjectOption<Values extends string> =
 
 export type ToggleButtonProps<
 	Values extends string,
-	Options extends Readonly<Values[] | ToggleButtonObjectOption<Values>[]>
+	Options extends Readonly<Values[] | ToggleButtonObjectOption<Values>[]>,
 > = {
 	/** the options for the  */
 	options: Options;
@@ -29,11 +29,11 @@ export type ToggleButtonProps<
 
 	/** the function to call when the selected option changes */
 	onChange: (value: Values, event: MouseEvent<HTMLElement>) => void;
-} & Omit<ToggleButtonGroupProps, 'onChange'>;
+} & Omit<ToggleButtonGroupProps, 'onChange' | 'value'>;
 
 export const ToggleButton = <
 	Values extends string,
-	Options extends Readonly<Values[] | ToggleButtonObjectOption<Values>[]>
+	Options extends Readonly<Values[] | ToggleButtonObjectOption<Values>[]>,
 >({
 	options: passedOptions,
 	value,
@@ -46,7 +46,9 @@ export const ToggleButton = <
 			value={value}
 			exclusive={groupProps.exclusive ?? true}
 			color={groupProps.color ?? 'primary'}
-			onChange={(event, newValue) => { onChange(newValue as Values, event); }}
+			onChange={(event, newValue) => {
+				onChange(newValue as Values, event);
+			}}
 		>
 			{passedOptions.map((passedOption) => {
 				let label: string;
