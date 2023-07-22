@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import { events } from '~/app/helpers/events';
 import { getSetting, setSetting } from '~/app/helpers/settings';
 
 import type { PropsWithChildren } from 'react';
@@ -14,34 +15,27 @@ export const DarkModeProvider = ({ children }: PropsWithChildren) => {
 	const [isDarkMode, setIsDarkMode] = useState<boolean>(defaultIsDarkMode);
 
 	useEffect(() => {
-		const toggleDarkMode: EventListener = () => {
+		const toggleListener = events.listen('toggleDarkMode', () => {
 			setIsDarkMode((prev) => {
 				setSetting('isDarkMode', !prev);
 				return !prev;
 			});
-		};
+		});
 
-		const updateDarkMode: EventListener = (event) => {
-			const newIsDarkMode = (event as CustomEvent).detail;
-			if (typeof newIsDarkMode !== 'boolean')
-				throw new Error('isDarkMode must be a boolean');
-
-			setSetting('isDarkMode', newIsDarkMode);
-			setIsDarkMode(newIsDarkMode);
-		};
+		const updateListener = events.listen('updateDarkMode', ({ detail }) => {
+			setSetting('isDarkMode', detail);
+			setIsDarkMode(detail);
+		});
 
 		const handlePrefersChange = (event: MediaQueryListEvent) => {
 			setSetting('isDarkMode', event.matches);
 			setIsDarkMode(event.matches);
 		};
-
-		window.addEventListener('toggle-dark-mode', toggleDarkMode);
-		window.addEventListener('update-dark-mode', updateDarkMode);
 		prefersDarkQuery.addEventListener('change', handlePrefersChange);
 
 		return () => {
-			window.removeEventListener('toggle-dark-mode', toggleDarkMode);
-			window.removeEventListener('update-dark-mode', updateDarkMode);
+			toggleListener.remove();
+			updateListener.remove();
 			prefersDarkQuery.removeEventListener('change', handlePrefersChange);
 		};
 	}, []);
@@ -63,16 +57,9 @@ export const useDarkMode = () => {
 };
 
 export const toggleDarkMode = () => {
-	const toggleEvent = new Event('toggle-dark-mode', {
-		bubbles: true,
-	});
-	window.dispatchEvent(toggleEvent);
+	events.emit('toggleDarkMode');
 };
 
 export const updateDarkMode = (isDarkMode: boolean) => {
-	const updateEvent = new CustomEvent('update-dark-mode', {
-		detail: isDarkMode,
-		bubbles: true,
-	});
-	window.dispatchEvent(updateEvent);
+	events.emit('updateDarkMode', isDarkMode);
 };
