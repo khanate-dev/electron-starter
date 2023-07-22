@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires, import/no-commonjs */
-import type TForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import type TReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import type TForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-const ForkTsCheckerWebpackPlugin: typeof TForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const ReactRefreshWebpackPlugin: typeof TReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ForkTsCheckerWebpackPlugin =
+	require('fork-ts-checker-webpack-plugin') as typeof TForkTsCheckerWebpackPlugin;
+const ReactRefreshWebpackPlugin =
+	require('@pmmmwh/react-refresh-webpack-plugin') as typeof TReactRefreshWebpackPlugin;
 
 export const plugins: (
 	| TForkTsCheckerWebpackPlugin
