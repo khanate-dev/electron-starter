@@ -5,17 +5,15 @@ const noParentImport = {
 
 /** @type {import('eslint').Linter.Config} */
 const config = {
-	env: {
-		es2021: true,
-	},
+	env: { es2021: true },
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/strict-type-checked',
 		'plugin:@typescript-eslint/stylistic-type-checked',
-		'prettier',
 		'plugin:import/recommended',
 		'plugin:import/typescript',
 		'plugin:import/electron',
+		'prettier',
 	],
 	plugins: ['import', 'unused-imports', '@typescript-eslint'],
 	parser: '@typescript-eslint/parser',
@@ -26,9 +24,7 @@ const config = {
 		tsconfigRootDir: __dirname,
 	},
 	settings: {
-		'import/resolver': {
-			typescript: true,
-		},
+		'import/resolver': { typescript: true },
 	},
 	rules: {
 		'array-callback-return': ['warn', { checkForEach: true }],
@@ -68,7 +64,7 @@ const config = {
 		'no-restricted-imports': [
 			'error',
 			{
-				patterns: [noParentImport],
+				patterns: [{ group: ['../*'], message: 'Do not use parent imports' }],
 			},
 		],
 		'no-restricted-syntax': [
@@ -119,6 +115,7 @@ const config = {
 		'import/no-duplicates': 'warn',
 		'import/export': 'off',
 		'import/no-empty-named-blocks': 'warn',
+		'import/no-nodejs-modules': 'error',
 		'import/no-self-import': 'warn',
 		'import/no-useless-path-segments': 'warn',
 		'import/order': [
@@ -153,15 +150,13 @@ const config = {
 		'@typescript-eslint/default-param-last': 'warn',
 		'no-dupe-class-members': 'off',
 		'@typescript-eslint/no-dupe-class-members': 'warn',
-		'@typescript-eslint/no-explicit-any': 'off',
+		'@typescript-eslint/no-explicit-any': ['warn', { ignoreRestArgs: true }],
 		'@typescript-eslint/no-floating-promises': 'off',
 		'@typescript-eslint/no-inferrable-types': 'off',
 		'@typescript-eslint/no-loop-func': 'warn',
 		'@typescript-eslint/no-misused-promises': [
 			'warn',
-			{
-				checksVoidReturn: false,
-			},
+			{ checksVoidReturn: false },
 		],
 		'@typescript-eslint/no-redundant-type-constituents': 'warn',
 		'@typescript-eslint/no-shadow': 'warn',
@@ -192,10 +187,6 @@ const config = {
 		],
 		'@typescript-eslint/return-await': 'warn',
 		'@typescript-eslint/switch-exhaustiveness-check': 'warn',
-		'@typescript-eslint/restrict-template-expressions': [
-			'warn',
-			{ allowAny: true },
-		],
 		'@typescript-eslint/ban-types': [
 			'warn',
 			{
@@ -263,14 +254,11 @@ const config = {
 				'vitest/prefer-expect-assertions': 'off',
 				'vitest/require-top-level-describe': 'off',
 				'vitest/max-expects': ['error', { max: 10 }],
-				'testing-library/no-manual-cleanup': 'warn',
-				'testing-library/no-global-regexp-flag-in-query': 'warn',
 				'testing-library/prefer-explicit-assert': [
 					'error',
 					{ assertion: 'toBeInTheDocument' },
 				],
 				'testing-library/prefer-user-event': 'warn',
-				'testing-library/prefer-wait-for': 'warn',
 			},
 		},
 		{
@@ -338,6 +326,12 @@ const config = {
 						],
 					},
 				],
+			},
+		},
+		{
+			files: ['**/*.d.ts'],
+			rules: {
+				'@typescript-eslint/consistent-type-definitions': 'off',
 			},
 		},
 	],
