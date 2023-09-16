@@ -19,7 +19,7 @@ export type DeleteDialogProps = {
 	onCancel: () => void;
 
 	/** the function to call to delete the entry */
-	onDelete: () => Promise<any>;
+	onDelete: () => Promise<unknown>;
 };
 
 export const DeleteDialog = ({
