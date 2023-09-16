@@ -1,13 +1,13 @@
 export const electronConfig = {
-	id: 'cbl-garment-tracking',
-	name: 'CBL Garment Tracking',
-	description: 'Garment Tracking Desktop Application For CBL',
+	id: 'electron-app',
+	name: 'Electron App',
+	description: 'Electron React Application',
 	icnsIcon: './src/app/assets/favicon/icons/mac/icns.ico',
 	icoIcon: './src/app/assets/favicon/icons/win/icon.ico',
 	pngIcon: './src/app/assets/favicon/favicon.png',
 	repository: {
-		owner: 'WiMetrixDev',
-		name: 'cbl-garment-tracking',
+		owner: 'khanate-dev',
+		name: 'electron-react-webpack-starter',
 	},
 	isDev: Boolean(process.env.DEV),
 	env: process.env.DEV ? 'development' : 'production',

@@ -1,8 +1,8 @@
 {
-	"name": "cbl-garment-tracking",
-	"productName": "cbl-garment-tracking",
+	"name": "electron-app",
+	"productName": "electron-app",
 	"version": "1.0.0",
-	"description": "electron react application for cbl garment tracking",
+	"description": "electron react application",
 	"main": ".webpack/main",
 	"scripts": {
 		"start": "DEV=1 electron-forge start",

@@ -1,6 +1,6 @@
-# CBL Garment Tracking
+# Electron React Webpack Starter
 
-React Electron desktop application for CBL Garment Tracking
+React Electron desktop application starter
 
 ## Building Blocks
 
@@ -17,4 +17,4 @@ React Electron desktop application for CBL Garment Tracking
 
 ## Scripts
 
-Start: `npm start`
+Start: `pnpm start`
