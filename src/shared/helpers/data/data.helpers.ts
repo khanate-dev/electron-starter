@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { App } from '~/app/types/app';
+import type { App } from '~/app/types/app.types';
 
 export const _localIdSchema = z
 	.number()

@@ -1,10 +1,10 @@
-import { getCatchMessage } from '~/shared/errors';
+import { stringifyError } from '~/shared/errors';
 import { createBulkResponseSchema } from '~/shared/helpers/schema';
 
 import type { z } from 'zod';
-import type { BulkResponse } from '~/app/helpers/api';
+import type { BulkResponse } from '~/app/helpers/api.helpers';
 import type { DefaultBulkResponseObj } from '~/shared/helpers/schema';
-import type { Utils } from '~/shared/types/utils';
+import type { Utils } from '~/shared/types/utils.types';
 
 export const readableTypeOf = (value: unknown) => {
 	if (typeof value !== 'object') return typeof value;
@@ -41,7 +41,7 @@ export const assertArray: AssertArray = (value, checker) => {
 		if (!value.length || !checker) return;
 		value.forEach(checker);
 	} catch (error) {
-		throw new TypeError(`Invalid array member. ${getCatchMessage(error)}`);
+		throw new TypeError(`Invalid array member. ${stringifyError(error)}`);
 	}
 };
 

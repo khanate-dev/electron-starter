@@ -4,7 +4,7 @@ import installExtension, {
 	REACT_DEVELOPER_TOOLS,
 } from 'electron-devtools-assembler';
 
-import { electronConfig } from './config';
+import { electronConfig } from './electron.config';
 import { setupIpc } from './ipc';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.

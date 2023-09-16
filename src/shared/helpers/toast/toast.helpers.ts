@@ -1,12 +1,12 @@
 import { toast } from 'react-hot-toast';
 
-import { getCatchMessage } from '~/shared/errors';
+import { stringifyError } from '~/shared/errors';
 
 export const addToast = (
 	message: unknown,
 	type: 'info' | 'error' | 'success' | 'loading' = 'error',
 ): string => {
-	const string = getCatchMessage(message);
+	const string = stringifyError(message);
 	if (type === 'info') return toast(string);
 	return toast[type](string);
 };
@@ -24,7 +24,7 @@ export const promiseToast = (
 			loading: 'Loaded!',
 			submitting: 'Successful!',
 		}[variation],
-		error: getCatchMessage,
+		error: stringifyError,
 	});
 };
 

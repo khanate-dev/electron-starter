@@ -8,13 +8,13 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { CustomButton } from '~/app/components/controls/custom-button';
-import { ThemeSwitch } from '~/app/components/controls/theme-switch';
-import { AppLogo } from '~/app/components/media/app-logo';
-import { BackgroundImage } from '~/app/components/media/background-image';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
-import { LOGIN_HEADER_HEIGHT } from '~/app/config';
-import { getCatchMessage } from '~/shared/errors';
+import { CustomButton } from '~/app/components/controls/custom-button.component';
+import { ThemeSwitch } from '~/app/components/controls/theme-switch.component';
+import { AppLogo } from '~/app/components/media/app-logo.component';
+import { BackgroundImage } from '~/app/components/media/background-image.component';
+import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo.component';
+import { LOGIN_HEADER_HEIGHT } from '~/app/constants';
+import { stringifyError } from '~/shared/errors';
 import { dayjsUtc } from '~/shared/helpers/date';
 
 const headerLogoSx = {
@@ -39,7 +39,7 @@ export const Example = () => {
 				setVal({ type: 'connected' });
 			})
 			.catch((error) => {
-				setVal({ type: 'error', message: getCatchMessage(error) });
+				setVal({ type: 'error', message: stringifyError(error) });
 			});
 
 		window.ipc.barCode.listen((data) => {

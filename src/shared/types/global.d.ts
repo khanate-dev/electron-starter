@@ -1,3 +1,8 @@
+/** global type alias for a generic object type */
 type Obj = Record<string, unknown>;
 
-type EmptyObj = Record<string, never>;
+declare module '*.svg' {
+	const content: string;
+	// eslint-disable-next-line import/no-default-export
+	export default content;
+}

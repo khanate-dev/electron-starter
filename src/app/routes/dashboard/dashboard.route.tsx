@@ -1,61 +1,73 @@
-import { AppBar, Box, Stack, Toolbar } from '@mui/material';
-import { Outlet, redirect, useLoaderData } from 'react-router-dom';
+import { AppBar, Stack, Toolbar } from '@mui/material';
+import { Outlet, redirect } from 'react-router-dom';
 
-import { UserProfile } from '~/app/components/app/user-profile';
-import { ThemeSwitch } from '~/app/components/controls/theme-switch';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
-import { Breadcrumbs } from '~/app/components/navigation/breadcrumbs';
-import { Sidebar } from '~/app/components/panels/sidebar';
-import { AuthProvider } from '~/app/contexts/auth';
-import { getSetting } from '~/app/helpers/settings';
-
-import { homeStyles as styles } from './dashboard.styles';
-
-import type { LoggedInUser } from '~/app/schemas/user';
+import { UserProfile } from '~/app/components/app/user-profile.component';
+import { ThemeSwitch } from '~/app/components/controls/theme-switch.component';
+import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo.component';
+import { Breadcrumbs } from '~/app/components/navigation/breadcrumbs.component';
+import { Sidebar } from '~/app/components/panels/sidebar.component';
+import { APP_HEADER_HEIGHT } from '~/app/constants';
+import { scrollStyles } from '~/app/helpers/style.helpers';
+import { UserProvider, getLocalStorageUser } from '~/app/hooks/user.hook';
 
 const loader = () => {
-	const user = getSetting('user');
+	const user = getLocalStorageUser();
 	if (!user) return redirect('/login');
-	return user;
+	return null;
 };
 
 export const Dashboard = () => {
-	const user = useLoaderData() as LoggedInUser;
 	return (
-		<AuthProvider user={user}>
+		<UserProvider>
 			<Sidebar />
 
-			<Box sx={styles.container}>
+			<Stack sx={{ flex: 1, overflow: 'hidden' }}>
 				<AppBar
 					position='relative'
-					sx={styles.header}
 					elevation={0}
+					color='transparent'
+					sx={{
+						backgroundColor: 'background.paper',
+						height: APP_HEADER_HEIGHT,
+					}}
 				>
 					<Stack
 						direction='row'
-						sx={styles.toolbar}
 						component={Toolbar}
+						sx={{
+							height: APP_HEADER_HEIGHT,
+							minHeight: `${APP_HEADER_HEIGHT}px !important`,
+							paddingRight: 1,
+							paddingLeft: `${APP_HEADER_HEIGHT + 5}px`,
+							position: 'relative',
+							alignItems: 'center',
+							gap: 1,
+							borderBottom: 2,
+							borderBottomStyle: 'solid',
+							borderBottomColor: 'divider',
+							'& > .MuiBreadcrumbs-root': { marginRight: 'auto' },
+						}}
 						disableGutters
 					>
 						<Breadcrumbs />
-
-						<WiMetrixLogo sx={styles.logo} />
-
+						<WiMetrixLogo
+							width={130}
+							sx={{ position: 'absolute', left: 'calc(50% - 65px)' }}
+						/>
 						<ThemeSwitch />
-
 						<UserProfile />
 					</Stack>
 				</AppBar>
 
-				<Box
-					className='scroll-y'
-					sx={styles.main}
+				<Stack
 					component='main'
+					flex={1}
+					sx={scrollStyles.y}
 				>
 					<Outlet />
-				</Box>
-			</Box>
-		</AuthProvider>
+				</Stack>
+			</Stack>
+		</UserProvider>
 	);
 };
 

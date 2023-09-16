@@ -1,161 +1,95 @@
-import {
-	AppBar,
-	Paper,
-	Stack,
-	Toolbar,
-	Typography,
-	alpha,
-} from '@mui/material';
+import { Paper } from '@mui/material';
 import { redirect, useNavigate } from 'react-router-dom';
 
-import { ThemeSwitch } from '~/app/components/controls/theme-switch';
-import { SchemaForm } from '~/app/components/forms/schema-form';
-import { AppLogo } from '~/app/components/media/app-logo';
-import { BackgroundImage } from '~/app/components/media/background-image';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo';
-import { LOGIN_HEADER_HEIGHT } from '~/app/config';
-import { login } from '~/app/endpoints/user';
-import { getSetting, setSetting } from '~/app/helpers/settings';
-import { FormSchema } from '~/app/schemas';
-import { userZodSchema } from '~/app/schemas/user';
+import { FormSchema } from '~/app/classes/form-schema.class';
+import { ThemeSwitch } from '~/app/components/controls/theme-switch.component';
+import { SchemaForm } from '~/app/components/forms/schema-form.component';
+import { AppLogo } from '~/app/components/media/app-logo.component';
+import { BackgroundImage } from '~/app/components/media/background-image.component';
+import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo.component';
+import { login } from '~/app/endpoints/user.endpoints';
+import { scrollStyles } from '~/app/helpers/style.helpers';
+import { useDocTitle } from '~/app/hooks/doc-title.hook';
+import { setLocalStorageUser } from '~/app/hooks/user.hook';
+import { loginSchema } from '~/app/schemas/user.schema';
 
-const loginSchema = new FormSchema({
-	name: 'login',
-	zod: userZodSchema.pick({ userName: true, password: true }),
+const schema = new FormSchema({
+	name: 'user',
+	zod: loginSchema,
 	fields: {
-		userName: { type: 'string' },
-		password: { type: 'string' },
+		UserName: {
+			type: 'string',
+			inputProps: {
+				pattern: '.*\\S.*',
+				title: 'Can not be empty',
+			},
+		},
+		Password: { type: 'string', isSecret: true },
 	},
 });
 
-const headerLogoSx = {
-	width: 'auto',
-	height: 'auto',
-	maxWidth: 300,
-	maxHeight: '70%',
-};
-
 const loader = () => {
-	const user = getSetting('user');
-	if (user) return redirect('/');
+	const user = localStorage.getItem('user');
+	if (user !== null) return redirect('/');
 	return null;
 };
 
 export const Login = () => {
 	const navigate = useNavigate();
-
+	useDocTitle('Login');
 	return (
 		<>
-			<AppBar
-				position='fixed'
-				elevation={0}
-				sx={{
-					zIndex: (theme) => theme.zIndex.drawer + 1,
-					transition: (theme) =>
-						theme.transitions.create(['width', 'margin'], {
-							easing: theme.transitions.easing.sharp,
-							duration: theme.transitions.duration.leavingScreen,
-						}),
-					background: (theme) => `linear-gradient(
-						to left,
-						${alpha(theme.palette.secondary[theme.palette.mode], 0.3)},
-						${alpha(theme.palette.primary[theme.palette.mode], 0.3)}
-					)`,
-					height: LOGIN_HEADER_HEIGHT,
-					display: 'flex',
-					alignItems: 'stretch',
-					boxShadow: 'unset',
-				}}
-			>
-				<Stack
-					direction='row'
-					component={Toolbar}
-					sx={{
-						height: '100%',
-						padding: '0 2em',
-						minHeight: '100%',
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-					}}
-					disableGutters
-				>
-					<AppLogo sx={headerLogoSx} />
-					<ThemeSwitch />
-					<WiMetrixLogo sx={headerLogoSx} />
-				</Stack>
-			</AppBar>
+			<BackgroundImage />
 
-			<Stack
-				direction='row'
+			<ThemeSwitch sx={{ position: 'absolute', top: '15px', right: '15px' }} />
+
+			<Paper
 				sx={{
-					background: 'background.paper',
-					marginTop: `${LOGIN_HEADER_HEIGHT}px`,
-					width: '100%',
-					height: `calc(100vh - ${LOGIN_HEADER_HEIGHT}px)`,
-					overflow: 'hidden',
-					position: 'relative',
+					height: 'auto',
+					width: 0.95,
+					maxWidth: 350,
+					boxShadow: 3,
+					borderRadius: 3,
+					margin: 'auto 5% auto auto',
 					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
 					alignItems: 'center',
+					position: 'relative',
+					padding: 4,
+					...scrollStyles.y,
 				}}
 			>
-				<BackgroundImage />
+				<AppLogo sx={{ width: 250, marginBottom: 4 }} />
 
-				<Paper
-					sx={{
-						width: 0.95,
-						height: 'auto',
-						maxWidth: 350,
-						boxShadow: 3,
-						borderRadius: 3,
-						marginInline: 'auto 15%',
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						flexWrap: 'nowrap',
-						alignItems: 'center',
-						position: 'relative',
-						overflow: 'hidden',
-						padding: 4,
-						gap: 4,
-						'& > form': {
-							'& > .MuiGrid-root:first-of-type': {
-								gap: 3,
-							},
-							'& > .MuiGrid-root > .MuiButton-root': {
-								width: 1,
-								height: 50,
-								marginTop: 1,
-							},
-						},
+				<SchemaForm
+					schema={schema}
+					isUpdate={false}
+					submitLabel='login'
+					styles={{
+						fieldOuterContainer: { margin: 0 },
+						button: { minWidth: 150, height: 40 },
 					}}
-				>
-					<Typography
-						variant='h1'
-						color='primary'
-					>
-						Login
-					</Typography>
+					onSubmit={async (data) => {
+						const user = await login(data);
+						setTimeout(() => {
+							setLocalStorageUser(user);
+							navigate('/');
+						}, 1250);
+						return {
+							type: 'success',
+							message: 'logged in! redirecting...',
+							ephemeral: true,
+							duration: 1000,
+						};
+					}}
+				/>
 
-					<SchemaForm
-						schema={loginSchema}
-						isUpdate={false}
-						onSubmit={async (data) => {
-							const user = await login(data);
-							setSetting('user', user);
-							setTimeout(() => {
-								navigate('/');
-							}, 500);
-							return 'login successful! redirecting...';
-						}}
-					/>
-
-					<WiMetrixLogo
-						width={150}
-						showPoweredBy
-					/>
-				</Paper>
-			</Stack>
+				<WiMetrixLogo
+					sx={{ width: 150, marginTop: 4 }}
+					showPoweredBy
+				/>
+			</Paper>
 		</>
 	);
 };

@@ -5,7 +5,7 @@ import {
 } from 'electron';
 
 import type { App, BrowserWindow } from 'electron';
-import type { Utils } from '~/shared/types/utils';
+import type { Utils } from '~/shared/types/utils.types';
 
 export type IpcApi = {
 	app: Pick<App, 'exit'> & {

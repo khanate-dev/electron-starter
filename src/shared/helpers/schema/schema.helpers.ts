@@ -5,9 +5,9 @@ import { z } from 'zod';
 import { dayjsFormatPatterns, dayjsUtc } from '~/shared/helpers/date';
 import { omit } from '~/shared/helpers/object';
 
-import type { GeneralTableColumn } from '~/app/components/tables/general-table';
-import type { BulkResponse } from '~/app/helpers/api';
-import type { App } from '~/app/types/app';
+import type { GeneralTableColumn } from '~/app/components/tables/general-table.component';
+import type { BulkResponse } from '~/app/helpers/api.helpers';
+import type { App } from '~/app/types/app.types';
 
 export const dbIdSchema = z.number().int().positive().finite().brand('DbKey');
 
