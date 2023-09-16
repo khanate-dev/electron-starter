@@ -12,7 +12,7 @@ const colors = {
 	blue: '\x1b[34m',
 };
 
-const sourceFolder = 'src/assets/icons';
+const sourceFolder = 'src/app/assets/icons';
 const spritesPath = path.join(sourceFolder, 'sprites.svg');
 const namesPath = path.join(sourceFolder, 'icon-names.ts');
 
