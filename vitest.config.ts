@@ -7,7 +7,7 @@ export default defineConfig({
 	plugins: [tsconfigPaths()],
 	test: {
 		globals: true,
-		environment: 'happy-dom',
+		environment: 'jsdom',
 		setupFiles: '.vitest/setup',
 		include: ['**/*.test.{ts,tsx}'],
 		clearMocks: true,
