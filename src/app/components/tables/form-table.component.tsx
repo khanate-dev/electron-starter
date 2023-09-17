@@ -14,10 +14,9 @@ import { FormField } from '~/app/components/forms/form-field.component';
 import { GeneralTable } from '~/app/components/tables/general-table.component';
 import { ResponseTable } from '~/app/components/tables/response-table.component';
 import { createLocalId } from '~/app/helpers/data.helpers';
-import { localIdSchema } from '~/app/helpers/schema.helpers';
 import { csx } from '~/app/helpers/style.helpers';
 import { formSchemaToGeneralTableColumns } from '~/app/helpers/table.helpers';
-import { isBulkResponse } from '~/app/helpers/type.helpers';
+
 
 import type {
 	FormSchema,
@@ -38,6 +37,9 @@ import type { StatusUpdate, useStatus } from '~/app/hooks/status.hook';
 import type { App } from '~/app/types/app.types';
 import type { Mui } from '~/app/types/mui.types';
 import type { Utils } from '~/shared/types/utils.types';
+
+import { isBulkResponse } from '~/app/helpers/type.helpers';
+import { localIdSchema } from '~/app/helpers/schema.helpers';
 
 export type FormTableFormStyles = Partial<
 	Record<

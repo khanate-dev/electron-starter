@@ -1,5 +1,5 @@
-import { objectKeys } from '~/app/helpers/object.helpers';
 import { usePrevious } from '~/app/hooks/previous.hook';
+import { objectKeys } from '~/shared/helpers/object.helpers';
 
 /** checks if the given value has changed */
 export const useCompare = <T extends unknown>(valueToCheck: T): boolean => {

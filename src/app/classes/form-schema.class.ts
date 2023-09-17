@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
-import { humanizeToken } from '~/app/helpers/humanize-token.helpers';
 import { stringifyError } from '~/shared/errors';
+import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
 
 import type { ComponentPropsWithoutRef } from 'react';
+import type { App } from '~/app/types/app.types';
 import type {
 	ZodDatetime,
 	ZodDbId,
 	ZodNumberSelection,
 	ZodStringSelection,
-} from '~/app/helpers/schema.helpers';
-import type { App } from '~/app/types/app.types';
+} from '~/shared/helpers/schema.helpers';
 import type { Utils } from '~/shared/types/utils.types';
 
 export type FormZod = z.ZodObject<Record<string, FormFieldZodType>, 'strict'>;
@@ -99,7 +99,6 @@ export type FormFieldZodType =
 	| SelectionType
 	| StringType
 	| NumberType
-	| DateType
 	| BooleanType;
 
 type AgnosticSchemaField<T extends FormFieldZodType> = {
@@ -331,9 +330,7 @@ export class FormSchema<
 					] as unknown as Zod['shape'][keyof Zod['shape']];
 					const zod = transformSchema(fz);
 					zodObject[key] = zod as Zod['shape'][keyof Zod['shape']];
-					defaultZodObject[key] = transformSchema(fz, true) as z.ZodCatch<
-						Zod['shape'][keyof Zod['shape']]
-					>;
+					defaultZodObject[key] = transformSchema(fz, true);
 
 					obj[key] = {
 						...field,

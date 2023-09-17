@@ -21,7 +21,6 @@ import {
 import { CustomButton } from '~/app/components/controls/custom-button.component';
 import { SortButton } from '~/app/components/controls/sort-button.component';
 import { PAGINATION_SIZES } from '~/app/constants';
-import { humanizeToken } from '~/app/helpers/humanize-token.helpers';
 import {
 	csx,
 	scrollStyles,
@@ -30,6 +29,7 @@ import {
 import { useFiltering } from '~/app/hooks/filtering.hook';
 import { usePagination } from '~/app/hooks/pagination.hook';
 import { useSorting } from '~/app/hooks/sorting.hook';
+import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
 
 import type { ButtonProps, TableCellProps } from '@mui/material';
 import type { ReactNode } from 'react';

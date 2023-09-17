@@ -12,12 +12,12 @@ import { CustomTooltip } from '~/app/components/feedback/custom-tooltip.componen
 import { AppIcon } from '~/app/components/media/app-icon.component';
 import { AppLink } from '~/app/components/navigation/app-link.component';
 import { SIDEBAR_GROUPS_LABELS } from '~/app/constants';
-import { humanizeToken } from '~/app/helpers/humanize-token.helpers';
 import {
 	csx,
 	getOppositeColor,
 	wrappedTextStyle,
 } from '~/app/helpers/style.helpers';
+import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
 
 import type {
 	SidebarItemType,

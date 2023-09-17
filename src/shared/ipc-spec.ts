@@ -34,9 +34,9 @@ declare global {
 	interface Window extends ApiGlobal {}
 }
 
-type invoker<T> = T extends (...args: any[]) => Promise<any> ? T : never;
+type invoker<T> = T extends (...args: any[]) => Promise<unknown> ? T : never;
 
-type sender<T> = T extends (...args: infer Args extends any[]) => infer R
+type sender<T> = T extends (...args: infer Args extends unknown[]) => infer R
 	? Utils.equal<R, void> extends true
 		? Args extends [(...args: any[]) => void]
 			? never
@@ -44,7 +44,7 @@ type sender<T> = T extends (...args: infer Args extends any[]) => infer R
 		: never
 	: never;
 
-type listener<T> = T extends (...args: infer Args extends any[]) => infer R
+type listener<T> = T extends (...args: infer Args extends unknown[]) => infer R
 	? Utils.equal<R, void> extends true
 		? Args extends [(...args: any[]) => void]
 			? T
@@ -91,7 +91,7 @@ type listenerFlatApi = {
 
 type renderListenerArgs<T extends keyof listenerFlatApi> = Parameters<
 	Parameters<listenerFlatApi[T]>[0]
-> extends infer args extends any[]
+> extends infer args extends unknown[]
 	? args
 	: [];
 
@@ -106,7 +106,7 @@ type IpcRenderer = {
 	): Promise<Awaited<ReturnType<invokerFlatApi[T]>>>;
 	on<
 		T extends keyof listenerFlatApi,
-		ListenerArgs extends any[] = renderListenerArgs<T>,
+		ListenerArgs extends unknown[] = renderListenerArgs<T>,
 	>(
 		channel: T,
 		listener: (event: Electron.IpcRendererEvent, ...args: ListenerArgs) => void,
@@ -128,14 +128,14 @@ export const ipcRenderer: IpcRenderer = {
 type IpcMain = {
 	on<
 		T extends keyof senderFlatApi,
-		HandlerArgs extends any[] = Parameters<senderFlatApi[T]>,
+		HandlerArgs extends unknown[] = Parameters<senderFlatApi[T]>,
 	>(
 		channel: T,
 		handler: (event: Electron.IpcMainEvent, ...args: HandlerArgs) => void,
 	): void;
 	handle<
 		T extends keyof invokerFlatApi,
-		CallbackArgs extends any[] = Parameters<invokerFlatApi[T]>,
+		CallbackArgs extends unknown[] = Parameters<invokerFlatApi[T]>,
 	>(
 		channel: T,
 		callback: (

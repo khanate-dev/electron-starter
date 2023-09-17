@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 
 import { act } from '@testing-library/react';
 
-import { renderWithProviders } from '~/app/helpers/test.helpers';
+import { renderWithProviders } from '~/shared/helpers/test.helpers';
 
 import { Login } from './login.route';
 

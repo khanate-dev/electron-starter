@@ -3,7 +3,6 @@ import { useLoaderData } from 'react-router-dom';
 import { FormSchema } from '~/app/classes/form-schema.class';
 import { SchemaUpdate } from '~/app/components/pages/schema-update.component';
 import { getUserById, updateUser } from '~/app/endpoints/user.endpoints';
-import { getParamId } from '~/app/helpers/route.helpers';
 import {
 	userFormSchema,
 	userFormZod,
@@ -11,6 +10,8 @@ import {
 } from '~/app/schemas/user.schema';
 
 import type { LoaderFunction } from 'react-router-dom';
+
+import { getParamId } from '~/app/helpers/route.helpers';
 
 const schema = new FormSchema({
 	name: 'user',

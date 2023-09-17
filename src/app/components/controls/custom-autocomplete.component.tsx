@@ -1,7 +1,6 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { z } from 'zod';
 
-import { dropdownOptionSchema } from '~/app/helpers/schema.helpers';
 import { csx } from '~/app/helpers/style.helpers';
 
 import type {
@@ -14,6 +13,8 @@ import type {
 } from '@mui/material';
 import type { App } from '~/app/types/app.types';
 import type { Utils } from '~/shared/types/utils.types';
+
+import { dropdownOptionSchema } from '~/app/helpers/schema.helpers';
 
 export type CustomAutocompleteProps<
 	Type extends number | string | Obj,

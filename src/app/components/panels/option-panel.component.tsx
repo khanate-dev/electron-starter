@@ -18,7 +18,6 @@ import {
 import { useState } from 'react';
 
 import { Dropzone } from '~/app/components/controls/dropzone.component';
-import { humanizeToken } from '~/app/helpers/humanize-token.helpers';
 import {
 	csx,
 	getOppositeColor,
@@ -26,6 +25,7 @@ import {
 } from '~/app/helpers/style.helpers';
 import { useFiltering } from '~/app/hooks/filtering.hook';
 import { usePagination } from '~/app/hooks/pagination.hook';
+import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
 
 import type { ReactNode } from 'react';
 import type { Mui } from '~/app/types/mui.types';

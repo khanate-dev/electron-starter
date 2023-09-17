@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { PageContainer } from '~/app/components/containers/page-container.component';
 import { SchemaForm } from '~/app/components/forms/schema-form.component';
-import { getParamId } from '~/app/helpers/route.helpers';
+
 
 import type { FormSchema } from '~/app/classes/form-schema.class';
 import type {
@@ -10,6 +10,8 @@ import type {
 	UpdateSchemaFormProps,
 } from '~/app/components/forms/schema-form.component';
 import type { App } from '~/app/types/app.types';
+
+import { getParamId } from '~/app/helpers/route.helpers';
 
 export type SchemaUpdateProps<
 	T extends FormSchema,

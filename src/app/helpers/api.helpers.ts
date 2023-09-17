@@ -13,7 +13,7 @@ import {
 	stringifyError,
 } from '~/shared/errors';
 
-import { addToast } from './toast.helpers';
+import { addToast } from '../../shared/helpers/toast.helpers';
 
 import type { Utils } from '~/shared/types/utils.types';
 

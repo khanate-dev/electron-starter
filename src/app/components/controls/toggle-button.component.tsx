@@ -3,8 +3,8 @@ import {
 	ToggleButtonGroup,
 } from '@mui/material';
 
-import { humanizeToken } from '~/app/helpers/humanize-token.helpers';
-import { omit } from '~/app/helpers/object.helpers';
+import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
+import { omit } from '~/shared/helpers/object.helpers';
 
 import type {
 	ToggleButtonProps as MuiToggleButtonProps,

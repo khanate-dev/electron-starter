@@ -10,8 +10,8 @@ import {
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { objectKeys } from '~/app/helpers/object.helpers';
 import { csx, getOppositeColor } from '~/app/helpers/style.helpers';
+import { objectKeys } from '~/shared/helpers/object.helpers';
 
 import type { ReactNode } from 'react';
 import type { Mui } from '~/app/types/mui.types';

@@ -9,7 +9,6 @@ import { CustomButton } from '~/app/components/controls/custom-button.component'
 import { CustomAlert } from '~/app/components/feedback/custom-alert.component';
 import { InfoTooltip } from '~/app/components/feedback/info-tooltip.component';
 import { GeneralTable } from '~/app/components/tables/general-table.component';
-import { pluralize } from '~/app/helpers/pluralize.helpers';
 import { wrappedTextStyle } from '~/app/helpers/style.helpers';
 
 import type {
@@ -18,6 +17,8 @@ import type {
 } from '~/app/components/tables/general-table.component';
 import type { BulkResponse } from '~/app/helpers/api.helpers';
 import type { Mui } from '~/app/types/mui.types';
+
+import { pluralize } from '~/app/helpers/pluralize.helpers';
 
 const alertStyle = {
 	gap: 0.5,

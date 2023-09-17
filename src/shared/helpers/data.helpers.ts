@@ -1,13 +1,4 @@
-import { z } from 'zod';
-
 import type { App } from '~/app/types/app.types';
-
-export const _localIdSchema = z
-	.number()
-	.int()
-	.positive()
-	.finite()
-	.brand('_localId');
 
 /**
  * creates a `localId` for the next row in a list.

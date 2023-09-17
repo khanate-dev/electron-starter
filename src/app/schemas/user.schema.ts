@@ -7,7 +7,7 @@ import {
 	imageVersionSchema,
 	jwtSchema,
 	metaSchema,
-} from '~/app/helpers/schema.helpers';
+} from '~/shared/helpers/schema.helpers';
 
 export type UserType = (typeof USER_TYPES)[number];
 

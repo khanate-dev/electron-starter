@@ -1,9 +1,9 @@
 import { stringifyError } from '~/shared/errors';
-import { createBulkResponseSchema } from '~/shared/helpers/schema';
+import { createBulkResponseSchema } from '~/shared/helpers/schema.helpers';
 
 import type { z } from 'zod';
 import type { BulkResponse } from '~/app/helpers/api.helpers';
-import type { DefaultBulkResponseObj } from '~/shared/helpers/schema';
+import type { DefaultBulkResponseObj } from '~/shared/helpers/schema.helpers';
 import type { Utils } from '~/shared/types/utils.types';
 
 export const readableTypeOf = (value: unknown) => {
@@ -62,10 +62,10 @@ export const excludeString = <
 };
 
 export const isBulkResponse = <
-	Schema extends z.ZodObject<any, any, any, any> = DefaultBulkResponseObj,
+	Schema extends z.ZodObject<z.ZodRawShape> = DefaultBulkResponseObj,
 >(
-	value: any,
+	value: unknown,
 	schema?: Schema,
-): value is BulkResponse<z.infer<Schema>> => {
+): value is BulkResponse<Schema['_output']> => {
 	return createBulkResponseSchema(schema).safeParse(value).success;
 };

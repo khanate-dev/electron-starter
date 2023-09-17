@@ -15,7 +15,7 @@ import { Paper, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { humanizeToken } from '~/app/helpers/humanize-token.helpers';
+import { PAGE_HEADER_HEIGHT } from '~/app/constants';
 import {
 	csx,
 	pageTransitionStyles,
@@ -23,7 +23,7 @@ import {
 } from '~/app/helpers/style.helpers';
 import { useDocTitle } from '~/app/hooks/doc-title.hook';
 import { useUser } from '~/app/hooks/user.hook';
-import { PAGE_HEADER_HEIGHT } from '~/app/constants';
+import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
 
 import type { ReactNode } from 'react';
 import type { To } from 'react-router-dom';
@@ -31,7 +31,6 @@ import type { FullButtonProps } from '~/app/components/controls/custom-button.co
 import type { UserType } from '~/app/schemas/user.schema';
 import type { Mui } from '~/app/types/mui.types';
 import type { Utils } from '~/shared/types/utils.types';
-
 
 type Navigation = Utils.includeUnionKeys<
 	{

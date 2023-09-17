@@ -269,7 +269,7 @@ const config = {
 		},
 		{
 			files: ['**/*'],
-			excludedFiles: ['src/**/*'],
+			excludedFiles: ['src/app/**/*'],
 			env: {
 				es2021: true,
 				node: true,

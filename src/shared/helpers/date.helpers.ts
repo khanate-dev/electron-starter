@@ -1,9 +1,10 @@
 import { default as dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
+import type { Dayjs } from 'dayjs';
+
 import { datetimeSchema } from '~/app/helpers/schema.helpers';
 
-import type { Dayjs } from 'dayjs';
 
 dayjs.extend(utc);
 
