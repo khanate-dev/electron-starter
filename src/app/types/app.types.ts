@@ -5,7 +5,7 @@ import type {
 	ZodLocalId,
 	ZodNumberSelection,
 	ZodStringSelection,
-} from '~/app/helpers/schema.helpers';
+} from '~/shared/helpers/schema.helpers';
 import type { Utils } from '~/shared/types/utils.types';
 
 export declare namespace App {

@@ -15,14 +15,13 @@ import {
 import { dashboardRoutes } from '~/app/dashboard.routes';
 import { scrollStyles } from '~/app/helpers/style.helpers';
 import { logout, useUser } from '~/app/hooks/user.hook';
+import { formatToken } from '~/shared/helpers/format-token.helpers';
 
 import { SidebarGroup } from './sidebar-group.component';
 
 import type { MouseEventHandler } from 'react';
 import type { UserType } from '~/app/schemas/user.schema';
 import type { Mui } from '~/app/types/mui.types';
-
-import { formatToken } from '~/app/helpers/format-token.helpers';
 
 export type TSidebarGroup = (typeof SIDEBAR_GROUPS)[number];
 

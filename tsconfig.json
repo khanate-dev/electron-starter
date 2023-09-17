@@ -7,7 +7,6 @@
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitAny": true,
 		"noImplicitOverride": true,
-		"noImplicitReturns": true,
 		"noImplicitThis": true,
 		"noUncheckedIndexedAccess": true,
 		"strictFunctionTypes": true,
@@ -19,9 +18,8 @@
 		"noUnusedParameters": false,
 
 		// modules
-		"baseUrl": ".",
 		"module": "CommonJS",
-		"moduleResolution": "node",
+		"moduleResolution": "Node",
 		"resolveJsonModule": true,
 		"types": ["vitest/globals"],
 		"paths": {
@@ -50,6 +48,7 @@
 		"jsx": "react-jsx",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"target": "esnext",
+		"moduleDetection": "force",
 
 		// output formatting
 		"noErrorTruncation": true,

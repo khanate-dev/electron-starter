@@ -1,6 +1,7 @@
+import { isObject, readableTypeOf } from '~/shared/helpers/type.helpers';
+
 import type { Utils } from '~/shared/types/utils.types';
 
-import { isObject, readableTypeOf } from '~/app/helpers/type.helpers';
 
 
 export const objectEntries = <T extends Obj>(

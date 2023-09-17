@@ -8,10 +8,9 @@ import {
 	userFormZod,
 	userTypeDropdownOptions,
 } from '~/app/schemas/user.schema';
+import { getParamId } from '~/shared/helpers/route.helpers';
 
 import type { LoaderFunction } from 'react-router-dom';
-
-import { getParamId } from '~/app/helpers/route.helpers';
 
 const schema = new FormSchema({
 	name: 'user',

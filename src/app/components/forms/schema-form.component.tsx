@@ -122,7 +122,7 @@ export type UpdateSchemaFormProps<
 export type SchemaFormProps<
 	T extends FormSchema,
 	Picture extends 'required' | 'optional',
-> = AddSchemaFormProps<T, Picture>;
+> = AddSchemaFormProps<T, Picture> | UpdateSchemaFormProps<T, Picture>;
 
 type FormAction<WorkingObj extends Obj> =
 	| { type: 'reset' }

@@ -2,7 +2,7 @@ import { contextBridge } from 'electron';
 
 import { ipcApiKey, ipcRenderer } from '~/shared/ipc-spec';
 
-import { electronConfig } from './config';
+import { electronConfig } from './electron.config';
 
 import type { IpcApi } from '~/shared/ipc-spec';
 

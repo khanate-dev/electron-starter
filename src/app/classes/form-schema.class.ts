@@ -99,6 +99,7 @@ export type FormFieldZodType =
 	| SelectionType
 	| StringType
 	| NumberType
+	| DateType
 	| BooleanType;
 
 type AgnosticSchemaField<T extends FormFieldZodType> = {
@@ -330,7 +331,9 @@ export class FormSchema<
 					] as unknown as Zod['shape'][keyof Zod['shape']];
 					const zod = transformSchema(fz);
 					zodObject[key] = zod as Zod['shape'][keyof Zod['shape']];
-					defaultZodObject[key] = transformSchema(fz, true);
+					defaultZodObject[key] = transformSchema(fz, true) as z.ZodCatch<
+						Zod['shape'][keyof Zod['shape']]
+					>;
 
 					obj[key] = {
 						...field,

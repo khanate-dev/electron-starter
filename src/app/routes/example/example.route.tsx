@@ -15,8 +15,7 @@ import { BackgroundImage } from '~/app/components/media/background-image.compone
 import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo.component';
 import { LOGIN_HEADER_HEIGHT } from '~/app/constants';
 import { stringifyError } from '~/shared/errors';
-
-import { dayjsUtc } from '~/shared/helpers/date';
+import { dayjsUtc } from '~/shared/helpers/date.helpers';
 
 const headerLogoSx = {
 	width: 'auto',
