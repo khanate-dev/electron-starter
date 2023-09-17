@@ -11,7 +11,7 @@ rules.push({
 });
 
 rules.push({
-	test: /\.(woff|woff2|eot|ttf|otf|png)$/iu,
+	test: /\.(woff|woff2|eot|ttf|otf|png|svg)$/iu,
 	type: 'asset/resource',
 });
 
@@ -19,7 +19,7 @@ export const rendererConfig: Configuration = {
 	module: { rules },
 	plugins,
 	resolve: {
-		extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
+		extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.svg'],
 		alias: {
 			'~': path.join(__dirname, 'src'),
 		},
