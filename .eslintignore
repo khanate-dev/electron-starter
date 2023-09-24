@@ -3,3 +3,5 @@ dist
 out
 .gitignore
 public
+trace
+.webpack

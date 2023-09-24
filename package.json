@@ -17,7 +17,9 @@
 		"spellcheck": "cspell . --quiet",
 		"generate-icons": "tsx ./scripts/generate-icons.ts",
 		"generate-favicons": "electron-icon-builder --input=./src/app/assets/favicon/favicon.png --output=./src/app/assets/favicon",
-		"audit": "electronegativity -i ./"
+		"audit": "electronegativity -i ./",
+		"diag": "tsc --extendedDiagnostics",
+		"trace": "tsc --generateTrace ./trace && npx @typescript/analyze-trace trace"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.1",
@@ -59,6 +61,7 @@
 		"@types/testing-library__jest-dom": "^6.0.0",
 		"@typescript-eslint/eslint-plugin": "^6.7.0",
 		"@typescript-eslint/parser": "^6.7.0",
+		"@typescript/analyze-trace": "^0.10.1",
 		"@vercel/webpack-asset-relocator-loader": "1.7.3",
 		"@vitest/ui": "^0.34.4",
 		"cspell": "^7.3.6",
