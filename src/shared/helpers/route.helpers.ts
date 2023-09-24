@@ -50,7 +50,7 @@ const transformRouteProps = (routes: AppRoute[]): AppRoute[] => {
 			route.shouldRevalidate ??
 			((args) => {
 				const { currentUrl, nextUrl } = args;
-				// TODO to prevent loader triggering on searchParams updation. Remove after moving to server side pagination and filtering
+				// TODO to prevent loader triggering on searchParams update. Remove after moving to server side pagination and filtering
 				const onlySearchParamsChanged =
 					!args.actionResult &&
 					currentUrl.pathname === nextUrl.pathname &&

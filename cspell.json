@@ -1,12 +1,21 @@
 {
 	"words": [
-		"datetime",
-		"typecheck",
-		"xlink",
+		"ampm",
 		"asar",
+		"datetime",
+		"doyensec",
 		"electronegativity",
+		"evenodd",
+		"favicons",
+		"icns",
 		"pmmmwh",
-		"prebuilds"
+		"prebuilds",
+		"relocator",
+		"revalidator",
+		"sooperwizer",
+		"typecheck",
+		"wimetrix",
+		"xlink"
 	],
 	"ignorePaths": [
 		"package-lock.json",
@@ -21,6 +30,6 @@
 		"dist",
 		"public",
 		"trace",
-		"**/*.mp3"
+		"**/*.{mp3,otf,icns}"
 	]
 }

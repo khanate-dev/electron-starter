@@ -68,7 +68,7 @@ type AgnosticSchemaFormProps<
 		data: SchemaFormSubmitData<T, Picture>,
 	) => Promise<void | string | StatusUpdate>;
 
-	/** is the current form for updation? */
+	/** is the current form for update? */
 	isUpdate: boolean;
 
 	/** is the page calling the form busy? */
@@ -82,7 +82,7 @@ export type AddSchemaFormProps<
 	T extends FormSchema,
 	Picture extends 'required' | 'optional',
 > = AgnosticSchemaFormProps<T, Picture> & {
-	/** is the current form for updation? */
+	/** is the current form for update? */
 	isUpdate: false;
 
 	/** the default values for the schema elements */
@@ -99,7 +99,7 @@ export type UpdateSchemaFormProps<
 	T extends FormSchema,
 	Picture extends 'required' | 'optional',
 > = AgnosticSchemaFormProps<T, Picture> & {
-	/** is the current form for updation? */
+	/** is the current form for update? */
 	isUpdate: true;
 
 	/** the default values for the schema elements */

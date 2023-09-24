@@ -158,7 +158,7 @@ export type SelectionSchemaField<Zod extends SelectionType> =
 
 		/** does the dropdown allow multiple selections? */
 		isMultiSelect?: boolean;
-	} & (Zod extends z.ZodArray<z.ZodTypeAny, 'many' | 'atleastone'>
+	} & (Zod extends z.ZodArray<z.ZodTypeAny, z.ArrayCardinality>
 			? { isMultiSelect: true }
 			: { isMultiSelect?: false });
 
