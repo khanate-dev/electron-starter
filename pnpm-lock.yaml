@@ -58,13 +58,7 @@ devDependencies:
   '@electron-forge/maker-deb':
     specifier: ^6.4.2
     version: 6.4.2
-  '@electron-forge/maker-rpm':
-    specifier: ^6.4.2
-    version: 6.4.2
   '@electron-forge/maker-squirrel':
-    specifier: ^6.4.2
-    version: 6.4.2
-  '@electron-forge/maker-zip':
     specifier: ^6.4.2
     version: 6.4.2
   '@electron-forge/plugin-auto-unpack-natives':
@@ -844,19 +838,6 @@ packages:
       - supports-color
     dev: true
 
-  /@electron-forge/maker-rpm@6.4.2:
-    resolution: {integrity: sha512-+hfbY5pYbAer0y07OtOzVgVBHoTRmemqqZ//T0mKJpyK2ThHKGTvyW8FFlr5jlQs5LoDCM2WHKE8oGtRhivsMg==}
-    engines: {node: '>= 14.17.5'}
-    dependencies:
-      '@electron-forge/maker-base': 6.4.2
-      '@electron-forge/shared-types': 6.4.2
-    optionalDependencies:
-      electron-installer-redhat: 3.4.0
-    transitivePeerDependencies:
-      - enquirer
-      - supports-color
-    dev: true
-
   /@electron-forge/maker-squirrel@6.4.2:
     resolution: {integrity: sha512-ukK3RcFaBrQXUzR52PsHxfwDq5XKSnj6A1kkXiyHWqgj+HIU97prBScBb5JRtasPvYN+nDdQO2vlInsLaqcx9Q==}
     engines: {node: '>= 14.17.5'}
@@ -866,20 +847,6 @@ packages:
       fs-extra: 10.1.0
     optionalDependencies:
       electron-winstaller: 5.1.0
-    transitivePeerDependencies:
-      - enquirer
-      - supports-color
-    dev: true
-
-  /@electron-forge/maker-zip@6.4.2:
-    resolution: {integrity: sha512-k2nfhhnxcYbUS7rCKCisuqEalxtH9l73+lrtfL0aQZiE/BLbDXyNckDIDOPvX0tBEg62nVzUdJonZwOhZVvAMw==}
-    engines: {node: '>= 14.17.5'}
-    dependencies:
-      '@electron-forge/maker-base': 6.4.2
-      '@electron-forge/shared-types': 6.4.2
-      cross-zip: 4.0.0
-      fs-extra: 10.1.0
-      got: 11.8.6
     transitivePeerDependencies:
       - enquirer
       - supports-color
@@ -4841,11 +4808,6 @@ packages:
       which: 2.0.2
     dev: true
 
-  /cross-zip@4.0.0:
-    resolution: {integrity: sha512-MEzGfZo0rqE10O/B+AEcCSJLZsrWuRUvmqJTqHNqBtALhaJc3E3ixLGLJNTRzEA2K34wbmOHC4fwYs9sVsdcCA==}
-    engines: {node: '>=12.10'}
-    dev: true
-
   /crypto-random-string@4.0.0:
     resolution: {integrity: sha512-x8dy3RnvYdlUcPOjkEHqozhiwzKNSq7GcPuXFbnyMOCHxX8V3OgIg/pYuabl2sbUPfIJaeAQB7PMOK8DFIdoRA==}
     engines: {node: '>=12'}
@@ -5504,25 +5466,6 @@ packages:
       electron-installer-common: 0.10.3
       fs-extra: 9.1.0
       get-folder-size: 2.0.1
-      lodash: 4.17.21
-      word-wrap: 1.2.5
-      yargs: 16.2.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-    optional: true
-
-  /electron-installer-redhat@3.4.0:
-    resolution: {integrity: sha512-gEISr3U32Sgtj+fjxUAlSDo3wyGGq6OBx7rF5UdpIgbnpUvMN4W5uYb0ThpnAZ42VEJh/3aODQXHbFS4f5J3Iw==}
-    engines: {node: '>= 10.0.0'}
-    os: [darwin, linux]
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      '@malept/cross-spawn-promise': 1.1.1
-      debug: 4.3.4
-      electron-installer-common: 0.10.3
-      fs-extra: 9.1.0
       lodash: 4.17.21
       word-wrap: 1.2.5
       yargs: 16.2.0
