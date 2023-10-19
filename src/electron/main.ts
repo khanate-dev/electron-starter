@@ -13,6 +13,8 @@ if (require('electron-squirrel-startup')) app.quit();
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
+// TODO Find a way to disallow dom types in shared and electron folder
+
 const createWindow = () => {
 	const mainWindow = new BrowserWindow({
 		minWidth: 700,
