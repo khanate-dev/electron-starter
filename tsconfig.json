@@ -30,6 +30,7 @@
 		"outDir": "dist",
 		"downlevelIteration": true,
 		"sourceMap": true,
+		"noEmit": true,
 
 		// javascript support
 		"allowJs": true,
