@@ -62,6 +62,7 @@
 		"@typescript/analyze-trace": "^0.10.1",
 		"@vercel/webpack-asset-relocator-loader": "1.7.3",
 		"@vitest/ui": "^0.34.6",
+		"cross-env": "^7.0.3",
 		"cspell": "^7.3.8",
 		"css-loader": "^6.8.1",
 		"electron": "^27.0.2",
