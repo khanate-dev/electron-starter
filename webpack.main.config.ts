@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { rules } from './webpack.rules';
 
 import type { Configuration } from 'webpack';
@@ -12,6 +14,9 @@ export const mainConfig: Configuration = {
 	module: { rules },
 	resolve: {
 		extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
+		alias: {
+			'@shared': path.join(__dirname, 'src', 'shared'),
+		},
 	},
 	// ? https://github.com/serialport/node-serialport/issues/2464#issuecomment-1516887882
 	externals: {

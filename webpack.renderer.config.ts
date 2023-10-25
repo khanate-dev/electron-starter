@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { plugins } from './webpack.plugins';
 import { rules } from './webpack.rules';
 
@@ -18,6 +20,10 @@ export const rendererConfig: Configuration = {
 	plugins,
 	resolve: {
 		extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.svg'],
+		alias: {
+			'~': path.join(__dirname, 'src', 'app'),
+			'@shared': path.join(__dirname, 'src', 'shared'),
+		},
 	},
 	devtool: 'inline-source-map',
 };
