@@ -4,6 +4,7 @@ coverage
 node_modules
 dist
 build
+out
 pnpm-lock.yaml
 .webpack
 trace

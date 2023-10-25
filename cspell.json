@@ -30,6 +30,7 @@
 		"dist",
 		"public",
 		"trace",
+		"out",
 		".webpack",
 		"**/*.{mp3,otf,icns}"
 	]
