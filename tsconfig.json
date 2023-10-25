@@ -22,9 +22,6 @@
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
 		"types": ["vitest/globals"],
-		"paths": {
-			"~/*": ["./src/*"]
-		},
 
 		// emit
 		"outDir": "dist",
@@ -57,6 +54,6 @@
 		// completeness
 		"skipLibCheck": true
 	},
-	"exclude": ["node_modules", "dist", "build", "public", ".webpack"],
+	"exclude": ["node_modules", "out", ".webpack"],
 	"include": ["**/*", "./.*.cjs"]
 }
