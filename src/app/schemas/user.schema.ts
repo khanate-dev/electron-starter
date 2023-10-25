@@ -1,17 +1,18 @@
 import { z } from 'zod';
 
-import { FormSchema } from '../classes/form-schema.class';
-import { USER_TYPES } from '../constants';
+import { FormSchema } from '~/classes/form-schema.class';
 import {
 	dbIdSchema,
 	imageVersionSchema,
 	jwtSchema,
 	metaSchema,
-} from '../helpers/schema.helpers';
+} from '~/helpers/schema.helpers';
 
-export type UserType = (typeof USER_TYPES)[number];
+export const userTypes = ['Administrator', 'Supervisor', 'Worker'] as const;
 
-export const userTypeDropdownOptions = USER_TYPES.map((row) => ({
+export type UserType = (typeof userTypes)[number];
+
+export const userTypeDropdownOptions = userTypes.map((row) => ({
 	value: row,
 	label: row,
 }));
@@ -19,7 +20,7 @@ export const userTypeDropdownOptions = USER_TYPES.map((row) => ({
 export const userSansMetaSchema = z.strictObject({
 	UserName: z.string().min(2).max(64),
 	Password: z.string().min(2).max(1024),
-	UserType: z.enum(USER_TYPES),
+	UserType: z.enum(userTypes),
 	ImageVersion: imageVersionSchema,
 });
 

@@ -1,19 +1,24 @@
-export const environment = window.ipc.app.env;
+export const env = window.ipc.app.env;
 
 export const backendPath = {
 	development: 'http://10.0.0.9:8888/api',
 	test: 'http://10.0.0.9:8888/api',
 	production: 'http://172.16.1.83:4005/api',
-}[environment];
+}[env];
 
-export const isFetchMocked = {
+const isFetchMockedConfig: Record<Env, boolean> = {
 	development: false,
 	test: false,
 	production: false,
-}[environment];
+};
+/** should the app use dummy data? used for demos of the frontend */
+export const isFetchMocked: boolean = isFetchMockedConfig[env];
 
-export const disableAuth = {
+const disableAuthConfig: Record<Env, boolean> = {
 	development: false,
 	test: false,
 	production: false,
-}[environment];
+};
+
+/** should fetch authentication be disabled? */
+export const disableAuth = disableAuthConfig[env];

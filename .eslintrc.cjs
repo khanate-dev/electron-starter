@@ -10,10 +10,10 @@ const config = {
 		'eslint:recommended',
 		'plugin:@typescript-eslint/strict-type-checked',
 		'plugin:@typescript-eslint/stylistic-type-checked',
-		'prettier',
 		'plugin:import/recommended',
 		'plugin:import/typescript',
 		'plugin:import/electron',
+		'prettier',
 	],
 	plugins: ['import', 'unused-imports', '@typescript-eslint'],
 	parser: '@typescript-eslint/parser',
@@ -268,10 +268,7 @@ const config = {
 		{
 			files: ['**/*'],
 			excludedFiles: ['src/**/*'],
-			env: {
-				es2021: true,
-				node: true,
-			},
+			env: { es2021: true, node: true },
 			rules: {
 				'import/no-nodejs-modules': 'off',
 			},

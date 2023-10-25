@@ -1,7 +1,7 @@
 import { createTheme, darken, lighten } from '@mui/material';
 
-import './assets/fonts/font.css';
-import { pageTransitionStyles } from './helpers/style.helpers';
+import '~/assets/fonts/font.css';
+import { pageTransitionStyles } from '~/helpers/style.helpers';
 
 const DARK_LIGHTEN = 0.25;
 
@@ -124,7 +124,7 @@ export const getMuiTheme = (mode: 'light' | 'dark') => {
 						width: '100%',
 						height: '100%',
 						overflow: 'hidden',
-						flexWrap: 'nowrap',
+						flexWrap: 'wrap',
 						...pageTransitionStyles,
 					},
 				},
