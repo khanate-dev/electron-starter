@@ -1,15 +1,15 @@
 {
-	"name": "electron-app",
-	"productName": "electron-app",
+	"name": "electron-starter",
+	"productName": "electron-starter",
 	"version": "1.0.0",
-	"description": "electron react application",
-	"main": ".webpack/main",
+	"description": "Electron React Starter Application",
 	"keywords": [],
 	"author": {
 		"name": "Khanate",
 		"email": "dev@khanate.pk",
 		"url": "https://khante.pk"
 	},
+	"main": ".webpack/main",
 	"scripts": {
 		"start": "cross-env DEV=1 electron-forge start",
 		"package": "electron-forge package",
