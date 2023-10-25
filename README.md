@@ -1,6 +1,6 @@
-# Electron React Webpack Starter
+# Electron React Starter
 
-React Electron desktop application starter
+Electron desktop application starter
 
 ## Building Blocks
 
@@ -11,6 +11,7 @@ React Electron desktop application starter
 - `MUI 5`
 - Formatting with `Prettier`
 - Linting with `ESLint`
+- Spell checking with `cSpell`
 - `pnpm` for package management
 
 ---
