@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { stringifyError } from '~/errors';
 import { dayjsUtc } from '~/helpers/date.helpers';
@@ -10,7 +10,11 @@ export const useCodeReader = () => {
 		| { type: 'connected'; reading?: { at: string; data: number } }
 	>({ type: 'connecting' });
 
+	const initialized = useRef<boolean>(false);
+
 	useEffect(() => {
+		if (initialized.current) return;
+		initialized.current = true;
 		window.ipc.codeReader
 			.connect()
 			.then(() => {
