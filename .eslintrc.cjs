@@ -1,8 +1,11 @@
+const noParentImport = {
+	group: ['../*'],
+	message: 'Do not use parent imports',
+};
+
 /** @type {import('eslint').Linter.Config} */
 const config = {
-	env: {
-		es2021: true,
-	},
+	env: { es2021: true },
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/strict-type-checked',
@@ -58,6 +61,12 @@ const config = {
 		'no-octal-escape': 'warn',
 		'no-param-reassign': 'warn',
 		'no-promise-executor-return': 'warn',
+		'no-restricted-imports': [
+			'error',
+			{
+				patterns: [noParentImport],
+			},
+		],
 		'no-restricted-syntax': [
 			'error',
 			{
@@ -106,6 +115,7 @@ const config = {
 		'import/no-duplicates': 'warn',
 		'import/export': 'off',
 		'import/no-empty-named-blocks': 'warn',
+		'import/no-nodejs-modules': 'error',
 		'import/no-self-import': 'warn',
 		'import/no-useless-path-segments': 'warn',
 		'import/order': [
@@ -140,15 +150,13 @@ const config = {
 		'@typescript-eslint/default-param-last': 'warn',
 		'no-dupe-class-members': 'off',
 		'@typescript-eslint/no-dupe-class-members': 'warn',
-		'@typescript-eslint/no-explicit-any': 'off',
+		'@typescript-eslint/no-explicit-any': ['warn', { ignoreRestArgs: true }],
 		'@typescript-eslint/no-floating-promises': 'off',
 		'@typescript-eslint/no-inferrable-types': 'off',
 		'@typescript-eslint/no-loop-func': 'warn',
 		'@typescript-eslint/no-misused-promises': [
 			'warn',
-			{
-				checksVoidReturn: false,
-			},
+			{ checksVoidReturn: false },
 		],
 		'@typescript-eslint/no-redundant-type-constituents': 'warn',
 		'@typescript-eslint/no-shadow': 'warn',
@@ -270,16 +278,13 @@ const config = {
 		},
 		{
 			files: ['./src/renderer/**/*'],
-			env: {
-				es2021: true,
-				browser: true,
-			},
 			rules: {
 				'import/no-nodejs-modules': 'error',
 				'no-restricted-imports': [
 					'error',
 					{
 						patterns: [
+							noParentImport,
 							{
 								group: ['electron/*', 'serialport/*'],
 								message: 'Not available in the renderer',
@@ -291,16 +296,23 @@ const config = {
 		},
 		{
 			files: ['./src/electron/**/*'],
-			env: { es2021: true, node: true },
 			rules: {
+				'import/no-nodejs-modules': 'off',
 				'no-restricted-imports': [
 					'error',
 					{
+						patterns: [
+							noParentImport,
+							{
+								group: ['~/*'],
+								message: 'Do not use app modules in electron',
+							},
+						],
 						paths: [
 							{
 								name: 'electron',
 								importNames: ['ipcRenderer', 'ipcMain'],
-								message: 'Please import ipc helper from `@shared/ipc-spec`.',
+								message: 'Please import ipc helper from `@shared/ipc`.',
 							},
 						],
 					},
@@ -311,6 +323,7 @@ const config = {
 			files: ['**/*.cjs', '**/*.js'],
 			rules: {
 				'import/no-commonjs': 'off',
+				'import/no-nodejs-modules': 'off',
 			},
 		},
 	],
