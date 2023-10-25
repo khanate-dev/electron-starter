@@ -7,9 +7,7 @@ import type { App, BrowserWindow } from 'electron';
 import type { Utils } from './types/utils.types';
 
 export type IpcApi = {
-	app: Pick<App, 'exit'> & {
-		env: 'development' | 'production';
-	};
+	app: Pick<App, 'exit'> & { env: Env };
 	codeReader: {
 		connect: () => Promise<void>;
 		disconnect: () => Promise<void>;

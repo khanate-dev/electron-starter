@@ -1,4 +1,6 @@
 export declare global {
+	type Env = 'development' | 'production' | 'test';
+
 	namespace NodeJS {
 		interface ProcessEnv {
 			DEV?: '1';
