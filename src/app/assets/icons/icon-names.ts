@@ -34,6 +34,7 @@ export const iconNames = [
 	'smart-box-allocation',
 	'stitching',
 	'dark-mode',
+	'language',
 	'light-mode',
 	'sort',
 	'system-mode',
