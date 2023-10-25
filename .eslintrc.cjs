@@ -61,12 +61,7 @@ const config = {
 		'no-octal-escape': 'warn',
 		'no-param-reassign': 'warn',
 		'no-promise-executor-return': 'warn',
-		'no-restricted-imports': [
-			'error',
-			{
-				patterns: [noParentImport],
-			},
-		],
+		'no-restricted-imports': ['error', { patterns: [noParentImport] }],
 		'no-restricted-syntax': [
 			'error',
 			{
@@ -187,10 +182,6 @@ const config = {
 		],
 		'@typescript-eslint/return-await': 'warn',
 		'@typescript-eslint/switch-exhaustiveness-check': 'warn',
-		'@typescript-eslint/restrict-template-expressions': [
-			'warn',
-			{ allowAny: true },
-		],
 		'@typescript-eslint/ban-types': [
 			'warn',
 			{
@@ -211,11 +202,9 @@ const config = {
 				'plugin:react-hooks/recommended',
 				'plugin:jsx-a11y/recommended',
 			],
-			plugins: ['jsx-expressions'],
+			plugins: ['jsx-expressions', 'react-refresh'],
 			settings: {
-				react: {
-					version: 'detect',
-				},
+				react: { version: 'detect' },
 			},
 			rules: {
 				'@typescript-eslint/no-unnecessary-type-constraint': 'off',
@@ -248,6 +237,13 @@ const config = {
 				'react/void-dom-elements-no-children': 'warn',
 				'react/prop-types': 'off',
 				'jsx-expressions/strict-logical-expressions': 'warn',
+				'react-refresh/only-export-components': 'warn',
+			},
+		},
+		{
+			files: ['src/contexts/**/*', 'src/hooks/**/*'],
+			rules: {
+				'react-refresh/only-export-components': 'off',
 			},
 		},
 		{
