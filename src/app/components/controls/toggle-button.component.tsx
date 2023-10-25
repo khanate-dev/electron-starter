@@ -3,15 +3,15 @@ import {
 	ToggleButtonGroup,
 } from '@mui/material';
 
+import { humanizeToken } from '~/helpers/humanize-token.helpers';
+import { omit } from '~/helpers/object.helpers';
+
 import type {
 	ToggleButtonProps as MuiToggleButtonProps,
 	ToggleButtonGroupProps,
 } from '@mui/material';
 import type { Utils } from '@shared/types/utils.types';
 import type { MouseEvent } from 'react';
-
-import { humanizeToken } from '~/helpers/humanize-token.helpers';
-import { omit } from '~/helpers/object.helpers';
 
 export type ToggleButtonObjectOption<Value extends string> = Utils.prettify<
 	MuiToggleButtonProps & {

@@ -1,8 +1,8 @@
 import { app } from 'electron';
 
-import { codeReader } from './serial-port';
+import { ipcMain } from '@shared/ipc';
 
-import { ipcMain } from '../shared/ipc';
+import { codeReader } from './serial-port';
 
 import type { BrowserWindow } from 'electron';
 

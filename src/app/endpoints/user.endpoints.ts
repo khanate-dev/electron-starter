@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { getRequest, postRequest, putRequest } from '../helpers/api.helpers';
-import { objectToFormData } from '../helpers/object.helpers';
-import { detailedUserSchema, loggedInUserSchema } from '../schemas/user.schema';
+import { getRequest, postRequest, putRequest } from '~/helpers/api.helpers';
+import { objectToFormData } from '~/helpers/object.helpers';
+import { detailedUserSchema, loggedInUserSchema } from '~/schemas/user.schema';
 
-import type { BulkResponse } from '../helpers/api.helpers';
-import type { LoginForm, UserForm, UserReset } from '../schemas/user.schema';
-import type { App } from '../types/app.types';
+import type { BulkResponse } from '~/helpers/api.helpers';
+import type { LoginForm, UserForm, UserReset } from '~/schemas/user.schema';
+import type { App } from '~/types/app.types';
 
 const prefix = 'users';
 

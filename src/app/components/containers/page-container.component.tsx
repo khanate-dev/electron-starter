@@ -14,13 +14,6 @@ import {
 import { Paper, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import type { Utils } from '@shared/types/utils.types';
-import type { ReactNode } from 'react';
-import type { To } from 'react-router-dom';
-import type { FullButtonProps } from '~/components/controls/custom-button.component';
-import type { UserType } from '~/schemas/user.schema';
-import type { Mui } from '~/types/mui.types';
-
 import { CustomButton } from '~/components/controls/custom-button.component';
 import { humanizeToken } from '~/helpers/humanize-token.helpers';
 import {
@@ -31,6 +24,13 @@ import {
 } from '~/helpers/style.helpers';
 import { useDocTitle } from '~/hooks/doc-title.hook';
 import { useUser } from '~/hooks/user.hook';
+
+import type { Utils } from '@shared/types/utils.types';
+import type { ReactNode } from 'react';
+import type { To } from 'react-router-dom';
+import type { FullButtonProps } from '~/components/controls/custom-button.component';
+import type { UserType } from '~/schemas/user.schema';
+import type { Mui } from '~/types/mui.types';
 
 type Navigation = Utils.includeUnionKeys<
 	{

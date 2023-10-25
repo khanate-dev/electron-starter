@@ -241,7 +241,7 @@ const config = {
 			},
 		},
 		{
-			files: ['src/contexts/**/*', 'src/hooks/**/*'],
+			files: ['src/app/contexts/**/*', 'src/app/hooks/**/*'],
 			rules: {
 				'react-refresh/only-export-components': 'off',
 			},
@@ -271,6 +271,7 @@ const config = {
 		},
 		{
 			files: ['./src/renderer/**/*'],
+			env: { es2021: true, browser: true },
 			rules: {
 				'import/no-nodejs-modules': 'error',
 				'no-restricted-imports': [

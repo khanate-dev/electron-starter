@@ -1,3 +1,4 @@
+/* eslint-disable import/no-nodejs-modules */
 import {
 	ipcMain as electronIpcMain,
 	ipcRenderer as electronIpcRenderer,

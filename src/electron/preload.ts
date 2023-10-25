@@ -1,10 +1,10 @@
 import { contextBridge } from 'electron';
 
+import { ipcApiKey, ipcRenderer } from '@shared/ipc';
+
 import { electronConfig } from './electron.config';
 
-import { ipcApiKey, ipcRenderer } from '../shared/ipc';
-
-import type { IpcApi } from '../shared/ipc';
+import type { IpcApi } from '@shared/ipc';
 
 const ipcApi: IpcApi = {
 	app: {

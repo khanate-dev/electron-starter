@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { stringifyError } from '../errors';
-import { dayjsUtc } from '../helpers/date.helpers';
+import { stringifyError } from '~/errors';
+import { dayjsUtc } from '~/helpers/date.helpers';
 
 export const useCodeReader = () => {
 	const [status, setStatus] = useState<
