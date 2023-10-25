@@ -53,28 +53,30 @@ export const Example = () => {
 						Bar Code Reader
 					</Typography>
 
-					<Stack sx={{ flexDirection: 'row', gap: 1 }}>
+					<Stack sx={{ flexDirection: 'row', gap: 1, alignItems: 'center' }}>
 						<Chip
+							sx={{ fontWeight: 'medium', paddingInline: 2 }}
 							color={
 								status.type === 'error'
 									? 'error'
 									: status.type === 'connected'
 									? 'success'
-									: 'warning'
+									: 'default'
 							}
 							label={
 								status.type === 'connecting'
-									? 'CONNECTING...'
+									? 'Connecting...'
 									: status.type === 'disconnecting'
-									? 'DISCONNECTING!'
+									? 'Disconnecting!'
 									: status.type === 'connected'
-									? 'CONNECTED!'
-									: 'NOT CONNECTED!'
+									? 'Connected!'
+									: 'Not Connected!'
 							}
 						/>
 						<CustomButton
+							variant='outlined'
 							label={status.type === 'connected' ? 'disconnect' : 'connect'}
-							color={status.type === 'connected' ? 'error' : 'success'}
+							size='small'
 							isBusy={
 								status.type === 'connecting' || status.type === 'disconnecting'
 							}
