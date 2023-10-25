@@ -1,6 +1,6 @@
 import { toast } from 'react-hot-toast';
 
-import { stringifyError } from '../errors';
+import { stringifyError } from '~/errors';
 
 export const addToast = (
 	message: unknown,

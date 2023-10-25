@@ -1,7 +1,7 @@
 import { alpha, keyframes } from '@mui/material';
 
 import type { Theme } from '@mui/material';
-import type { Mui } from '../types/mui.types';
+import type { Mui } from '~/types/mui.types';
 
 export type CxInput = 0 | undefined | false | null | string | CxInput[];
 
@@ -42,22 +42,22 @@ export const pageTransitionStyles = {
 } satisfies Mui.sxStyle;
 
 export const getLoadingStyles = (color: Mui.themeColor) => {
+	const size = '200px';
 	return {
 		color: `${color}.dark`,
 		background: ({ palette }) =>
-			`repeating-linear-gradient(${[
-				'45deg',
-				`${alpha(palette[color].light, 0.25)} 0%`,
-				`${alpha(palette[color].light, 0.25)} 5%`,
-				`${alpha(palette[color].dark, 0.25)} 5%`,
-				`${alpha(palette[color].dark, 0.25)} 10%`,
-			].join(', ')})`,
-		animationDuration: '1s',
+			`repeating-linear-gradient(
+				45deg,
+				${alpha(palette[color].light, 0.25)} 0% 5%,
+				${alpha(palette[color].dark, 0.25)} 0% 10%
+			)`,
+		animationDuration: '1.5s',
 		animationTimingFunction: 'linear',
 		animationIterationCount: 'infinite',
-		animation: keyframes({ to: { backgroundPositionX: '100%' } }).toString(),
-		backgroundSize: '200% 100%',
-		opacity: 0.8,
+		animationName: keyframes({
+			to: { backgroundPosition: `${size} 0` },
+		}).toString(),
+		backgroundSize: `${size} ${size}`,
 	} satisfies Mui.sxStyle;
 };
 
@@ -72,3 +72,16 @@ export const scrollStyles = {
 	y: { overflowX: 'hidden', overflowY: 'auto', flexWrap: 'nowrap' },
 	xy: { overflowX: 'auto', overflowY: 'auto', flexWrap: 'nowrap' },
 } satisfies Mui.sxStyleObj;
+
+export const controlContainerStyles = {
+	flexDirection: 'row',
+	gap: 1,
+	flexWrap: 'wrap',
+	alignItems: 'flex-end',
+	'> *': { flexShrink: 0 },
+	'& > .MuiAutocomplete-root, & > .MuiTextField-root': {
+		minWidth: 200,
+		marginTop: 1,
+	},
+	'& > .MuiButton-root, & > .MuiButtonGroup-root': { minHeight: '36.7167px' },
+} satisfies Mui.sxStyle;

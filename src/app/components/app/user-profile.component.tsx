@@ -1,15 +1,15 @@
 import { Divider, IconButton, Popover, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 
-import { FormSchema } from '../../classes/form-schema.class';
-import { CustomButton } from '../controls/custom-button.component';
-import { SchemaForm } from '../forms/schema-form.component';
-import { AppIcon } from '../media/app-icon.component';
-import { CustomAvatar } from '../media/custom-avatar.component';
-import { resetUserPassword } from '../../endpoints/user.endpoints';
-import { getImageUrl } from '../../helpers/image.helpers';
-import { logout, useUser } from '../../hooks/user.hook';
-import { userResetSchema } from '../../schemas/user.schema';
+import { FormSchema } from '~/classes/form-schema.class';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { SchemaForm } from '~/components/forms/schema-form.component';
+import { AppIcon } from '~/components/media/app-icon.component';
+import { CustomAvatar } from '~/components/media/custom-avatar.component';
+import { resetUserPassword } from '~/endpoints/user.endpoints';
+import { getImageUrl } from '~/helpers/image.helpers';
+import { logout, useUser } from '~/hooks/user.hook';
+import { userResetSchema } from '~/schemas/user.schema';
 
 const schema = new FormSchema({
 	name: 'password-reset',
@@ -28,37 +28,41 @@ export const UserProfile = () => {
 
 	return (
 		<>
-			<Stack maxWidth={300}>
-				<Typography
-					variant='h5'
-					noWrap
-				>
-					{user.UserName}
-				</Typography>
-				<Typography
-					variant='body2'
-					noWrap
-				>
-					{user.UserType}
-				</Typography>
-			</Stack>
-
-			<IconButton
-				aria-describedby='user-popover'
-				onClick={(event) => {
-					setAnchor(event.currentTarget);
-				}}
+			<Stack
+				sx={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 0.5 }}
 			>
-				<CustomAvatar
-					alt={user.UserName}
-					src={getImageUrl({
-						table: 'user',
-						id: user.UserID,
-						version: user.ImageVersion,
-					})}
-					showFallback
-				/>
-			</IconButton>
+				<Stack sx={{ maxWidth: 300, textAlign: 'right' }}>
+					<Typography
+						variant='h5'
+						noWrap
+					>
+						{user.UserName}
+					</Typography>
+					<Typography
+						variant='body2'
+						noWrap
+					>
+						{user.UserType}
+					</Typography>
+				</Stack>
+
+				<IconButton
+					aria-describedby='user-popover'
+					onClick={(event) => {
+						setAnchor(event.currentTarget);
+					}}
+				>
+					<CustomAvatar
+						alt={user.UserName}
+						src={getImageUrl({
+							table: 'user',
+							id: user.UserID,
+							version: user.ImageVersion,
+						})}
+						showFallback
+					/>
+				</IconButton>
+			</Stack>
 
 			<Popover
 				id='user-popover'
@@ -85,12 +89,7 @@ export const UserProfile = () => {
 						schema={schema}
 						submitLabel='Reset Password'
 						isUpdate={false}
-						sx={{
-							flexDirection: 'column',
-							'& > *': {
-								marginTop: 0,
-							},
-						}}
+						sx={{ flexDirection: 'column' }}
 						onSubmit={async (data) => {
 							await resetUserPassword(user.UserID, data);
 							setTimeout(() => {

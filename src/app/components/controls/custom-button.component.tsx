@@ -1,16 +1,16 @@
 import { Button, IconButton } from '@mui/material';
 
-import { CustomTooltip } from '../feedback/custom-tooltip.component';
-import { csx, getLoadingStyles } from '../../helpers/style.helpers';
-import { excludeString } from '../../helpers/type.helpers';
+import { CustomTooltip } from '~/components/feedback/custom-tooltip.component';
+import { csx, getLoadingStyles } from '~/helpers/style.helpers';
+import { excludeString } from '~/helpers/type.helpers';
 
 import type {
 	ButtonProps,
 	IconButtonProps as MuiIconButtonProps,
 	TooltipProps,
 } from '@mui/material';
+import type { Utils } from '@shared/types/utils.types';
 import type { ReactNode } from 'react';
-import type { Utils } from '../../../shared/types/utils.types';
 
 type ButtonBaseProps = Pick<
 	ButtonProps,

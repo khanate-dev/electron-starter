@@ -1,15 +1,15 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { PageContainer } from '../containers/page-container.component';
-import { SchemaForm } from '../forms/schema-form.component';
-import { getParamId } from '../../helpers/route.helpers';
+import { PageContainer } from '~/components/containers/page-container.component';
+import { SchemaForm } from '~/components/forms/schema-form.component';
+import { getParamId } from '~/helpers/route.helpers';
 
-import type { FormSchema } from '../../classes/form-schema.class';
+import type { FormSchema } from '~/classes/form-schema.class';
 import type {
 	SchemaFormSubmitData,
 	UpdateSchemaFormProps,
-} from '../forms/schema-form.component';
-import type { App } from '../../types/app.types';
+} from '~/components/forms/schema-form.component';
+import type { App } from '~/types/app.types';
 
 export type SchemaUpdateProps<
 	T extends FormSchema,

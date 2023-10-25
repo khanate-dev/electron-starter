@@ -1,10 +1,10 @@
 import { Box, keyframes } from '@mui/material';
 
-import { BackgroundImage } from '../media/background-image.component';
-import { csx } from '../../helpers/style.helpers';
+import { BackgroundImage } from '~/components/media/background-image.component';
+import { csx } from '~/helpers/style.helpers';
 
 import type { ReactNode } from 'react';
-import type { Mui } from '../../types/mui.types';
+import type { Mui } from '~/types/mui.types';
 
 const triangleSize = 75;
 const decorationDistance = (-1 * triangleSize) / 2;
@@ -12,6 +12,9 @@ const decorationDistance = (-1 * triangleSize) / 2;
 export type EmptyPageProps = {
 	/** the styles to apply to the center box */
 	boxSx?: Mui.sxProp;
+
+	/** the accent of the center box. @default `primary` */
+	accent?: Mui.themeColor;
 
 	/** the opacity of the background image */
 	backgroundOpacity?: number;
@@ -22,9 +25,11 @@ export type EmptyPageProps = {
 
 export const EmptyPage = ({
 	boxSx,
+	accent = 'primary',
 	backgroundOpacity,
 	children,
 }: EmptyPageProps) => {
+	const color = `${accent}.main`;
 	return (
 		<Box
 			sx={{
@@ -53,10 +58,10 @@ export const EmptyPage = ({
 					{
 						width: '80%',
 						maxWidth: 600,
-						borderWidth: 3,
+						borderWidth: 2,
 						borderStyle: 'solid',
 						borderRadius: 2,
-						borderColor: 'grey.400',
+						borderColor: color,
 						padding: '50px',
 						display: 'flex',
 						justifyContent: 'center',
@@ -83,10 +88,11 @@ export const EmptyPage = ({
 							borderStyle: 'solid',
 							borderWidth: triangleSize,
 							borderRadius: 2,
+							opacity: 0.9,
 						},
 						'&::before': {
-							borderTopColor: 'secondary.light',
-							borderLeftColor: 'secondary.light',
+							borderTopColor: color,
+							borderLeftColor: color,
 							borderBottomColor: 'transparent',
 							borderRightColor: 'transparent',
 							top: decorationDistance,
@@ -95,8 +101,8 @@ export const EmptyPage = ({
 						'&::after': {
 							borderTopColor: 'transparent',
 							borderLeftColor: 'transparent',
-							borderBottomColor: 'secondary.light',
-							borderRightColor: 'secondary.light',
+							borderBottomColor: color,
+							borderRightColor: color,
 							bottom: decorationDistance,
 							right: decorationDistance,
 						},

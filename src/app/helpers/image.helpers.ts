@@ -1,8 +1,9 @@
-import { backendPath } from '../app.config';
-import { IMAGE_EXTENSIONS } from '../constants';
+import { backendPath } from '~/app.config';
 
-import type { Utils } from '../../shared/types/utils.types';
-import type { App } from '../types/app.types';
+import type { Utils } from '@shared/types/utils.types';
+import type { App } from '~/types/app.types';
+
+export const validImageExtensions = ['.jpg', '.jpeg', '.png'] as const;
 
 /**
  * a function that throws an error if the given value is not a valid image
@@ -13,12 +14,12 @@ export const assertValidImage: Utils.assertFunction<File> = (file) => {
 	if (!(file instanceof File))
 		throw new Error('invalid image: the given value is not a valid file');
 
-	const validTypes = IMAGE_EXTENSIONS.map((type) =>
+	const validTypes = validImageExtensions.map((type) =>
 		type.replace('.', 'image/'),
 	);
 	if (!validTypes.includes(file.type)) {
 		throw new Error(
-			`invalid image: expected [${IMAGE_EXTENSIONS.join(
+			`invalid image: expected [${validImageExtensions.join(
 				', ',
 			)}], received '${file.type.replace('image/', '.')}'`,
 		);

@@ -1,25 +1,25 @@
 import { useState } from 'react';
 
-import { CustomAlert } from '../components/feedback/custom-alert.component';
-import { AuthError, stringifyError } from '../errors';
-import { csx } from '../helpers/style.helpers';
+import { CustomAlert } from '~/components/feedback/custom-alert.component';
+import { AuthError, stringifyError } from '~/errors';
+import { csx } from '~/helpers/style.helpers';
 
-import type { Utils } from '../../shared/types/utils.types';
-import type { Mui } from '../types/mui.types';
+import type { Utils } from '@shared/types/utils.types';
+import type { Mui } from '~/types/mui.types';
 
 const hiddenStatusTypes = ['idle', 'submitting', 'loading'] as const;
-type HiddenStatusType = (typeof hiddenStatusTypes)[number];
+type HiddenType = (typeof hiddenStatusTypes)[number];
 
 const showingStatusTypes = ['error', 'success', 'info', 'warning'] as const;
-type ShowingStatusType = (typeof showingStatusTypes)[number];
+type ShowingType = (typeof showingStatusTypes)[number];
 
 type HiddenStatus = {
-	type: HiddenStatusType;
-	prev?: HiddenStatusType | ShowingStatusType;
+	type: HiddenType;
+	hidingFrom?: ShowingType;
 };
 
 type ShowingStatus = {
-	type: ShowingStatusType;
+	type: ShowingType;
 	message: string;
 };
 
@@ -58,17 +58,21 @@ export const useStatus = (params?: StatusParams) => {
 
 	const updateStatus = (value: StatusUpdate) => {
 		if (isHiddenStatus(value)) {
-			setStatus({ ...value, prev: status.type });
+			setStatus(value);
+			if (value.hidingFrom) {
+				setTimeout(() => {
+					setStatus({ ...value, hidingFrom: undefined });
+				}, 250);
+			}
 		} else if (value.type === 'error') {
 			setStatus({
 				type: 'error',
 				message: stringifyError(value.message),
 			});
 		} else {
-			const prev = value.type;
 			if (value.ephemeral) {
 				setTimeout(() => {
-					setStatus({ type: 'idle', prev });
+					updateStatus({ type: 'idle', hidingFrom: value.type });
 				}, value.duration ?? 2500);
 			}
 			setStatus(value);
@@ -122,26 +126,20 @@ export const useStatus = (params?: StatusParams) => {
 		status,
 		updateStatus,
 		isBusy,
-		statusJsx: (
-			<CustomAlert
-				key={params?.key ?? 'status-hook-jsx'}
-				sx={csx({ flexBasis: 40, marginBottom: 1, width: '100%' }, params?.sx)}
-				message={isShowing ? status.message : null}
-				hidden={!isShowing}
-				severity={
-					isShowing
-						? status.type
-						: status.prev === 'success' ||
-						  status.prev === 'info' ||
-						  status.prev === 'warning'
-						? status.prev
-						: 'error'
-				}
-				onClose={() => {
-					updateStatus({ type: 'idle' });
-				}}
-			/>
-		),
+		statusJsx:
+			isShowing || status.hidingFrom ? (
+				<CustomAlert
+					key={params?.key ?? 'status-hook-jsx'}
+					sx={csx({ flexBasis: 40, width: '100%' }, params?.sx)}
+					message={isShowing ? status.message : null}
+					hidden={!isShowing}
+					severity={isShowing ? status.type : status.hidingFrom ?? 'error'}
+					onClose={() => {
+						if (isHiddenStatus(status)) return;
+						updateStatus({ type: 'idle', hidingFrom: status.type });
+					}}
+				/>
+			) : null,
 		asyncWrapper,
 	};
 };

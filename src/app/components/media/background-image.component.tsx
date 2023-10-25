@@ -1,8 +1,8 @@
 import { Box, alpha, darken, lighten, useTheme } from '@mui/material';
 
-import { csx } from '../../helpers/style.helpers';
+import { csx } from '~/helpers/style.helpers';
 
-import type { Mui } from '../../types/mui.types';
+import type { Mui } from '~/types/mui.types';
 
 const offsets = {
 	light: { more: 0.6, slight: 0.3 },
@@ -27,7 +27,7 @@ export const BackgroundImage = ({ sx, opacity }: BackgroundImageProps) => {
 					height: 'min(95%, 600px)',
 					position: 'absolute',
 					bottom: 0,
-					left: -50,
+					left: 0,
 					opacity: opacity ?? 0.8,
 				},
 				sx,

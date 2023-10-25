@@ -1,29 +1,31 @@
-import { Drawer, IconButton, List, Stack, keyframes } from '@mui/material';
+import { List, Stack } from '@mui/material';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { dashboardRoutes } from '~/dashboard.routes';
+import { formatToken } from '~/helpers/format-token.helpers';
+import { csx, scrollStyles } from '~/helpers/style.helpers';
+import { useSidebar } from '~/hooks/sidebar.hook';
+import { logout, useUser } from '~/hooks/user.hook';
+
 import { SidebarGroup } from './sidebar-group.component';
 
-import { CustomButton } from '../controls/custom-button.component';
-import { AppIcon } from '../media/app-icon.component';
-import { AppLogo } from '../media/app-logo.component';
-import { AppLink } from '../navigation/app-link.component';
-import {
-	APP_HEADER_HEIGHT,
-	DRAWER_MINIMIZED_WIDTH,
-	DRAWER_WIDTH,
-	SIDEBAR_GROUPS,
-} from '../../constants';
-import { dashboardRoutes } from '../../dashboard.routes';
-import { formatToken } from '../../helpers/format-token.helpers';
-import { scrollStyles } from '../../helpers/style.helpers';
-import { logout, useUser } from '../../hooks/user.hook';
-
 import type { MouseEventHandler } from 'react';
-import type { UserType } from '../../schemas/user.schema';
-import type { Mui } from '../../types/mui.types';
+import type { UserType } from '~/schemas/user.schema';
+import type { Mui } from '~/types/mui.types';
 
-export type TSidebarGroup = (typeof SIDEBAR_GROUPS)[number];
+const groups = [
+	'order-generation',
+	'cutting',
+	'stitching',
+	'machine',
+	'smart-box-allocation',
+	'quality',
+	'planning',
+	'settings',
+] as const;
+
+export type TSidebarGroup = (typeof groups)[number];
 
 export type SidebarItemType = Mui.propsWithSx<{
 	/** the identifier string */
@@ -49,11 +51,15 @@ const pages = dashboardRoutes.map<SidebarItemType>((route) => ({
 	availableTo: route.availableTo,
 }));
 
-export const Sidebar = () => {
-	const { UserType } = useUser();
+const width = { full: 200, minimized: 70 };
+
+export const Sidebar = (props: Mui.propsWithSx) => {
 	const { pathname } = useLocation();
 
-	const activeGroup = SIDEBAR_GROUPS.find((group) => {
+	const { UserType } = useUser();
+	const { size, isMinimized } = useSidebar();
+
+	const activeGroup = groups.find((group) => {
 		const items = pages.filter((item) => item.group === group);
 		return items.some((item) =>
 			new RegExp(`/${formatToken(item.name, 'kebab')}(/.*)?$`, 'iu').test(
@@ -62,7 +68,6 @@ export const Sidebar = () => {
 		);
 	});
 
-	const [isMinimized, setIsMinimized] = useState<boolean>(false);
 	const [defaultActiveGroup] = useState(activeGroup);
 
 	const appControls: SidebarItemType[] = [
@@ -71,7 +76,7 @@ export const Sidebar = () => {
 			label: 'Logout',
 			sx: { color: 'error.main', '& svg': { color: 'error.main' } },
 			onClick: logout,
-			group: 'bottom',
+			group: 'settings',
 		},
 	];
 
@@ -82,87 +87,32 @@ export const Sidebar = () => {
 	);
 
 	const topNavigation = availableNavigation.filter(
-		(item) => item.group !== 'bottom',
+		(item) => item.group !== 'settings',
 	);
 	const bottomNavigation = availableNavigation.filter(
-		(item) => item.group === 'bottom',
+		(item) => item.group === 'settings',
 	);
 
-	const groupsSansBottom = SIDEBAR_GROUPS.filter((group) => group !== 'bottom');
+	const groupsSansBottom = groups.filter((group) => group !== 'settings');
 
 	return (
-		<Drawer
-			variant='permanent'
-			sx={{
-				zIndex: (theme) => theme.zIndex.drawer + 2,
-				width: isMinimized ? DRAWER_MINIMIZED_WIDTH : DRAWER_WIDTH,
-				height: '100vh',
-				flexShrink: 0,
-				whiteSpace: 'nowrap',
-				backgroundColor: 'background.paper',
-				position: 'relative',
-				transition: (theme) => theme.transitions.create('width'),
-				'& > .MuiDrawer-paper': {
-					transition: (theme) => theme.transitions.create('width'),
-					overflow: 'unset',
-					width: isMinimized ? DRAWER_MINIMIZED_WIDTH : DRAWER_WIDTH,
+		<Stack
+			component='aside'
+			sx={csx(
+				{
+					width: width[size],
 					height: '100%',
+					whiteSpace: 'nowrap',
+					backgroundColor: 'background.paper',
+					position: 'relative',
 					borderRightWidth: 2,
+					borderRightStyle: 'solid',
+					borderRightColor: 'divider',
+					transition: (theme) => theme.transitions.create('width'),
 				},
-				'& .MuiListItemIcon-root': {
-					width: isMinimized ? '100%' : undefined,
-				},
-			}}
+				props.sx,
+			)}
 		>
-			<AppLink to=''>
-				<CustomButton
-					icon={<AppLogo isIcon={isMinimized} />}
-					label='Home'
-					tooltip={isMinimized ? { placement: 'right' } : false}
-					sx={{
-						borderRadius: 0,
-						width: '100%',
-						height: APP_HEADER_HEIGHT - 2,
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						flexShrink: 0,
-						'& svg': {
-							width: '85%',
-							height: '85%',
-							animationDuration: (theme) =>
-								`${theme.transitions.duration.shortest}ms`,
-							animationTimingFunction: (theme) =>
-								theme.transitions.easing.sharp,
-							animationName: keyframes({ from: { opacity: 0 } }).toString(),
-						},
-					}}
-					isIcon
-				/>
-			</AppLink>
-
-			<IconButton
-				sx={{
-					position: 'absolute',
-					top: 0,
-					right: -APP_HEADER_HEIGHT,
-					width: APP_HEADER_HEIGHT,
-					height: 'auto',
-					padding: '20px',
-					aspectRatio: '1',
-					borderRadius: 0,
-					'& > svg': {
-						transform: `rotateY(${isMinimized ? 0 : 180}deg)`,
-						transition: (theme) => theme.transitions.create('transform'),
-					},
-				}}
-				onClick={() => {
-					setIsMinimized((prev) => !prev);
-				}}
-			>
-				<AppIcon name='toggle-sidebar' />
-			</IconButton>
-
 			<Stack
 				component={List}
 				sx={{ flex: 1, overflow: 'hidden', paddingBlock: 0.5 }}
@@ -184,11 +134,11 @@ export const Sidebar = () => {
 					))}
 				</Stack>
 				<SidebarGroup
-					group='bottom'
+					group='settings'
 					items={bottomNavigation}
 					isMinimized={isMinimized}
-					isActive={activeGroup === 'bottom'}
-					defaultExpanded={defaultActiveGroup === 'bottom'}
+					isActive={activeGroup === 'settings'}
+					defaultExpanded={defaultActiveGroup === 'settings'}
 					sx={{
 						'& .MuiAccordionSummary-expandIconWrapper': {
 							transform: 'rotate(180deg)',
@@ -197,6 +147,6 @@ export const Sidebar = () => {
 					}}
 				/>
 			</Stack>
-		</Drawer>
+		</Stack>
 	);
 };

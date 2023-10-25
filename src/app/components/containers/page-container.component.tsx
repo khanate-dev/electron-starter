@@ -14,23 +14,23 @@ import {
 import { Paper, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { CustomButton } from '../controls/custom-button.component';
-import { PAGE_HEADER_HEIGHT } from '../../constants';
-import { humanizeToken } from '../../helpers/humanize-token.helpers';
+import type { Utils } from '@shared/types/utils.types';
+import type { ReactNode } from 'react';
+import type { To } from 'react-router-dom';
+import type { FullButtonProps } from '~/components/controls/custom-button.component';
+import type { UserType } from '~/schemas/user.schema';
+import type { Mui } from '~/types/mui.types';
+
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { humanizeToken } from '~/helpers/humanize-token.helpers';
 import {
+	controlContainerStyles,
 	csx,
 	pageTransitionStyles,
 	scrollStyles,
-} from '../../helpers/style.helpers';
-import { useDocTitle } from '../../hooks/doc-title.hook';
-import { useUser } from '../../hooks/user.hook';
-
-import type { ReactNode } from 'react';
-import type { To } from 'react-router-dom';
-import type { Utils } from '../../../shared/types/utils.types';
-import type { FullButtonProps } from '../controls/custom-button.component';
-import type { UserType } from '../../schemas/user.schema';
-import type { Mui } from '../../types/mui.types';
+} from '~/helpers/style.helpers';
+import { useDocTitle } from '~/hooks/doc-title.hook';
+import { useUser } from '~/hooks/user.hook';
 
 type Navigation = Utils.includeUnionKeys<
 	{
@@ -92,7 +92,12 @@ const defaultNavigation = {
 
 type DefaultNavigation = keyof typeof defaultNavigation;
 
-export type PageContainerProps = Mui.propsWithSx<{
+export type PageContainerProps = {
+	/** the styles to apply to the elements */
+	styles?: {
+		container?: Mui.sxProp;
+		controls?: Mui.sxProp;
+	};
 	/** the title of the page */
 	title: string;
 
@@ -103,14 +108,14 @@ export type PageContainerProps = Mui.propsWithSx<{
 	controls?: JSX.Element | JSX.Element[] | null;
 
 	/** the status alert for the current page */
-	status?: JSX.Element;
+	status?: JSX.Element | null;
 
 	children: ReactNode;
-}>;
+};
 
 export const PageContainer = ({
 	children,
-	sx,
+	styles,
 	title,
 	navigation,
 	controls,
@@ -141,7 +146,7 @@ export const PageContainer = ({
 				direction='row'
 				sx={{
 					alignItems: 'center',
-					height: PAGE_HEADER_HEIGHT,
+					height: 50,
 					flexGrow: 0,
 					flexShrink: 0,
 					flexWrap: 'nowrap',
@@ -189,34 +194,25 @@ export const PageContainer = ({
 						borderRadius: 1,
 						margin: 1,
 						marginTop: 0,
-						padding: 2,
+						padding: 1,
+						gap: 1,
 						display: 'flex',
+						backgroundColor: 'background.paper',
 						flexDirection: 'column',
 						alignItems: 'stretch',
 						borderWidth: 2,
 						borderStyle: 'solid',
 						borderColor: 'divider',
 						position: 'relative',
-						'& > .MuiAlert-root.showing': { marginBottom: 2 },
 						...scrollStyles.y,
 						...pageTransitionStyles,
 					},
-					sx,
+					styles?.container,
 				)}
 			>
 				{status}
 				{controls && (
-					<Stack
-						direction='row'
-						sx={{
-							alignItems: 'center',
-							gap: 1,
-							flexWrap: 'wrap',
-							marginBottom: 1,
-							'> *': { flexGrow: 0, flexShrink: 0 },
-							'& > .MuiAutocomplete-root': { minWidth: 200 },
-						}}
-					>
+					<Stack sx={csx(controlContainerStyles, styles?.controls)}>
 						{controls}
 					</Stack>
 				)}

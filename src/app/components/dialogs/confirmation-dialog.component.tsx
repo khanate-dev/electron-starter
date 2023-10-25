@@ -1,8 +1,7 @@
 import { Typography } from '@mui/material';
 
-import { GeneralDialog } from './general-dialog.component';
-
-import { useStatus } from '../../hooks/status.hook';
+import { GeneralDialog } from '~/components/dialogs/general-dialog.component';
+import { useStatus } from '~/hooks/status.hook';
 
 import type { ReactNode } from 'react';
 

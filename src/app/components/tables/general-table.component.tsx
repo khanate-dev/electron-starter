@@ -18,24 +18,24 @@ import {
 	useTheme,
 } from '@mui/material';
 
-import { CustomButton } from '../controls/custom-button.component';
-import { SortButton } from '../controls/sort-button.component';
-import { PAGINATION_SIZES } from '../../constants';
-import { humanizeToken } from '../../helpers/humanize-token.helpers';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { SortButton } from '~/components/controls/sort-button.component';
+import { humanizeToken } from '~/helpers/humanize-token.helpers';
 import {
+	controlContainerStyles,
 	csx,
 	scrollStyles,
 	wrappedTextStyle,
-} from '../../helpers/style.helpers';
-import { useFiltering } from '../../hooks/filtering.hook';
-import { usePagination } from '../../hooks/pagination.hook';
-import { useSorting } from '../../hooks/sorting.hook';
+} from '~/helpers/style.helpers';
+import { useFiltering } from '~/hooks/filtering.hook';
+import { paginationSizes, usePagination } from '~/hooks/pagination.hook';
+import { useSorting } from '~/hooks/sorting.hook';
 
 import type { ButtonProps, TableCellProps } from '@mui/material';
+import type { Utils } from '@shared/types/utils.types';
 import type { ReactNode } from 'react';
-import type { Utils } from '../../../shared/types/utils.types';
-import type { SortDirection } from '../../hooks/sorting.hook';
-import type { Mui } from '../../types/mui.types';
+import type { SortDirection } from '~/hooks/sorting.hook';
+import type { Mui } from '~/types/mui.types';
 
 const generalTableCommonStyles = [
 	'container',
@@ -136,7 +136,7 @@ export type GeneralTableProps<Type extends Obj> = {
 	)[];
 
 	/** the status of the table */
-	status?: JSX.Element;
+	status?: JSX.Element | null;
 
 	/** the details for the table's footer */
 	footer?: TableCellProps[];
@@ -162,8 +162,6 @@ export type GeneralTableProps<Type extends Obj> = {
 	/** should the row numbers be shown? */
 	showRowNumbers?: boolean;
 };
-
-const SMALLEST_PAGINATION = Math.min(...PAGINATION_SIZES);
 
 const getDefaultSorting = <T extends Obj>(
 	columns: GeneralTableColumn<T>[],
@@ -218,6 +216,7 @@ export const GeneralTable = <Type extends Obj>({
 		setPageSize,
 		totalRows,
 		paginatedData,
+		showPagination,
 	} = usePagination(sortedData, !hasPagination, true);
 
 	const borderColor =
@@ -255,14 +254,7 @@ export const GeneralTable = <Type extends Obj>({
 	};
 
 	const sharedStyles = {
-		container: csx(
-			{
-				flex: 1,
-				overflow: 'hidden',
-				'& > .MuiAlert-root.showing': { marginBottom: 1 },
-			},
-			styles?.container,
-		),
+		container: csx({ flex: 1, overflow: 'hidden', gap: 1 }, styles?.container),
 		cell: csx(
 			{
 				fontSize: '1.3em',
@@ -279,21 +271,10 @@ export const GeneralTable = <Type extends Obj>({
 	} satisfies Record<string, Mui.sxProp>;
 
 	const controlsJsx =
-		controls || filterJsx ? (
+		controls?.length || hasFiltering ? (
 			<Stack
-				direction='row'
 				sx={csx(
-					{
-						flex: 0,
-						flexWrap: 'wrap',
-						alignItems: 'center',
-						displayPrint: 'none',
-						paddingTop: 1,
-						marginBottom: 1,
-						gap: 1,
-						'> *': { flexShrink: 0 },
-						'& > .MuiAutocomplete-root': { minWidth: 200 },
-					},
+					{ flex: 0, displayPrint: 'none', ...controlContainerStyles },
 					styles?.controls,
 				)}
 			>
@@ -344,8 +325,6 @@ export const GeneralTable = <Type extends Obj>({
 		);
 	}
 
-	const showPagination = hasPagination && totalRows > SMALLEST_PAGINATION;
-
 	const columns = [
 		...passedColumns,
 		...(actions?.map<GeneralTableColumn<Type>>(
@@ -361,6 +340,7 @@ export const GeneralTable = <Type extends Obj>({
 							fontSize: '0.8em',
 							paddingInline: 1.5,
 							paddingBlock: 0.5,
+							marginInline: 0.5,
 							'.MuiButton-startIcon': { marginRight: 0.25 },
 						}}
 						onClick={onHeaderClick}
@@ -380,6 +360,7 @@ export const GeneralTable = <Type extends Obj>({
 							fontSize: '0.8em',
 							paddingInline: 1.5,
 							paddingBlock: 0.5,
+							marginInline: 1,
 							'.MuiButton-startIcon': { marginRight: 0.25 },
 						}}
 						onClick={() => {
@@ -472,7 +453,7 @@ export const GeneralTable = <Type extends Obj>({
 					sx={csx(
 						{
 							height: 'fit-content',
-							tableLayout: 'fixed',
+							tableLayout: 'auto',
 							marginBlock: 0,
 							marginInline: 'auto',
 							fontSize: '0.8em',
@@ -496,6 +477,7 @@ export const GeneralTable = <Type extends Obj>({
 										{
 											zIndex: 5,
 											position: 'sticky',
+											top: 0,
 											backgroundColor: (theme) =>
 												theme.palette.primary[theme.palette.mode],
 											color: 'primary.contrastText',
@@ -595,7 +577,7 @@ export const GeneralTable = <Type extends Obj>({
 							{showPagination && (
 								<TableRow sx={styles?.row}>
 									<TablePagination
-										rowsPerPageOptions={PAGINATION_SIZES as unknown as number[]}
+										rowsPerPageOptions={paginationSizes as unknown as number[]}
 										colSpan={columns.length}
 										count={totalRows}
 										rowsPerPage={pageSize}
@@ -604,6 +586,9 @@ export const GeneralTable = <Type extends Obj>({
 											{
 												zIndex: 5,
 												backgroundColor: borderColor,
+												borderBottomLeftRadius: (theme) => theme.spacing(1),
+												borderBottomRightRadius: (theme) => theme.spacing(1),
+												borderBottom: 'none',
 												position: 'sticky',
 												bottom: 0,
 												'@media print': { backgroundColor: 'silver' },
@@ -615,7 +600,7 @@ export const GeneralTable = <Type extends Obj>({
 										}}
 										onRowsPerPageChange={({ target }) => {
 											const newSize = Number(target.value);
-											if (!PAGINATION_SIZES.includes(newSize)) return;
+											if (!paginationSizes.includes(newSize)) return;
 											setPageSize(newSize as typeof pageSize);
 										}}
 									/>

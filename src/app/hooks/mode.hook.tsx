@@ -1,22 +1,21 @@
 import { useSyncExternalStore } from 'react';
 import { z } from 'zod';
 
-import {
-	getLocalStorage,
-	setLocalStorageAndDispatch,
-} from '../helpers/local-storage.helpers';
+import { createStore } from '~/helpers/store.helpers';
 
-const modes = ['dark', 'light', 'system'] as const;
+export const modes = ['dark', 'light', 'system'] as const;
 export type Mode = (typeof modes)[number];
+
+const store = createStore({
+	key: 'mode',
+	schema: z.enum(modes),
+	defaultVal: 'system',
+});
 
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-const getLocalStorageMode = () => {
-	return getLocalStorage('mode', z.enum(modes), 'system');
-};
-
 const getMode = () => {
-	const stored = getLocalStorageMode();
+	const stored = store.get();
 	const mode =
 		stored === 'system' ? (prefersDark.matches ? 'dark' : 'light') : stored;
 	return mode;
@@ -28,7 +27,7 @@ const subscribe = (callback: () => void) => {
 			if (event.key && event.key !== 'mode') return;
 			callback();
 		} else {
-			const mode = getLocalStorageMode();
+			const mode = store.get();
 			if (mode === 'system') callback();
 		}
 	};
@@ -40,15 +39,12 @@ const subscribe = (callback: () => void) => {
 	};
 };
 
-export const toggleMode = () => {
-	const prev = getLocalStorageMode();
-	const newValue =
-		prev === 'system' ? 'light' : prev === 'light' ? 'dark' : 'system';
-	setLocalStorageAndDispatch('mode', newValue);
+export const updateMode = (value: Mode) => {
+	store.set(value);
 };
 
 export const useStoredMode = () => {
-	const mode = useSyncExternalStore(subscribe, getLocalStorageMode);
+	const mode = useSyncExternalStore(subscribe, store.get);
 	return mode;
 };
 

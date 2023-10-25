@@ -9,8 +9,8 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
+import { ThemeControl } from '~/components/controls/theme-control.component';
 import { CustomButton } from '../components/controls/custom-button.component';
-import { ThemeSwitch } from '../components/controls/theme-switch.component';
 import { CustomAlert } from '../components/feedback/custom-alert.component';
 import { AppLogo } from '../components/media/app-logo.component';
 import { BackgroundImage } from '../components/media/background-image.component';
@@ -67,7 +67,7 @@ export const Example = () => {
 					disableGutters
 				>
 					<AppLogo sx={headerLogoSx} />
-					<ThemeSwitch />
+					<ThemeControl />
 					<WiMetrixLogo sx={headerLogoSx} />
 				</Stack>
 			</AppBar>

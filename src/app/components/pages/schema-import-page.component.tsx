@@ -1,9 +1,10 @@
-import { SchemaImport } from '../app/schema-import.component';
-import { PageContainer } from '../containers/page-container.component';
+import { SchemaImport } from '~/components/app/schema-import.component';
+import { PageContainer } from '~/components/containers/page-container.component';
+import { useStatus } from '~/hooks/status.hook';
 
-import type { FormSchema } from '../../classes/form-schema.class';
-import type { SchemaImportProps } from '../app/schema-import.component';
-import type { BulkResponse } from '../../helpers/api.helpers';
+import type { FormSchema } from '~/classes/form-schema.class';
+import type { SchemaImportProps } from '~/components/app/schema-import.component';
+import type { BulkResponse } from '~/helpers/api.helpers';
 
 export type SchemaImportPageProps<T extends FormSchema> = Pick<
 	SchemaImportProps<T>,
@@ -20,15 +21,16 @@ export const SchemaImportPage = <T extends FormSchema>({
 	selectionLists,
 	endpoint,
 }: SchemaImportPageProps<T>) => {
+	const status = useStatus();
 	return (
 		<PageContainer
-			sx={{ gap: 2 }}
 			title={`Import ${schema.label}`}
 			navigation={['back']}
 		>
 			<SchemaImport
 				schema={schema}
 				selectionLists={selectionLists as never}
+				status={status}
 				onImport={endpoint}
 			/>
 		</PageContainer>

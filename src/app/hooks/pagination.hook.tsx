@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
-import { DEFAULT_PAGINATION_SIZE } from '../constants';
+export const paginationSizes = [10, 20, 50, 100] as const;
 
-import type { PAGINATION_SIZES } from '../constants';
+export const defaultPaginationSize =
+	10 satisfies (typeof paginationSizes)[number];
 
-type Size = (typeof PAGINATION_SIZES)[number];
+type Size = (typeof paginationSizes)[number];
 
 export const usePagination = <Type extends unknown>(
 	data: Type[],
@@ -14,7 +15,7 @@ export const usePagination = <Type extends unknown>(
 	const firstPage = isZeroBased ? 0 : 1;
 
 	const [currentPage, setCurrentPage] = useState<number>(firstPage);
-	const [pageSize, setPageSize] = useState<Size>(DEFAULT_PAGINATION_SIZE);
+	const [pageSize, setPageSize] = useState<Size>(defaultPaginationSize);
 
 	const totalRows = data.length;
 	const totalPages = Math.max(Math.ceil(totalRows / pageSize), 1);
@@ -40,5 +41,6 @@ export const usePagination = <Type extends unknown>(
 		totalRows,
 		totalPages,
 		paginatedData,
+		showPagination: !isDisabled && totalRows > Math.min(...paginationSizes),
 	};
 };

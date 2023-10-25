@@ -1,11 +1,11 @@
-import type { Utils } from '../../shared/types/utils.types';
-import type { BaseSelectionType } from '../classes/form-schema.class';
+import type { Utils } from '@shared/types/utils.types';
+import type { BaseSelectionType } from '~/classes/form-schema.class';
 import type {
 	ZodDbId,
 	ZodLocalId,
 	ZodNumberSelection,
 	ZodStringSelection,
-} from '../helpers/schema.helpers';
+} from '~/helpers/schema.helpers';
 
 export declare namespace App {
 	/** branded type for database ids */

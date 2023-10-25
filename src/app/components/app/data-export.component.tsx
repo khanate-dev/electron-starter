@@ -5,18 +5,18 @@ import {
 import { ButtonGroup, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 
-import { getViewColumnValue } from '../../helpers/table.helpers';
-import { CustomButton } from '../controls/custom-button.component';
-import { dayjsUtc } from '../../helpers/date.helpers';
-import { exportToExcel } from '../../helpers/export.helpers';
-import { formatToken } from '../../helpers/format-token.helpers';
-import { humanizeToken } from '../../helpers/humanize-token.helpers';
-import { addToast } from '../../helpers/toast.helpers';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { dayjsUtc } from '~/helpers/date.helpers';
+import { exportToExcel } from '~/helpers/export.helpers';
+import { formatToken } from '~/helpers/format-token.helpers';
+import { humanizeToken } from '~/helpers/humanize-token.helpers';
+import { getViewColumnValue } from '~/helpers/table.helpers';
+import { addToast } from '~/helpers/toast.helpers';
 
 import type {
 	ViewColumnKey,
 	ViewColumns,
-} from '../tables/view-table.component';
+} from '~/components/tables/view-table.component';
 
 export type SchemaExportProps<T extends Obj, Cols extends ViewColumnKey<T>> = {
 	fileName: string;
@@ -74,14 +74,6 @@ export const DataExport = <T extends Obj, Cols extends ViewColumnKey<T>>({
 					}
 				}}
 			/>
-			<CustomButton
-				aria-describedby='data-export-popover'
-				label={<ExpandIcon />}
-				sx={{ paddingInline: 0.5 }}
-				onClick={(event) => {
-					setAnchor(event.currentTarget);
-				}}
-			/>
 			<Menu
 				open={Boolean(anchor)}
 				id='data-export-popover'
@@ -107,6 +99,14 @@ export const DataExport = <T extends Obj, Cols extends ViewColumnKey<T>>({
 					</MenuItem>
 				))}
 			</Menu>
+			<CustomButton
+				aria-describedby='data-export-popover'
+				label={<ExpandIcon />}
+				sx={{ paddingInline: 0.5 }}
+				onClick={(event) => {
+					setAnchor(event.currentTarget);
+				}}
+			/>
 		</ButtonGroup>
 	);
 };

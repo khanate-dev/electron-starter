@@ -8,13 +8,13 @@ import {
 	alpha,
 } from '@mui/material';
 
-import { CustomButton } from '../controls/custom-button.component';
-import { csx, scrollStyles } from '../../helpers/style.helpers';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { csx, scrollStyles } from '~/helpers/style.helpers';
 
 import type { DialogProps } from '@mui/material';
 import type { ReactNode } from 'react';
-import type { FullButtonProps } from '../controls/custom-button.component';
-import type { Mui } from '../../types/mui.types';
+import type { FullButtonProps } from '~/components/controls/custom-button.component';
+import type { Mui } from '~/types/mui.types';
 
 export type GeneralDialogAction = FullButtonProps;
 
@@ -83,11 +83,7 @@ export const GeneralDialog = ({
 			open={open ?? true}
 			maxWidth={maxWidth}
 			PaperProps={{
-				sx: csx(
-					{ backgroundColor: 'background.paper', borderRadius: 2 },
-					sx,
-					passedStyles?.container,
-				),
+				sx: csx({ backgroundImage: 'unset' }, sx, passedStyles?.container),
 			}}
 			fullWidth
 			onClose={(_event, reason) => {

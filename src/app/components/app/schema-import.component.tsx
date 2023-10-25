@@ -8,28 +8,26 @@ import { useState } from 'react';
 import { read, utils } from 'xlsx';
 import { z } from 'zod';
 
-import { SimpleAccordion } from '../containers/simple-accordion.component';
-import { CustomButton } from '../controls/custom-button.component';
-import { Dropzone } from '../controls/dropzone.component';
-import { FileUploadButton } from '../controls/file-upload-button.component';
-import { CustomAlert } from '../feedback/custom-alert.component';
-import { GeneralTable } from '../tables/general-table.component';
-import { ResponseTable } from '../tables/response-table.component';
-import { stringifyError } from '../../errors';
-import { exportToExcel } from '../../helpers/export.helpers';
-import { formatToken } from '../../helpers/format-token.helpers';
-import { pluralize } from '../../helpers/pluralize.helpers';
-import { formSchemaToGeneralTableColumns } from '../../helpers/table.helpers';
-import { readableTypeOf } from '../../helpers/type.helpers';
-import { useStatus } from '../../hooks/status.hook';
-
+import type { Utils } from '@shared/types/utils.types';
 import type { ReactNode } from 'react';
-import type {
-	FormSchema,
-	FormSelectLists,
-} from '../../classes/form-schema.class';
-import type { BulkResponse } from '../../helpers/api.helpers';
-import type { Mui } from '../../types/mui.types';
+import type { FormSchema, FormSelectLists } from '~/classes/form-schema.class';
+import type { BulkResponse } from '~/helpers/api.helpers';
+import type { useStatus } from '~/hooks/status.hook';
+import type { Mui } from '~/types/mui.types';
+
+import { SimpleAccordion } from '~/components/containers/simple-accordion.component';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { Dropzone } from '~/components/controls/dropzone.component';
+import { FileUploadButton } from '~/components/controls/file-upload-button.component';
+import { CustomAlert } from '~/components/feedback/custom-alert.component';
+import { GeneralTable } from '~/components/tables/general-table.component';
+import { ResponseTable } from '~/components/tables/response-table.component';
+import { stringifyError } from '~/errors';
+import { exportToExcel } from '~/helpers/export.helpers';
+import { formatToken } from '~/helpers/format-token.helpers';
+import { pluralize } from '~/helpers/pluralize.helpers';
+import { formSchemaToGeneralTableColumns } from '~/helpers/table.helpers';
+import { readableTypeOf } from '~/helpers/type.helpers';
 
 export type SchemaImportProps<T extends FormSchema> = FormSelectLists<
 	T,
@@ -47,8 +45,11 @@ export type SchemaImportProps<T extends FormSchema> = FormSelectLists<
 	/** should importing be disabled? */
 	disabled?: boolean;
 
-	/** is the page calling the component busy? */
-	isBusy?: boolean;
+	/** status hook to control form state */
+	status: Utils.prettify<
+		Pick<ReturnType<typeof useStatus>, 'isBusy' | 'asyncWrapper'> &
+			Partial<Pick<ReturnType<typeof useStatus>, 'statusJsx'>>
+	>;
 };
 
 type State<T extends Obj> =
@@ -70,11 +71,9 @@ export const SchemaImport = <T extends FormSchema>({
 	selectionLists,
 	onImport,
 	disabled: passedDisabled,
-	isBusy: isParentBusy,
+	status,
 }: SchemaImportProps<T>) => {
-	const { isBusy: isLocalBusy, statusJsx, asyncWrapper } = useStatus();
-
-	const isBusy = isLocalBusy || isParentBusy;
+	const { isBusy, statusJsx, asyncWrapper } = status;
 
 	const [state, setState] = useState<State<T['zod']['_output']>>({
 		step: 'start',
@@ -229,15 +228,15 @@ export const SchemaImport = <T extends FormSchema>({
 	);
 
 	const alertStyles = {
-		fontSize: '0.8em',
 		borderWidth: 1,
-		padding: 1,
+		paddingInline: 1,
+		paddingBlock: 0.5,
 		'& > .MuiAlert-message > span': {
 			display: 'inline-flex',
 			paddingInline: 1,
 			paddingBlock: 0.5,
 			borderRadius: 0.5,
-			marginRight: 0.5,
+			marginRight: 1,
 			backgroundColor: 'action.selected',
 			textTransform: 'none',
 		},
@@ -347,7 +346,6 @@ export const SchemaImport = <T extends FormSchema>({
 					<GeneralTable
 						columns={tableColumns}
 						data={state.data.invalid}
-						styles={{ cell: { paddingBlock: 1.5 } }}
 					/>
 				</SimpleAccordion>
 			)}
@@ -355,7 +353,7 @@ export const SchemaImport = <T extends FormSchema>({
 			{state.step === 'imported' && (
 				<>
 					<Stack
-						sx={{ alignItems: 'center', gap: 2 }}
+						sx={{ alignItems: 'center', gap: 1, marginBlock: 1 }}
 						direction='row'
 					>
 						<CustomAlert
@@ -380,7 +378,7 @@ export const SchemaImport = <T extends FormSchema>({
 									) as T['zod']['_output'][];
 									const response = await onImport(body, state.data.raw);
 									if (response) setState({ step: 'response', response });
-									return 'import successful!';
+									else return 'import successful!';
 								});
 							}}
 						/>
@@ -398,6 +396,7 @@ export const SchemaImport = <T extends FormSchema>({
 					<GeneralTable
 						columns={tableColumns}
 						data={state.data.valid}
+						hasPagination
 					/>
 				</>
 			)}
@@ -406,6 +405,7 @@ export const SchemaImport = <T extends FormSchema>({
 				<ResponseTable
 					columns={tableColumns}
 					response={state.response}
+					hasPagination
 					onClear={() => {
 						setState({ step: 'start' });
 					}}

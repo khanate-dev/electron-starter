@@ -1,9 +1,10 @@
-import { Alert, alpha } from '@mui/material';
+import { Alert, alpha, keyframes } from '@mui/material';
 
-import { csx, wrappedTextStyle } from '../../helpers/style.helpers';
+import { csx, wrappedTextStyle } from '~/helpers/style.helpers';
 
 import type { AlertProps } from '@mui/material';
 import type { ReactNode } from 'react';
+import type { Mui } from '~/types/mui.types';
 
 export type CustomAlertProps = Omit<AlertProps, 'children' | 'severity'> &
 	Required<Pick<AlertProps, 'severity'>> & {
@@ -20,9 +21,14 @@ export const CustomAlert = ({
 	hidden,
 	...alertProps
 }: CustomAlertProps) => {
+	const hiddenStyles = {
+		flexBasis: 0,
+		padding: 0,
+		margin: 0,
+		borderWidth: 0,
+	} satisfies Mui.sxProp;
 	return (
 		<Alert
-			className={!hidden ? 'showing' : undefined}
 			sx={csx(
 				{
 					display: 'flex',
@@ -44,6 +50,9 @@ export const CustomAlert = ({
 							'margin',
 							'border',
 						]),
+					animationDuration: ({ transitions }) =>
+						`${transitions.duration.short}ms`,
+					animationName: keyframes({ from: hiddenStyles }).toString(),
 					'& > .MuiAlert-icon, & > .MuiAlert-action': {
 						width: 'auto',
 						height: 'fit-content',
@@ -60,12 +69,7 @@ export const CustomAlert = ({
 					},
 				},
 				sx,
-				hidden && {
-					flexBasis: 0,
-					padding: 0,
-					margin: 0,
-					borderWidth: 0,
-				},
+				hidden && hiddenStyles,
 			)}
 			{...alertProps}
 		>

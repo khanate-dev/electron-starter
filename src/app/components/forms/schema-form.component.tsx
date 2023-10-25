@@ -1,26 +1,25 @@
 import { Box, Stack } from '@mui/material';
 import { useReducer, useState } from 'react';
 
-import { FormField } from './form-field.component';
-import { FormImage } from './form-image.component';
-
-import { CustomButton } from '../controls/custom-button.component';
-import { getImageUrl } from '../../helpers/image.helpers';
-import { csx } from '../../helpers/style.helpers';
-import { useStatus } from '../../hooks/status.hook';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { FormField } from '~/components/forms/form-field.component';
+import { FormImage } from '~/components/forms/form-image.component';
+import { getImageUrl } from '~/helpers/image.helpers';
+import { csx } from '~/helpers/style.helpers';
+import { useStatus } from '~/hooks/status.hook';
 
 import type { TextFieldProps } from '@mui/material';
+import type { Utils } from '@shared/types/utils.types';
 import type { ReactNode, Reducer } from 'react';
-import type { Utils } from '../../../shared/types/utils.types';
 import type {
 	FormSchema,
 	FormSelectLists,
 	FormSuggestLists,
 	FormWorkingObj,
-} from '../../classes/form-schema.class';
-import type { StatusUpdate } from '../../hooks/status.hook';
-import type { App } from '../../types/app.types';
-import type { Mui } from '../../types/mui.types';
+} from '~/classes/form-schema.class';
+import type { StatusUpdate } from '~/hooks/status.hook';
+import type { App } from '~/types/app.types';
+import type { Mui } from '~/types/mui.types';
 
 export type SchemaFormSubmitData<
 	T extends FormSchema,
@@ -158,7 +157,12 @@ export const SchemaForm = <
 		statusJsx,
 		updateStatus,
 		asyncWrapper,
-	} = useStatus({ sx: csx({ maxWidth: 750, marginTop: 2 }, styles?.status) });
+	} = useStatus({
+		sx: csx(
+			{ maxWidth: (theme) => 900 - parseInt(theme.spacing(6)), marginTop: 2 },
+			styles?.status,
+		),
+	});
 
 	const [form, dispatch] = useReducer<
 		Reducer<FormWorkingObj<T>, FormAction<FormWorkingObj<T>>>
@@ -227,8 +231,7 @@ export const SchemaForm = <
 						justifyContent: 'center',
 						width: '100%',
 						maxWidth: 900,
-						marginInline: 'auto',
-						marginBlock: 3,
+						padding: 3,
 					},
 					styles?.fieldOuterContainer,
 				)}

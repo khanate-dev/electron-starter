@@ -8,19 +8,21 @@ import {
 	Typography,
 } from '@mui/material';
 
-import { CustomTooltip } from '../feedback/custom-tooltip.component';
-import { AppIcon } from '../media/app-icon.component';
-import { AppLink } from '../navigation/app-link.component';
-import { SIDEBAR_GROUPS_LABELS } from '../../constants';
-import { humanizeToken } from '../../helpers/humanize-token.helpers';
+import { CustomTooltip } from '~/components/feedback/custom-tooltip.component';
+import { AppIcon } from '~/components/media/app-icon.component';
+import { AppLink } from '~/components/navigation/app-link.component';
+import { humanizeToken } from '~/helpers/humanize-token.helpers';
 import {
 	csx,
 	getOppositeColor,
 	wrappedTextStyle,
-} from '../../helpers/style.helpers';
+} from '~/helpers/style.helpers';
 
-import type { SidebarItemType, TSidebarGroup } from './sidebar.component';
-import type { Mui } from '../../types/mui.types';
+import type {
+	SidebarItemType,
+	TSidebarGroup,
+} from '~/components/panels/sidebar.component';
+import type { Mui } from '~/types/mui.types';
 
 export type SidebarGroupProps = Mui.propsWithSx<{
 	/** the name of the group */
@@ -47,7 +49,7 @@ export const SidebarGroup = ({
 	isActive,
 	defaultExpanded,
 }: SidebarGroupProps) => {
-	const groupLabel = SIDEBAR_GROUPS_LABELS[group] ?? humanizeToken(group);
+	const groupLabel = humanizeToken(group);
 
 	return (
 		<Accordion
@@ -155,7 +157,7 @@ export const SidebarGroup = ({
 							sx={{
 								transition: (theme) => theme.transitions.create('width'),
 								minWidth: 'unset',
-								width: 25,
+								width: isMinimized ? '100%' : 25,
 								marginRight: 1,
 								justifyContent: 'center',
 								color: 'text.secondary',

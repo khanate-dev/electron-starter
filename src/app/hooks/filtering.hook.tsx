@@ -10,11 +10,11 @@ import {
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { objectKeys } from '../helpers/object.helpers';
-import { csx, getOppositeColor } from '../helpers/style.helpers';
+import { objectKeys } from '~/helpers/object.helpers';
+import { csx, getOppositeColor } from '~/helpers/style.helpers';
 
 import type { ReactNode } from 'react';
-import type { Mui } from '../types/mui.types';
+import type { Mui } from '~/types/mui.types';
 
 export type FilterOptions<T extends Obj> = Mui.propsWithSx<{
 	/** the data to use for filtering */
@@ -93,8 +93,8 @@ export const useFiltering = <T extends Obj>({
 						borderWidth: 2,
 						borderStyle: 'solid',
 						borderColor: 'currentcolor',
-						borderRadius: 1.5,
-						padding: 1,
+						borderRadius: 1.25,
+						padding: 0.85,
 						transition: (theme) =>
 							theme.transitions.create(['background-color', 'border']),
 						'&.Mui-disabled': {

@@ -5,20 +5,19 @@ import {
 } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
 
-import { GeneralTable } from './general-table.component';
-
-import { CustomButton } from '../controls/custom-button.component';
-import { CustomAlert } from '../feedback/custom-alert.component';
-import { InfoTooltip } from '../feedback/info-tooltip.component';
-import { pluralize } from '../../helpers/pluralize.helpers';
-import { wrappedTextStyle } from '../../helpers/style.helpers';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { CustomAlert } from '~/components/feedback/custom-alert.component';
+import { InfoTooltip } from '~/components/feedback/info-tooltip.component';
+import { GeneralTable } from '~/components/tables/general-table.component';
+import { pluralize } from '~/helpers/pluralize.helpers';
+import { wrappedTextStyle } from '~/helpers/style.helpers';
 
 import type {
 	GeneralTableColumn,
-	GeneralTableStyles,
-} from './general-table.component';
-import type { BulkResponse } from '../../helpers/api.helpers';
-import type { Mui } from '../../types/mui.types';
+	GeneralTableProps,
+} from '~/components/tables/general-table.component';
+import type { BulkResponse } from '~/helpers/api.helpers';
+import type { Mui } from '~/types/mui.types';
 
 const alertStyle = {
 	gap: 0.5,
@@ -36,15 +35,12 @@ const alertStyle = {
 	},
 } satisfies Mui.sxStyle;
 
-export type ResponseTableProps<T extends Obj> = {
-	/** the schema to show the response for */
-	columns: GeneralTableColumn<T>[];
-
+export type ResponseTableProps<T extends Obj> = Pick<
+	GeneralTableProps<T>,
+	'columns' | 'styles' | 'hasPagination' | 'hasFiltering'
+> & {
 	/** the response data to use */
 	response: BulkResponse<T>;
-
-	/** the styles to apply to table components */
-	styles?: GeneralTableStyles;
 
 	/** the function to call when the response is cleared. Clear button is only rendered if this is passed in */
 	onClear?: () => void;
@@ -53,8 +49,8 @@ export type ResponseTableProps<T extends Obj> = {
 export const ResponseTable = <T extends Obj>({
 	columns: passedColumns,
 	response,
-	styles,
 	onClear,
+	...tableProps
 }: ResponseTableProps<T>) => {
 	const { successful, failed } = response;
 
@@ -63,13 +59,19 @@ export const ResponseTable = <T extends Obj>({
 		{
 			name: 'status',
 			header: 'Status',
+			align: 'center',
 			getCell: ({ error }) => {
 				if (typeof error !== 'string' || !error)
 					return <SuccessIcon color='success' />;
 				return (
 					<Stack
 						direction='row'
-						sx={{ gap: 1, paddingInline: 1 }}
+						sx={{
+							gap: 1,
+							paddingInline: 1,
+							maxWidth: 200,
+							marginInline: 'auto',
+						}}
 					>
 						<ErrorIcon color='error' />
 						<Box sx={{ fontSize: '0.9em', ...wrappedTextStyle }}>{error}</Box>
@@ -84,7 +86,7 @@ export const ResponseTable = <T extends Obj>({
 	];
 
 	return (
-		<Stack sx={{ gap: 2 }}>
+		<Stack sx={{ gap: 2, width: '100%' }}>
 			<Stack sx={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
 				<Typography sx={{ color: 'text.secondary', fontSize: '1.3em' }}>
 					Response
@@ -126,7 +128,7 @@ export const ResponseTable = <T extends Obj>({
 			<GeneralTable
 				columns={columns}
 				data={[...successful, ...failed]}
-				styles={styles}
+				{...tableProps}
 			/>
 		</Stack>
 	);

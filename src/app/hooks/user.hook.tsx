@@ -1,28 +1,22 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
 
-import { getLocalStorage } from '../helpers/local-storage.helpers';
-import { loggedInUserSchema } from '../schemas/user.schema';
+import { createStore } from '~/helpers/store.helpers';
+import { loggedInUserSchema } from '~/schemas/user.schema';
 
 import type { PropsWithChildren } from 'react';
-import type { LoggedInUser } from '../schemas/user.schema';
+import type { LoggedInUser } from '~/schemas/user.schema';
 
-export const getLocalStorageUser = () => {
-	return getLocalStorage(
-		'user',
-		z.preprocess((val) => JSON.parse(String(val)), loggedInUserSchema),
-	);
-};
+const store = createStore({ key: 'user', schema: loggedInUserSchema });
 
-export const setLocalStorageUser = (user: LoggedInUser) => {
-	window.localStorage.setItem('user', JSON.stringify(user));
-};
-
-export const updateLocalStorageUser = (toUpdate: Partial<LoggedInUser>) => {
-	const user = getLocalStorageUser();
-	if (!user) return;
-	setLocalStorageUser({ ...user, ...toUpdate });
+export const userStore = {
+	...store,
+	update: (toUpdate: Partial<LoggedInUser>) => {
+		const user = store.get();
+		if (!user) return;
+		store.set({ ...user, ...toUpdate });
+	},
 };
 
 export const logout = () => {
@@ -45,7 +39,7 @@ export const UserProvider = (props: PropsWithChildren) => {
 };
 
 export const useUser = () => {
-	const user = getLocalStorageUser();
+	const user = userStore.get();
 	const ref = useRef<LoggedInUser | null>(user);
 
 	useEffect(() => {

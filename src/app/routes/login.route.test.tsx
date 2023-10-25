@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 
 import { act } from '@testing-library/react';
 
-import { Login } from './login.route';
+import { renderWithProviders } from '~/helpers/test.helpers';
 
-import { renderWithProviders } from '../helpers/test.helpers';
+import { Login } from './login.route';
 
 type SetupParams = {
 	username?: string;
@@ -65,6 +65,6 @@ test('shows appropriate error when password is incorrect', async () => {
 		shouldClick: true,
 	});
 
-	const status = await screen.findByText(/incorrect sign in information!/iu);
+	const status = await screen.findByText(/incorrect signin information!/iu);
 	expect(status).toBeInTheDocument();
 });

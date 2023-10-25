@@ -1,17 +1,17 @@
 import { isDayjs } from 'dayjs';
 import { isValidElement } from 'react';
 
-import { dayjsFormatPatterns } from './date.helpers';
-import { humanizeToken } from './humanize-token.helpers';
+import { dayjsFormatPatterns } from '~/helpers/date.helpers';
+import { humanizeToken } from '~/helpers/humanize-token.helpers';
 
 import type { z } from 'zod';
-import type { FormSchema, FormSelectLists } from '../classes/form-schema.class';
-import type { GeneralTableColumn } from '../components/tables/general-table.component';
+import type { FormSchema, FormSelectLists } from '~/classes/form-schema.class';
+import type { GeneralTableColumn } from '~/components/tables/general-table.component';
 import type {
 	ViewColumnKey,
 	ViewColumnType,
 	ViewColumns,
-} from '../components/tables/view-table.component';
+} from '~/components/tables/view-table.component';
 
 export const getViewColumnValue = (
 	data: Obj,

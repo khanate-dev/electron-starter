@@ -1,10 +1,10 @@
 import { Box, Stack } from '@mui/material';
 
-import { CustomTooltip } from '../feedback/custom-tooltip.component';
-import { csx, wrappedTextStyle } from '../../helpers/style.helpers';
+import { CustomTooltip } from '~/components/feedback/custom-tooltip.component';
+import { csx, wrappedTextStyle } from '~/helpers/style.helpers';
 
 import type { TextFieldProps } from '@mui/material';
-import type { Mui } from '../../types/mui.types';
+import type { Mui } from '~/types/mui.types';
 
 export type FormReadonlyProps = Mui.propsWithSx<{
 	/** the size of the form field. @default `medium` */

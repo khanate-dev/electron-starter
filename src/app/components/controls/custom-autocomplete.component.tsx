@@ -1,9 +1,6 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { z } from 'zod';
 
-import { dropdownOptionSchema } from '../../helpers/schema.helpers';
-import { csx } from '../../helpers/style.helpers';
-
 import type {
 	AutocompleteChangeDetails,
 	AutocompleteChangeReason,
@@ -12,8 +9,11 @@ import type {
 	ChipTypeMap,
 	TextFieldProps,
 } from '@mui/material';
-import type { Utils } from '../../../shared/types/utils.types';
-import type { App } from '../../types/app.types';
+import type { Utils } from '@shared/types/utils.types';
+import type { App } from '~/types/app.types';
+
+import { dropdownOptionSchema } from '~/helpers/schema.helpers';
+import { csx } from '~/helpers/style.helpers';
 
 export type CustomAutocompleteProps<
 	Type extends number | string | Obj,

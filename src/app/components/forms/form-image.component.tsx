@@ -1,13 +1,15 @@
 import { Stack } from '@mui/material';
 import { useState } from 'react';
 
-import { FileUploadButton } from '../controls/file-upload-button.component';
-import { CustomAvatar } from '../media/custom-avatar.component';
-import { IMAGE_EXTENSIONS } from '../../constants';
-import { assertValidImage } from '../../helpers/image.helpers';
-import { csx } from '../../helpers/style.helpers';
+import { FileUploadButton } from '~/components/controls/file-upload-button.component';
+import { CustomAvatar } from '~/components/media/custom-avatar.component';
+import {
+	assertValidImage,
+	validImageExtensions,
+} from '~/helpers/image.helpers';
+import { csx } from '~/helpers/style.helpers';
 
-import type { Mui } from '../../types/mui.types';
+import type { Mui } from '~/types/mui.types';
 
 export type FormImageProps = Mui.propsWithSx<{
 	/** the width and height of the image, in pixels */
@@ -58,7 +60,7 @@ export const FormImage = ({
 			/>
 			<FileUploadButton
 				name='image'
-				accept={IMAGE_EXTENSIONS.join()}
+				accept={validImageExtensions.join()}
 				required={required}
 				disabled={disabled}
 				onChange={({ target }) => {

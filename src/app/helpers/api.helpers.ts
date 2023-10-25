@@ -1,21 +1,12 @@
 import { z } from 'zod';
 
+import { backendPath, disableAuth } from '~/app.config';
+import { ApiError, AuthError, ConnectionError, stringifyError } from '~/errors';
+import { logout, userStore } from '~/hooks/user.hook';
+
 import { addToast } from './toast.helpers';
 
-import { backendPath, disableAuth, isFetchMocked } from '../app.config';
-import {
-	ApiError,
-	AuthError,
-	ConnectionError,
-	stringifyError,
-} from '../errors';
-import {
-	getLocalStorageUser,
-	logout,
-	updateLocalStorageUser,
-} from '../hooks/user.hook';
-
-import type { Utils } from '../../shared/types/utils.types';
+import type { Utils } from '@shared/types/utils.types';
 
 const responseSchema = z.object({
 	statusCode: z.number(),
@@ -38,7 +29,7 @@ const apiRequest = async <Response = unknown>(
 	isPublic: boolean = false,
 ): Promise<Response> => {
 	try {
-		if (!isFetchMocked && !navigator.onLine)
+		if (!navigator.onLine)
 			throw new ConnectionError('not connected to the internet!');
 
 		const options: Omit<RequestInit, 'headers'> & { headers: Headers } = {
@@ -47,7 +38,7 @@ const apiRequest = async <Response = unknown>(
 		};
 
 		if (!isPublic && !disableAuth) {
-			const user = getLocalStorageUser();
+			const user = userStore.get();
 			if (!user) throw new AuthError('user auth token not found!');
 			options.headers.set('Authorization', `Bearer ${user.token}`);
 			options.headers.set('x-refresh-token', user.refreshToken);
@@ -63,7 +54,7 @@ const apiRequest = async <Response = unknown>(
 		const response = await fetch(`${backendPath}/${apiPath}`, options);
 		if (response.status === 401) throw new AuthError('login expired!');
 		const token = response.headers.get('x-access-token');
-		if (token) updateLocalStorageUser({ token });
+		if (token) userStore.update({ token });
 
 		const result = responseSchema.safeParse(await response.json());
 		if (!result.success) throw new ApiError('invalid api response format!');

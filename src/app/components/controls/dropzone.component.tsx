@@ -1,10 +1,10 @@
 import { Box, Stack, alpha } from '@mui/material';
 import { useState } from 'react';
 
-import { csx } from '../../helpers/style.helpers';
+import { csx } from '~/helpers/style.helpers';
 
 import type { ReactNode } from 'react';
-import type { Mui } from '../../types/mui.types';
+import type { Mui } from '~/types/mui.types';
 
 export type DropzoneProps = Mui.propsWithSx<{
 	/** the function to call when data or files are dropped */
@@ -31,41 +31,39 @@ export const Dropzone = ({ sx, onDrop, children }: DropzoneProps) => {
 				setDropping(false);
 			}}
 		>
-			<Box
-				sx={{
-					position: 'absolute',
-					width: '100%',
-					height: '100%',
-					transition: (theme) =>
-						theme.transitions.create(['opacity', 'background-color']),
-					borderRadius: 2,
-					color: 'divider',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					fontSize: '10em',
-					fontWeight: 'bold',
-					textAlign: 'center',
-					lineHeight: 0.9,
-					zIndex: dropping ? 2 : 0,
-					opacity: dropping ? 0.8 : 0,
-					background: dropping
-						? ({ palette }) =>
-								`repeating-linear-gradient(${[
-									'45deg',
-									`${alpha(palette.primary.light, 0.25)} 0%`,
-									`${alpha(palette.primary.light, 0.25)} 5%`,
-									`${alpha(palette.primary.dark, 0.25)} 5%`,
-									`${alpha(palette.primary.dark, 0.25)} 10%`,
-								].join(', ')})`
-						: 'transparent',
-				}}
-				onDragLeave={() => {
-					setDropping(false);
-				}}
-			>
-				Drop Here
-			</Box>
+			{dropping && (
+				<Box
+					sx={{
+						position: 'absolute',
+						width: '100%',
+						height: '100%',
+						borderRadius: 2,
+						color: 'divider',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						fontSize: '10em',
+						fontWeight: 'bold',
+						textAlign: 'center',
+						lineHeight: 0.9,
+						zIndex: 2,
+						opacity: 0.5,
+						background: ({ palette }) =>
+							`repeating-linear-gradient(${[
+								'45deg',
+								`${alpha(palette.primary.light, 0.25)} 0%`,
+								`${alpha(palette.primary.light, 0.25)} 5%`,
+								`${alpha(palette.primary.dark, 0.25)} 5%`,
+								`${alpha(palette.primary.dark, 0.25)} 10%`,
+							].join(', ')})`,
+					}}
+					onDragLeave={() => {
+						setDropping(false);
+					}}
+				>
+					Drop Here
+				</Box>
+			)}
 			{children}
 		</Stack>
 	);

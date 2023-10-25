@@ -1,6 +1,6 @@
 import { redirect } from 'react-router-dom';
 
-import { getLocalStorageUser } from '../hooks/user.hook';
+import { userStore } from '~/hooks/user.hook';
 
 import type {
 	IndexRouteObject,
@@ -9,9 +9,9 @@ import type {
 	Params,
 	ShouldRevalidateFunction,
 } from 'react-router-dom';
-import type { TSidebarGroup } from '../components/panels/sidebar.component';
-import type { UserType } from '../schemas/user.schema';
-import type { App } from '../types/app.types';
+import type { TSidebarGroup } from '~/components/panels/sidebar.component';
+import type { UserType } from '~/schemas/user.schema';
+import type { App } from '~/types/app.types';
 
 export const getParamId = (params: Params): App.dbId => {
 	const id = Number(params.id);
@@ -60,7 +60,7 @@ const transformRouteProps = (routes: AppRoute[]): AppRoute[] => {
 				return args.defaultShouldRevalidate;
 			});
 		const loader: LoaderFunction = (args) => {
-			const user = getLocalStorageUser();
+			const user = userStore.get();
 			if (!user) return redirect('/login');
 			if (route.availableTo && !route.availableTo.includes(user.UserType))
 				throw new Error('You do not have access to this route!');

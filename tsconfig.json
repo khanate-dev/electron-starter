@@ -23,8 +23,8 @@
 		"resolveJsonModule": true,
 		"types": ["vitest/globals"],
 		"paths": {
-			"~/*": ["./src/app/"],
-			"@shared/*": ["./src/shared/"]
+			"~/*": ["./src/app/*"],
+			"@shared/*": ["./src/shared/*"]
 		},
 
 		// emit

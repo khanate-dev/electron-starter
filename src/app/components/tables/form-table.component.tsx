@@ -8,37 +8,36 @@ import { Stack } from '@mui/material';
 import { useState } from 'react';
 import { z } from 'zod';
 
-import { GeneralTable } from './general-table.component';
-import { ResponseTable } from './response-table.component';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { GeneralDialog } from '~/components/dialogs/general-dialog.component';
+import { FormField } from '~/components/forms/form-field.component';
+import { GeneralTable } from '~/components/tables/general-table.component';
+import { ResponseTable } from '~/components/tables/response-table.component';
+import { createLocalId } from '~/helpers/data.helpers';
+import { localIdSchema } from '~/helpers/schema.helpers';
+import { csx } from '~/helpers/style.helpers';
+import { formSchemaToGeneralTableColumns } from '~/helpers/table.helpers';
+import { isBulkResponse } from '~/helpers/type.helpers';
 
-import { CustomButton } from '../controls/custom-button.component';
-import { GeneralDialog } from '../dialogs/general-dialog.component';
-import { FormField } from '../forms/form-field.component';
-import { createLocalId } from '../../helpers/data.helpers';
-import { localIdSchema } from '../../helpers/schema.helpers';
-import { csx } from '../../helpers/style.helpers';
-import { formSchemaToGeneralTableColumns } from '../../helpers/table.helpers';
-import { isBulkResponse } from '../../helpers/type.helpers';
-
-import type { Utils } from '../../../shared/types/utils.types';
+import type { Utils } from '@shared/types/utils.types';
 import type {
 	FormSchema,
 	FormSelectLists,
 	FormSuggestLists,
 	FormWorkingObj,
-} from '../../classes/form-schema.class';
-import type { CustomButtonProps } from '../controls/custom-button.component';
+} from '~/classes/form-schema.class';
+import type { CustomButtonProps } from '~/components/controls/custom-button.component';
 import type {
 	GeneralTableAction,
 	GeneralTableColumn,
 	GeneralTableProps,
 	GeneralTableStyles,
-} from './general-table.component';
-import type { BulkResponse } from '../../helpers/api.helpers';
-import type { SortDirection } from '../../hooks/sorting.hook';
-import type { StatusUpdate, useStatus } from '../../hooks/status.hook';
-import type { App } from '../../types/app.types';
-import type { Mui } from '../../types/mui.types';
+} from '~/components/tables/general-table.component';
+import type { BulkResponse } from '~/helpers/api.helpers';
+import type { SortDirection } from '~/hooks/sorting.hook';
+import type { StatusUpdate, useStatus } from '~/hooks/status.hook';
+import type { App } from '~/types/app.types';
+import type { Mui } from '~/types/mui.types';
 
 export type FormTableFormStyles = Partial<
 	Record<
@@ -183,8 +182,16 @@ export const FormTable = <T extends FormSchema>({
 	const columns = schema.fieldsArray.map<GeneralTableColumn<WorkingRow<T>>>(
 		(field) => ({
 			name: field.name.toString(),
+			align: 'center',
 			styles: {
-				header: field.type === 'selection' ? { minWidth: 200 } : undefined,
+				header: {
+					width:
+						field.type === 'selection'
+							? 200
+							: field.type === 'boolean' || field.type === 'readonly'
+							? 75
+							: 150,
+				},
 			},
 			header: field.label,
 			getCell: (row) => {
@@ -221,17 +228,6 @@ export const FormTable = <T extends FormSchema>({
 									'&.MuiInputLabel-outlined.MuiInputLabel-shrink': {
 										transform: 'translate(14px, -4px) scale(0.75)',
 									},
-								},
-								'& input[type=number]': {
-									MozAppearance: 'textfield',
-								},
-								'& input::-webkit-outer-spin-button': {
-									WebkitAppearance: 'none',
-									margin: 0,
-								},
-								'& input::-webkit-inner-spin-button': {
-									WebkitAppearance: 'none',
-									margin: 0,
 								},
 							},
 							styles?.formField,
@@ -374,7 +370,6 @@ export const FormTable = <T extends FormSchema>({
 				rowActions={rowActions}
 				data={data}
 				emptyLabel={emptyLabel}
-				styles={styles}
 				status={statusJsx}
 				controls={controls}
 				footer={footer}
@@ -382,10 +377,14 @@ export const FormTable = <T extends FormSchema>({
 				defaultSorting={defaultSorting}
 				disableSorting={disableSorting}
 				hasPagination={hasPagination}
+				styles={{
+					...styles,
+					table: { tableLayout: 'fixed', ...styles?.table },
+				}}
 			/>
 			{response && (
 				<GeneralDialog
-					sx={{ height: '90vh' }}
+					sx={{ height: '90vh', width: '100%' }}
 					title={`${schema.label} Response`}
 					maxWidth='lg'
 					onClose={() => {
@@ -395,6 +394,8 @@ export const FormTable = <T extends FormSchema>({
 					<ResponseTable
 						columns={formSchemaToGeneralTableColumns(schema, selectionLists)}
 						response={response}
+						styles={{ container: { width: '100%' } }}
+						hasPagination
 						onClear={() => {
 							setResponse(null);
 						}}

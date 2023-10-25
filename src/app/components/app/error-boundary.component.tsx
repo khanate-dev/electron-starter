@@ -9,12 +9,12 @@ import {
 	useRouteError,
 } from 'react-router-dom';
 
-import { EmptyPage } from '../containers/empty-page.component';
-import { CustomButton } from '../controls/custom-button.component';
-import { AppIcon } from '../media/app-icon.component';
-import { AuthError } from '../../errors';
-import { wrappedTextStyle } from '../../helpers/style.helpers';
-import { logout } from '../../hooks/user.hook';
+import { EmptyPage } from '~/components/containers/empty-page.component';
+import { CustomButton } from '~/components/controls/custom-button.component';
+import { AppIcon } from '~/components/media/app-icon.component';
+import { AuthError } from '~/errors';
+import { wrappedTextStyle } from '~/helpers/style.helpers';
+import { logout } from '~/hooks/user.hook';
 
 export const ErrorBoundary = () => {
 	const navigate = useNavigate();
@@ -23,10 +23,11 @@ export const ErrorBoundary = () => {
 	return (
 		<EmptyPage
 			backgroundOpacity={0.2}
+			accent='error'
 			boxSx={{
 				opacity: 0.7,
 				gap: 3,
-				maxWidth: '50%',
+				maxWidth: 600,
 				'> h1, h3': {
 					...wrappedTextStyle,
 					maxWidth: '95%',

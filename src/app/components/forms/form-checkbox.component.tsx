@@ -1,9 +1,9 @@
 import { Checkbox, FormControlLabel, alpha } from '@mui/material';
 
-import { csx, getOppositeColor } from '../../helpers/style.helpers';
+import { csx, getOppositeColor } from '~/helpers/style.helpers';
 
 import type { CheckboxProps } from '@mui/material';
-import type { Mui } from '../../types/mui.types';
+import type { Mui } from '~/types/mui.types';
 
 export type FormCheckboxProps = Mui.propsWithSx<{
 	/** the size of the form field */
@@ -50,7 +50,7 @@ export const FormCheckbox = ({
 			sx={csx(
 				{
 					width: 'auto',
-					padding: size === 'small' ? 0.5 : 1,
+					padding: !label ? (size === 'small' ? 0.75 : 1.25) : 0,
 					'& > svg': {
 						fontSize: '1.75em',
 					},
@@ -84,8 +84,9 @@ export const FormCheckbox = ({
 						? (theme) => alpha(theme.palette.primary.light, 0.2)
 						: undefined,
 					borderRadius: 1,
-					padding: size === 'small' ? 0.25 : 0.5,
-					width: '100%',
+					paddingBlock: size === 'small' ? 0.75 : 1.25,
+					paddingInline: size === 'small' ? 1 : 2,
+					gap: 0.5,
 					'&:hover': {
 						borderColor: value ? getOppositeColor : 'action.active',
 					},

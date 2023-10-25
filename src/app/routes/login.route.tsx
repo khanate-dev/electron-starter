@@ -1,17 +1,17 @@
 import { Paper } from '@mui/material';
 import { redirect, useNavigate } from 'react-router-dom';
 
-import { FormSchema } from '../classes/form-schema.class';
-import { ThemeSwitch } from '../components/controls/theme-switch.component';
-import { SchemaForm } from '../components/forms/schema-form.component';
-import { AppLogo } from '../components/media/app-logo.component';
-import { BackgroundImage } from '../components/media/background-image.component';
-import { WiMetrixLogo } from '../components/media/wimetrix-logo.component';
-import { login } from '../endpoints/user.endpoints';
-import { scrollStyles } from '../helpers/style.helpers';
-import { useDocTitle } from '../hooks/doc-title.hook';
-import { setLocalStorageUser } from '../hooks/user.hook';
-import { loginSchema } from '../schemas/user.schema';
+import { FormSchema } from '~/classes/form-schema.class';
+import { ThemeControl } from '~/components/controls/theme-control.component';
+import { SchemaForm } from '~/components/forms/schema-form.component';
+import { AppLogo } from '~/components/media/app-logo.component';
+import { BackgroundImage } from '~/components/media/background-image.component';
+import { WiMetrixLogo } from '~/components/media/wimetrix-logo.component';
+import { login } from '~/endpoints/user.endpoints';
+import { scrollStyles } from '~/helpers/style.helpers';
+import { useDocTitle } from '~/hooks/doc-title.hook';
+import { userStore } from '~/hooks/user.hook';
+import { loginSchema } from '~/schemas/user.schema';
 
 const schema = new FormSchema({
 	name: 'user',
@@ -29,7 +29,7 @@ const schema = new FormSchema({
 });
 
 const loader = () => {
-	const user = localStorage.getItem('user');
+	const user = userStore.get();
 	if (user !== null) return redirect('/');
 	return null;
 };
@@ -41,7 +41,7 @@ export const Login = () => {
 		<>
 			<BackgroundImage />
 
-			<ThemeSwitch sx={{ position: 'absolute', top: '15px', right: '15px' }} />
+			<ThemeControl sx={{ position: 'absolute', top: '15px', right: '15px' }} />
 
 			<Paper
 				sx={{
@@ -67,13 +67,13 @@ export const Login = () => {
 					isUpdate={false}
 					submitLabel='login'
 					styles={{
-						fieldOuterContainer: { margin: 0 },
-						button: { minWidth: 150, height: 40 },
+						fieldOuterContainer: { padding: 0 },
+						button: { minWidth: 150 },
 					}}
 					onSubmit={async (data) => {
 						const user = await login(data);
 						setTimeout(() => {
-							setLocalStorageUser(user);
+							userStore.set(user);
 							navigate('/');
 						}, 1250);
 						return {

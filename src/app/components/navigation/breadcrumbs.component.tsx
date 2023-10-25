@@ -2,13 +2,13 @@ import { HomeOutlined as HomeIcon } from '@mui/icons-material';
 import { Box, Breadcrumbs as MuiBreadcrumbs, keyframes } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
-import { AppLink } from './app-link.component';
+import { AppLink } from '~/components/navigation/app-link.component';
+import { humanizeToken } from '~/helpers/humanize-token.helpers';
+import { csx } from '~/helpers/style.helpers';
 
-import { humanizeToken } from '../../helpers/humanize-token.helpers';
+import type { Mui } from '~/types/mui.types';
 
-import type { Mui } from '../../types/mui.types';
-
-export const Breadcrumbs = () => {
+export const Breadcrumbs = (props: Mui.propsWithSx) => {
 	const { pathname } = useLocation();
 
 	const pathnames = pathname
@@ -37,29 +37,32 @@ export const Breadcrumbs = () => {
 
 	return (
 		<MuiBreadcrumbs
-			sx={{
-				fontSize: '1em',
-				fontWeight: 'medium',
-				'& > .MuiBreadcrumbs-ol': {
-					alignItems: 'stretch',
-					'& > .MuiBreadcrumbs-separator': {
-						alignItems: 'center',
-						marginInline: 0.5,
-						...animationStyles,
-					},
-					'& > .MuiBreadcrumbs-li > *': {
-						height: '100%',
-						display: 'flex',
-						alignItems: 'center',
-						paddingInline: 1,
-						paddingBlock: 0.5,
-						borderRadius: 1,
-						backgroundColor: 'background.default',
-						color: 'text.secondary',
-						...animationStyles,
+			sx={csx(
+				{
+					fontSize: '1em',
+					fontWeight: 'medium',
+					'& > .MuiBreadcrumbs-ol': {
+						alignItems: 'stretch',
+						'& > .MuiBreadcrumbs-separator': {
+							alignItems: 'center',
+							marginInline: 0.5,
+							...animationStyles,
+						},
+						'& > .MuiBreadcrumbs-li > *': {
+							height: '100%',
+							display: 'flex',
+							alignItems: 'center',
+							paddingInline: 1,
+							paddingBlock: 0.5,
+							borderRadius: 1,
+							backgroundColor: 'background.default',
+							color: 'text.secondary',
+							...animationStyles,
+						},
 					},
 				},
-			}}
+				props.sx,
+			)}
 		>
 			{pathnames.length > 0 && (
 				<Box sx={linkStyles}>
