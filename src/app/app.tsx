@@ -5,15 +5,14 @@ import locale from 'dayjs/locale/en';
 import { Toaster } from 'react-hot-toast';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 
-import { ErrorBoundary } from '~/app/components/app/error-boundary.component';
-import { Dashboard } from '~/app/routes/dashboard/dashboard.route';
-import { Welcome } from '~/app/routes/dashboard/welcome.route';
-import { Login } from '~/app/routes/login/login.route';
-import { getMuiTheme } from '~/app/theme';
-
+import { ErrorBoundary } from './components/app/error-boundary.component';
+import { Dashboard } from './routes/dashboard/dashboard.route';
+import { Welcome } from './routes/dashboard/welcome.route';
+import { Login } from './routes/login.route';
+import { getMuiTheme } from './theme';
 import { dashboardRoutes } from './dashboard.routes';
 import { useMode } from './hooks/mode.hook';
-import { Example } from './routes/example';
+import { Example } from './routes/example.route';
 
 import type { RouterProviderProps } from 'react-router-dom';
 
@@ -32,10 +31,7 @@ const router = createHashRouter([
 		children: [
 			{
 				errorElement: <ErrorBoundary />,
-				children: [
-					{index: true,element: <Welcome />,},
-					...dashboardRoutes,
-				],
+				children: [{ index: true, element: <Welcome /> }, ...dashboardRoutes],
 			},
 		],
 	},

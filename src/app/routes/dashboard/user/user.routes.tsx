@@ -3,7 +3,7 @@ import { UserImport } from './user-import.route';
 import { UserUpdate } from './user-update.route';
 import { UserView } from './user-view.route';
 
-import type { AppRoute } from '~/shared/helpers/route.helpers';
+import type { AppRoute } from '../../../helpers/route.helpers';
 
 export const userRoutes: AppRoute[] = [
 	{

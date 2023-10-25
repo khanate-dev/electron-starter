@@ -1,9 +1,9 @@
-import { SchemaImport } from '~/app/components/app/schema-import.component';
-import { PageContainer } from '~/app/components/containers/page-container.component';
+import { SchemaImport } from '../app/schema-import.component';
+import { PageContainer } from '../containers/page-container.component';
 
-import type { FormSchema } from '~/app/classes/form-schema.class';
-import type { SchemaImportProps } from '~/app/components/app/schema-import.component';
-import type { BulkResponse } from '~/app/helpers/api.helpers';
+import type { FormSchema } from '../../classes/form-schema.class';
+import type { SchemaImportProps } from '../app/schema-import.component';
+import type { BulkResponse } from '../../helpers/api.helpers';
 
 export type SchemaImportPageProps<T extends FormSchema> = Pick<
 	SchemaImportProps<T>,

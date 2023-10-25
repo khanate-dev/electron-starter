@@ -231,8 +231,8 @@ const config = {
 						shorthandLast: true,
 					},
 				],
-				'react/jsx-wrap-multilines': 'warn',
-				'react/no-access-state-in-setstate': 'warn',
+				'react/jsx-wrap-multilines': 'warn', // cSpell: disable-line
+				'react/no-access-state-in-setstate': 'warn', // cSpell: disable-line
 				'react/no-danger': 'warn',
 				'react/no-object-type-as-default-prop': 'warn',
 				'react/no-unstable-nested-components': ['warn', { allowAsProps: true }],

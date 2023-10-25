@@ -11,7 +11,7 @@ import {
 import { useState } from 'react';
 
 import type { TextFieldProps } from '@mui/material';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 export type FormTextfieldProps = Mui.propsWithSx<{
 	/** the type of the `input` tag */

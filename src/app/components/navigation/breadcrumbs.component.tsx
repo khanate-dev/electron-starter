@@ -2,10 +2,11 @@ import { HomeOutlined as HomeIcon } from '@mui/icons-material';
 import { Box, Breadcrumbs as MuiBreadcrumbs, keyframes } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
-import { AppLink } from '~/app/components/navigation/app-link.component';
-import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
+import { AppLink } from './app-link.component';
 
-import type { Mui } from '~/app/types/mui.types';
+import { humanizeToken } from '../../helpers/humanize-token.helpers';
+
+import type { Mui } from '../../types/mui.types';
 
 export const Breadcrumbs = () => {
 	const { pathname } = useLocation();

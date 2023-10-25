@@ -1,9 +1,9 @@
 import { Checkbox, FormControlLabel, alpha } from '@mui/material';
 
-import { csx, getOppositeColor } from '~/app/helpers/style.helpers';
+import { csx, getOppositeColor } from '../../helpers/style.helpers';
 
 import type { CheckboxProps } from '@mui/material';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 export type FormCheckboxProps = Mui.propsWithSx<{
 	/** the size of the form field */

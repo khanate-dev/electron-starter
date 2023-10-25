@@ -2,13 +2,13 @@ import { ExpandMoreRounded as ExpandIcon } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { useState } from 'react';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { csx } from '~/app/helpers/style.helpers';
+import { CustomButton } from '../controls/custom-button.component';
+import { csx } from '../../helpers/style.helpers';
 
 import type { AccordionProps } from '@mui/material';
 import type { ReactNode } from 'react';
-import type { FullButtonProps } from '~/app/components/controls/custom-button.component';
-import type { Mui } from '~/app/types/mui.types';
+import type { FullButtonProps } from '../controls/custom-button.component';
+import type { Mui } from '../../types/mui.types';
 
 export type SimpleAccordionProps = Pick<
 	AccordionProps,

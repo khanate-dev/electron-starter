@@ -2,7 +2,7 @@ import { Link } from '@mui/material';
 import { forwardRef } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
+import { humanizeToken } from '../../helpers/humanize-token.helpers';
 
 import type { LinkProps } from '@mui/material';
 import type { ElementRef, ReactNode, Ref } from 'react';

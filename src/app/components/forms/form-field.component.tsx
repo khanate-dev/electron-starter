@@ -1,18 +1,18 @@
 import { isDayjs } from 'dayjs';
 
-import { FormCheckbox } from '~/app/components/forms/form-checkbox.component';
-import { FormDropdown } from '~/app/components/forms/form-dropdown.component';
-import { FormPicker } from '~/app/components/forms/form-picker.component';
-import { FormReadonly } from '~/app/components/forms/form-readonly.component';
-import { FormTextfield } from '~/app/components/forms/form-textfield.component';
+import { FormCheckbox } from './form-checkbox.component';
+import { FormDropdown } from './form-dropdown.component';
+import { FormPicker } from './form-picker.component';
+import { FormReadonly } from './form-readonly.component';
+import { FormTextfield } from './form-textfield.component';
 
 import type { TextFieldProps } from '@mui/material';
 import type {
 	FormFieldZodType,
 	FormSchemaField,
-} from '~/app/classes/form-schema.class';
-import type { App } from '~/app/types/app.types';
-import type { Mui } from '~/app/types/mui.types';
+} from '../../classes/form-schema.class';
+import type { App } from '../../types/app.types';
+import type { Mui } from '../../types/mui.types';
 
 export type FormFieldProps<
 	Type extends FormFieldZodType,

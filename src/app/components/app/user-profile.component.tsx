@@ -1,15 +1,15 @@
 import { Divider, IconButton, Popover, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 
-import { FormSchema } from '~/app/classes/form-schema.class';
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { SchemaForm } from '~/app/components/forms/schema-form.component';
-import { AppIcon } from '~/app/components/media/app-icon.component';
-import { CustomAvatar } from '~/app/components/media/custom-avatar.component';
-import { resetUserPassword } from '~/app/endpoints/user.endpoints';
-import { getImageUrl } from '~/app/helpers/image.helpers';
-import { logout, useUser } from '~/app/hooks/user.hook';
-import { userResetSchema } from '~/app/schemas/user.schema';
+import { FormSchema } from '../../classes/form-schema.class';
+import { CustomButton } from '../controls/custom-button.component';
+import { SchemaForm } from '../forms/schema-form.component';
+import { AppIcon } from '../media/app-icon.component';
+import { CustomAvatar } from '../media/custom-avatar.component';
+import { resetUserPassword } from '../../endpoints/user.endpoints';
+import { getImageUrl } from '../../helpers/image.helpers';
+import { logout, useUser } from '../../hooks/user.hook';
+import { userResetSchema } from '../../schemas/user.schema';
 
 const schema = new FormSchema({
 	name: 'password-reset',

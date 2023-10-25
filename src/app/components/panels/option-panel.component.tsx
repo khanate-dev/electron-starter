@@ -17,18 +17,18 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
-import { Dropzone } from '~/app/components/controls/dropzone.component';
+import { Dropzone } from '../controls/dropzone.component';
+import { humanizeToken } from '../../helpers/humanize-token.helpers';
 import {
 	csx,
 	getOppositeColor,
 	scrollStyles,
-} from '~/app/helpers/style.helpers';
-import { useFiltering } from '~/app/hooks/filtering.hook';
-import { usePagination } from '~/app/hooks/pagination.hook';
-import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
+} from '../../helpers/style.helpers';
+import { useFiltering } from '../../hooks/filtering.hook';
+import { usePagination } from '../../hooks/pagination.hook';
 
 import type { ReactNode } from 'react';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 export type OptionPanelProps<T extends Obj> = {
 	/** the styles to apply to the panel components */

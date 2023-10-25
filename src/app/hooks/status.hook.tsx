@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { CustomAlert } from '~/app/components/feedback/custom-alert.component';
-import { csx } from '~/app/helpers/style.helpers';
-import { AuthError, stringifyError } from '~/shared/errors';
+import { CustomAlert } from '../components/feedback/custom-alert.component';
+import { AuthError, stringifyError } from '../errors';
+import { csx } from '../helpers/style.helpers';
 
-import type { Mui } from '~/app/types/mui.types';
-import type { Utils } from '~/shared/types/utils.types';
+import type { Utils } from '../../shared/types/utils.types';
+import type { Mui } from '../types/mui.types';
 
 const hiddenStatusTypes = ['idle', 'submitting', 'loading'] as const;
 type HiddenStatusType = (typeof hiddenStatusTypes)[number];

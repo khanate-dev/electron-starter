@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-import { getLocalStorage } from '~/app/helpers/local-storage.helpers';
-import { loggedInUserSchema } from '~/app/schemas/user.schema';
+import { getLocalStorage } from '../helpers/local-storage.helpers';
+import { loggedInUserSchema } from '../schemas/user.schema';
 
 import type { PropsWithChildren } from 'react';
-import type { LoggedInUser } from '~/app/schemas/user.schema';
+import type { LoggedInUser } from '../schemas/user.schema';
 
 export const getLocalStorageUser = () => {
 	return getLocalStorage(

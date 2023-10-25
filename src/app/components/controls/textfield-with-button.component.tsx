@@ -1,10 +1,10 @@
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
+import { CustomButton } from './custom-button.component';
 
 import type { TextFieldProps } from '@mui/material';
-import type { CustomButtonProps } from '~/app/components/controls/custom-button.component';
+import type { CustomButtonProps } from './custom-button.component';
 
 export type TextFieldWithButtonProps = Omit<TextFieldProps, 'onSubmit'> & {
 	/** the function to call when the button is clicked, or enter pressed */

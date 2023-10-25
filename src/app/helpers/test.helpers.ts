@@ -3,7 +3,7 @@ import { userEvent } from '@testing-library/user-event';
 import { createElement } from 'react';
 import { createMemoryRouter } from 'react-router-dom';
 
-import { Providers } from '~/app/app';
+import { Providers } from '../app';
 
 export const renderWithProviders = (component: JSX.Element) => {
 	return {

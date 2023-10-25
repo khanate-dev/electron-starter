@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-// import { isFetchMocked } from '~/app/config';
+// import { isFetchMocked } from './app.config';
 
 import { App } from './app';
 

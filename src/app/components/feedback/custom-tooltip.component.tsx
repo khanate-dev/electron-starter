@@ -1,6 +1,6 @@
 import { Tooltip } from '@mui/material';
 
-import { csx } from '~/app/helpers/style.helpers';
+import { csx } from '../../helpers/style.helpers';
 
 import type { Theme, TooltipProps } from '@mui/material';
 import type { SystemCssProperties } from '@mui/system';

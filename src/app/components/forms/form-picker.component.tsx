@@ -2,7 +2,7 @@ import { DatePicker, DateTimePicker, TimePicker } from '@mui/x-date-pickers';
 
 import type { TextFieldProps } from '@mui/material';
 import type { Dayjs } from 'dayjs';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 const pickerComponents = {
 	datetime: DateTimePicker,

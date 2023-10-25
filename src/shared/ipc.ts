@@ -1,17 +1,16 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import {
 	ipcMain as electronIpcMain,
 	ipcRenderer as electronIpcRenderer,
 } from 'electron';
 
 import type { App, BrowserWindow } from 'electron';
-import type { Utils } from '~/shared/types/utils.types';
+import type { Utils } from './types/utils.types';
 
 export type IpcApi = {
 	app: Pick<App, 'exit'> & {
 		env: 'development' | 'production';
 	};
-	barCode: {
+	codeReader: {
 		connect: () => Promise<void>;
 		disconnect: () => Promise<void>;
 		listen: (listener: (value: number) => void) => void;
@@ -150,13 +149,11 @@ type IpcMain = {
 	): void;
 };
 
-declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
-
 // ? https://www.electronjs.org/docs/latest/tutorial/security#17-validate-the-sender-of-all-ipc-messages
 const validateSender = (
 	event: Electron.IpcMainEvent | Electron.IpcMainInvokeEvent,
 ): boolean => {
-	return event.senderFrame.url === MAIN_WINDOW_WEBPACK_ENTRY;
+	return event.senderFrame.parent === null;
 };
 
 export const ipcMain: IpcMain = {

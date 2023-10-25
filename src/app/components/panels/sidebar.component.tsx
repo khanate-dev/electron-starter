@@ -2,26 +2,26 @@ import { Drawer, IconButton, List, Stack, keyframes } from '@mui/material';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { AppIcon } from '~/app/components/media/app-icon.component';
-import { AppLogo } from '~/app/components/media/app-logo.component';
-import { AppLink } from '~/app/components/navigation/app-link.component';
+import { SidebarGroup } from './sidebar-group.component';
+
+import { CustomButton } from '../controls/custom-button.component';
+import { AppIcon } from '../media/app-icon.component';
+import { AppLogo } from '../media/app-logo.component';
+import { AppLink } from '../navigation/app-link.component';
 import {
 	APP_HEADER_HEIGHT,
 	DRAWER_MINIMIZED_WIDTH,
 	DRAWER_WIDTH,
 	SIDEBAR_GROUPS,
-} from '~/app/constants';
-import { dashboardRoutes } from '~/app/dashboard.routes';
-import { scrollStyles } from '~/app/helpers/style.helpers';
-import { logout, useUser } from '~/app/hooks/user.hook';
-import { formatToken } from '~/shared/helpers/format-token.helpers';
-
-import { SidebarGroup } from './sidebar-group.component';
+} from '../../constants';
+import { dashboardRoutes } from '../../dashboard.routes';
+import { formatToken } from '../../helpers/format-token.helpers';
+import { scrollStyles } from '../../helpers/style.helpers';
+import { logout, useUser } from '../../hooks/user.hook';
 
 import type { MouseEventHandler } from 'react';
-import type { UserType } from '~/app/schemas/user.schema';
-import type { Mui } from '~/app/types/mui.types';
+import type { UserType } from '../../schemas/user.schema';
+import type { Mui } from '../../types/mui.types';
 
 export type TSidebarGroup = (typeof SIDEBAR_GROUPS)[number];
 

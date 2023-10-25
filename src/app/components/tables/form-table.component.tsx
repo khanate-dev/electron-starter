@@ -8,36 +8,37 @@ import { Stack } from '@mui/material';
 import { useState } from 'react';
 import { z } from 'zod';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { GeneralDialog } from '~/app/components/dialogs/general-dialog.component';
-import { FormField } from '~/app/components/forms/form-field.component';
-import { GeneralTable } from '~/app/components/tables/general-table.component';
-import { ResponseTable } from '~/app/components/tables/response-table.component';
-import { createLocalId } from '~/app/helpers/data.helpers';
-import { csx } from '~/app/helpers/style.helpers';
-import { formSchemaToGeneralTableColumns } from '~/app/helpers/table.helpers';
-import { localIdSchema } from '~/shared/helpers/schema.helpers';
-import { isBulkResponse } from '~/shared/helpers/type.helpers';
+import { GeneralTable } from './general-table.component';
+import { ResponseTable } from './response-table.component';
 
+import { CustomButton } from '../controls/custom-button.component';
+import { GeneralDialog } from '../dialogs/general-dialog.component';
+import { FormField } from '../forms/form-field.component';
+import { createLocalId } from '../../helpers/data.helpers';
+import { localIdSchema } from '../../helpers/schema.helpers';
+import { csx } from '../../helpers/style.helpers';
+import { formSchemaToGeneralTableColumns } from '../../helpers/table.helpers';
+import { isBulkResponse } from '../../helpers/type.helpers';
+
+import type { Utils } from '../../../shared/types/utils.types';
 import type {
 	FormSchema,
 	FormSelectLists,
 	FormSuggestLists,
 	FormWorkingObj,
-} from '~/app/classes/form-schema.class';
-import type { CustomButtonProps } from '~/app/components/controls/custom-button.component';
+} from '../../classes/form-schema.class';
+import type { CustomButtonProps } from '../controls/custom-button.component';
 import type {
 	GeneralTableAction,
 	GeneralTableColumn,
 	GeneralTableProps,
 	GeneralTableStyles,
-} from '~/app/components/tables/general-table.component';
-import type { BulkResponse } from '~/app/helpers/api.helpers';
-import type { SortDirection } from '~/app/hooks/sorting.hook';
-import type { StatusUpdate, useStatus } from '~/app/hooks/status.hook';
-import type { App } from '~/app/types/app.types';
-import type { Mui } from '~/app/types/mui.types';
-import type { Utils } from '~/shared/types/utils.types';
+} from './general-table.component';
+import type { BulkResponse } from '../../helpers/api.helpers';
+import type { SortDirection } from '../../hooks/sorting.hook';
+import type { StatusUpdate, useStatus } from '../../hooks/status.hook';
+import type { App } from '../../types/app.types';
+import type { Mui } from '../../types/mui.types';
 
 export type FormTableFormStyles = Partial<
 	Record<

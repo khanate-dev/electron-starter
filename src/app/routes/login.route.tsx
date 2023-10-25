@@ -1,17 +1,17 @@
 import { Paper } from '@mui/material';
 import { redirect, useNavigate } from 'react-router-dom';
 
-import { FormSchema } from '~/app/classes/form-schema.class';
-import { ThemeSwitch } from '~/app/components/controls/theme-switch.component';
-import { SchemaForm } from '~/app/components/forms/schema-form.component';
-import { AppLogo } from '~/app/components/media/app-logo.component';
-import { BackgroundImage } from '~/app/components/media/background-image.component';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo.component';
-import { login } from '~/app/endpoints/user.endpoints';
-import { scrollStyles } from '~/app/helpers/style.helpers';
-import { useDocTitle } from '~/app/hooks/doc-title.hook';
-import { setLocalStorageUser } from '~/app/hooks/user.hook';
-import { loginSchema } from '~/app/schemas/user.schema';
+import { FormSchema } from '../classes/form-schema.class';
+import { ThemeSwitch } from '../components/controls/theme-switch.component';
+import { SchemaForm } from '../components/forms/schema-form.component';
+import { AppLogo } from '../components/media/app-logo.component';
+import { BackgroundImage } from '../components/media/background-image.component';
+import { WiMetrixLogo } from '../components/media/wimetrix-logo.component';
+import { login } from '../endpoints/user.endpoints';
+import { scrollStyles } from '../helpers/style.helpers';
+import { useDocTitle } from '../hooks/doc-title.hook';
+import { setLocalStorageUser } from '../hooks/user.hook';
+import { loginSchema } from '../schemas/user.schema';
 
 const schema = new FormSchema({
 	name: 'user',

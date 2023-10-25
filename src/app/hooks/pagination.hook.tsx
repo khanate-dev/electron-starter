@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { DEFAULT_PAGINATION_SIZE } from '~/app/constants';
+import { DEFAULT_PAGINATION_SIZE } from '../constants';
 
-import type { PAGINATION_SIZES } from '~/app/constants';
+import type { PAGINATION_SIZES } from '../constants';
 
 type Size = (typeof PAGINATION_SIZES)[number];
 

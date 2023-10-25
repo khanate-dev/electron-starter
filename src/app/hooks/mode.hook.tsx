@@ -4,7 +4,7 @@ import { z } from 'zod';
 import {
 	getLocalStorage,
 	setLocalStorageAndDispatch,
-} from '~/app/helpers/local-storage.helpers';
+} from '../helpers/local-storage.helpers';
 
 const modes = ['dark', 'light', 'system'] as const;
 export type Mode = (typeof modes)[number];

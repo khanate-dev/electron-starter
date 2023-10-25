@@ -2,8 +2,8 @@ import { Autocomplete, TextField } from '@mui/material';
 
 import type { AutocompleteProps, TextFieldProps } from '@mui/material';
 import type { ElementType } from 'react';
-import type { App } from '~/app/types/app.types';
-import type { Mui } from '~/app/types/mui.types';
+import type { App } from '../../types/app.types';
+import type { Mui } from '../../types/mui.types';
 
 export type FormDropdownProps<Type extends App.dropdownType> = Mui.propsWithSx<
 	{

@@ -1,21 +1,22 @@
 import {
 	AppBar,
+	Chip,
 	Paper,
 	Stack,
 	Toolbar,
 	Typography,
 	alpha,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { ThemeSwitch } from '~/app/components/controls/theme-switch.component';
-import { AppLogo } from '~/app/components/media/app-logo.component';
-import { BackgroundImage } from '~/app/components/media/background-image.component';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo.component';
-import { LOGIN_HEADER_HEIGHT } from '~/app/constants';
-import { stringifyError } from '~/shared/errors';
-import { dayjsUtc } from '~/shared/helpers/date.helpers';
+import { CustomButton } from '../components/controls/custom-button.component';
+import { ThemeSwitch } from '../components/controls/theme-switch.component';
+import { CustomAlert } from '../components/feedback/custom-alert.component';
+import { AppLogo } from '../components/media/app-logo.component';
+import { BackgroundImage } from '../components/media/background-image.component';
+import { WiMetrixLogo } from '../components/media/wimetrix-logo.component';
+import { LOGIN_HEADER_HEIGHT } from '../constants';
+import { useCodeReader } from '../hooks/code-reader.hook';
 
 const headerLogoSx = {
 	width: 'auto',
@@ -25,38 +26,9 @@ const headerLogoSx = {
 };
 
 export const Example = () => {
-	const [val, setVal] = useState<
-		| { type: 'error'; message: string }
-		| { type: 'connecting' }
-		| { type: 'connected'; reading?: { at: string; data: number } }
-	>({ type: 'connecting' });
+	const { status, toggleConnection } = useCodeReader();
+
 	const [counter, setCounter] = useState(0);
-
-	useEffect(() => {
-		window.ipc.barCode
-			.connect()
-			.then(() => {
-				setVal({ type: 'connected' });
-			})
-			.catch((error) => {
-				setVal({ type: 'error', message: stringifyError(error) });
-			});
-
-		window.ipc.barCode.listen((data) => {
-			setVal((prev) =>
-				prev.type === 'connected'
-					? {
-							...prev,
-							reading: { data, at: dayjsUtc().format('h:mm:ss A') },
-					  }
-					: prev,
-			);
-		});
-
-		return () => {
-			window.ipc.barCode.disconnect().catch(() => false);
-		};
-	}, []);
 
 	return (
 		<>
@@ -120,7 +92,7 @@ export const Example = () => {
 					sx={{
 						width: 0.95,
 						height: 'auto',
-						maxWidth: 500,
+						maxWidth: 450,
 						boxShadow: 3,
 						borderRadius: 3,
 						marginInline: 'auto',
@@ -145,42 +117,71 @@ export const Example = () => {
 						},
 					}}
 				>
-					<Typography
-						variant='h2'
-						color='primary.main'
-					>
-						Bar Code Reader
-					</Typography>
+					<Chip
+						sx={{ fontWidth: 'medium' }}
+						label={window.ipc.app.env}
+					/>
 
-					<Typography
-						variant='h3'
-						color={val.type === 'error' ? 'error.main' : 'success.main'}
-					>
-						{val.type === 'connecting'
-							? 'CONNECTING...'
-							: val.type === 'connected'
-							? 'CONNECTED!'
-							: 'DISCONNECTED!'}
-					</Typography>
-					{val.type === 'connected' && (
-						<>
-							<Typography
-								variant='h4'
-								color='primary.main'
-							>
-								{val.reading ? val.reading.data : 'No Value Read Yet!'}
-							</Typography>
-							<Typography variant='h4'>
-								Last Read On: {val.reading ? val.reading.at : 'N/A'}
-							</Typography>
-						</>
-					)}
-
-					{val.type === 'error' && (
-						<Typography sx={{ '& > code': { backgroundColor: '#8882' } }}>
-							<code>{val.message}</code>
+					<Stack sx={{ gap: 1, alignItems: 'center', maxWidth: '100%' }}>
+						<Typography
+							variant='h3'
+							color='primary.main'
+						>
+							Bar Code Reader
 						</Typography>
-					)}
+
+						<Stack sx={{ flexDirection: 'row', gap: 1 }}>
+							<Chip
+								color={
+									status.type === 'error'
+										? 'error'
+										: status.type === 'connected'
+										? 'success'
+										: 'warning'
+								}
+								label={
+									status.type === 'connecting'
+										? 'CONNECTING...'
+										: status.type === 'disconnecting'
+										? 'DISCONNECTING!'
+										: status.type === 'connected'
+										? 'CONNECTED!'
+										: 'NOT CONNECTED!'
+								}
+							/>
+							<CustomButton
+								label={status.type === 'connected' ? 'disconnect' : 'connect'}
+								color={status.type === 'connected' ? 'error' : 'success'}
+								isBusy={
+									status.type === 'connecting' ||
+									status.type === 'disconnecting'
+								}
+								onClick={toggleConnection}
+							/>
+						</Stack>
+
+						{status.type === 'connected' && (
+							<>
+								<Typography
+									variant='h6'
+									color='primary.main'
+								>
+									Read Value: {status.reading?.data ?? 'N/A'}
+								</Typography>
+								<Typography variant='h6'>
+									Read On: {status.reading?.at ?? 'N/A'}
+								</Typography>
+							</>
+						)}
+
+						{status.type === 'error' && (
+							<CustomAlert
+								message={status.message}
+								severity='error'
+								sx={{ maxWidth: '100%' }}
+							/>
+						)}
+					</Stack>
 
 					<CustomButton
 						label={`Click Me! ${counter}`}

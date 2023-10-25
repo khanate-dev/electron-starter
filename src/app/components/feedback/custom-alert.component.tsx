@@ -1,6 +1,6 @@
 import { Alert, alpha } from '@mui/material';
 
-import { csx, wrappedTextStyle } from '~/app/helpers/style.helpers';
+import { csx, wrappedTextStyle } from '../../helpers/style.helpers';
 
 import type { AlertProps } from '@mui/material';
 import type { ReactNode } from 'react';

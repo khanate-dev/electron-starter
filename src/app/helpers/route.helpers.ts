@@ -1,6 +1,6 @@
 import { redirect } from 'react-router-dom';
 
-import { getLocalStorageUser } from '~/app/hooks/user.hook';
+import { getLocalStorageUser } from '../hooks/user.hook';
 
 import type {
 	IndexRouteObject,
@@ -9,9 +9,9 @@ import type {
 	Params,
 	ShouldRevalidateFunction,
 } from 'react-router-dom';
-import type { TSidebarGroup } from '~/app/components/panels/sidebar.component';
-import type { UserType } from '~/app/schemas/user.schema';
-import type { App } from '~/app/types/app.types';
+import type { TSidebarGroup } from '../components/panels/sidebar.component';
+import type { UserType } from '../schemas/user.schema';
+import type { App } from '../types/app.types';
 
 export const getParamId = (params: Params): App.dbId => {
 	const id = Number(params.id);

@@ -1,7 +1,7 @@
 import { default as dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
-import { datetimeSchema } from '~/shared/helpers/schema.helpers';
+import { datetimeSchema } from './schema.helpers';
 
 import type { Dayjs } from 'dayjs';
 

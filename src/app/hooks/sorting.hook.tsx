@@ -1,7 +1,7 @@
 import { isDayjs } from 'dayjs';
 import { useState } from 'react';
 
-import type { GeneralTableColumn } from '~/app/components/tables/general-table.component';
+import type { GeneralTableColumn } from '../components/tables/general-table.component';
 
 export type SortDirection = 'ascending' | 'descending';
 

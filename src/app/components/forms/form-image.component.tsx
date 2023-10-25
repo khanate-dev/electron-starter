@@ -1,14 +1,13 @@
 import { Stack } from '@mui/material';
 import { useState } from 'react';
 
-import { FileUploadButton } from '~/app/components/controls/file-upload-button.component';
-import { CustomAvatar } from '~/app/components/media/custom-avatar.component';
-import { assertValidImage } from '~/app/helpers/image.helpers';
-import { csx } from '~/app/helpers/style.helpers';
-import { IMAGE_EXTENSIONS } from '~/app/constants';
+import { FileUploadButton } from '../controls/file-upload-button.component';
+import { CustomAvatar } from '../media/custom-avatar.component';
+import { IMAGE_EXTENSIONS } from '../../constants';
+import { assertValidImage } from '../../helpers/image.helpers';
+import { csx } from '../../helpers/style.helpers';
 
-import type { Mui } from '~/app/types/mui.types';
-
+import type { Mui } from '../../types/mui.types';
 
 export type FormImageProps = Mui.propsWithSx<{
 	/** the width and height of the image, in pixels */

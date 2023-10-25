@@ -1,10 +1,10 @@
 import { contextBridge } from 'electron';
 
-import { ipcApiKey, ipcRenderer } from '~/shared/ipc-spec';
-
 import { electronConfig } from './electron.config';
 
-import type { IpcApi } from '~/shared/ipc-spec';
+import { ipcApiKey, ipcRenderer } from '../shared/ipc';
+
+import type { IpcApi } from '../shared/ipc';
 
 const ipcApi: IpcApi = {
 	app: {
@@ -13,15 +13,15 @@ const ipcApi: IpcApi = {
 			ipcRenderer.send('appExit');
 		},
 	},
-	barCode: {
+	codeReader: {
 		async connect() {
-			return ipcRenderer.invoke('barCodeConnect');
+			return ipcRenderer.invoke('codeReaderConnect');
 		},
 		async disconnect() {
-			return ipcRenderer.invoke('barCodeDisconnect');
+			return ipcRenderer.invoke('codeReaderDisconnect');
 		},
 		listen(callback) {
-			ipcRenderer.on('barCodeListen', (_event, value) => {
+			ipcRenderer.on('codeReaderListen', (_event, value) => {
 				callback(value);
 			});
 		},

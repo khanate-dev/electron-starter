@@ -1,7 +1,7 @@
 import { createTheme, darken, lighten } from '@mui/material';
 
-import '~/app/assets/fonts/font.css';
-import { pageTransitionStyles } from '~/app/helpers/style.helpers';
+import './assets/fonts/font.css';
+import { pageTransitionStyles } from './helpers/style.helpers';
 
 const DARK_LIGHTEN = 0.25;
 

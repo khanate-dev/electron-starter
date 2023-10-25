@@ -1,5 +1,5 @@
-import type { User } from '~/app/schemas/user.schema';
-import type { App } from '~/app/types/app.types';
+import type { User } from '../schemas/user.schema';
+import type { App } from '../types/app.types';
 
 export const getStringDropdownOptions = (
 	list: string[],

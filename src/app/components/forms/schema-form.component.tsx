@@ -1,25 +1,26 @@
 import { Box, Stack } from '@mui/material';
 import { useReducer, useState } from 'react';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { FormField } from '~/app/components/forms/form-field.component';
-import { FormImage } from '~/app/components/forms/form-image.component';
-import { getImageUrl } from '~/app/helpers/image.helpers';
-import { csx } from '~/app/helpers/style.helpers';
-import { useStatus } from '~/app/hooks/status.hook';
+import { FormField } from './form-field.component';
+import { FormImage } from './form-image.component';
+
+import { CustomButton } from '../controls/custom-button.component';
+import { getImageUrl } from '../../helpers/image.helpers';
+import { csx } from '../../helpers/style.helpers';
+import { useStatus } from '../../hooks/status.hook';
 
 import type { TextFieldProps } from '@mui/material';
 import type { ReactNode, Reducer } from 'react';
+import type { Utils } from '../../../shared/types/utils.types';
 import type {
 	FormSchema,
 	FormSelectLists,
 	FormSuggestLists,
 	FormWorkingObj,
-} from '~/app/classes/form-schema.class';
-import type { StatusUpdate } from '~/app/hooks/status.hook';
-import type { App } from '~/app/types/app.types';
-import type { Mui } from '~/app/types/mui.types';
-import type { Utils } from '~/shared/types/utils.types';
+} from '../../classes/form-schema.class';
+import type { StatusUpdate } from '../../hooks/status.hook';
+import type { App } from '../../types/app.types';
+import type { Mui } from '../../types/mui.types';
 
 export type SchemaFormSubmitData<
 	T extends FormSchema,

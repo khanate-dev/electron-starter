@@ -1,7 +1,7 @@
 import { Box, useTheme } from '@mui/material';
 
 import type { Theme } from '@mui/material';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 const getColor = (
 	theme: Theme,

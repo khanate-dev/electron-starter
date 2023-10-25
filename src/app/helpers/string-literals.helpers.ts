@@ -1,4 +1,4 @@
-import type { Utils } from '~/shared/types/utils.types';
+import type { Utils } from '../../shared/types/utils.types';
 
 export const lowerAlphabet = 'abcdefghijklmnopqrstuvwxyz' as const;
 export type LowerAlphabet = Utils.stringToUnion<typeof lowerAlphabet>;

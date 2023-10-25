@@ -1,21 +1,21 @@
 import { z } from 'zod';
 
-import { backendPath, disableAuth, isFetchMocked } from '~/app/app.config';
-import {
-	getLocalStorageUser,
-	logout,
-	updateLocalStorageUser,
-} from '~/app/hooks/user.hook';
+import { addToast } from './toast.helpers';
+
+import { backendPath, disableAuth, isFetchMocked } from '../app.config';
 import {
 	ApiError,
 	AuthError,
 	ConnectionError,
 	stringifyError,
-} from '~/shared/errors';
+} from '../errors';
+import {
+	getLocalStorageUser,
+	logout,
+	updateLocalStorageUser,
+} from '../hooks/user.hook';
 
-import { addToast } from '../../shared/helpers/toast.helpers';
-
-import type { Utils } from '~/shared/types/utils.types';
+import type { Utils } from '../../shared/types/utils.types';
 
 const responseSchema = z.object({
 	statusCode: z.number(),

@@ -14,23 +14,23 @@ import {
 import { Paper, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { PAGE_HEADER_HEIGHT } from '~/app/constants';
+import { CustomButton } from '../controls/custom-button.component';
+import { PAGE_HEADER_HEIGHT } from '../../constants';
+import { humanizeToken } from '../../helpers/humanize-token.helpers';
 import {
 	csx,
 	pageTransitionStyles,
 	scrollStyles,
-} from '~/app/helpers/style.helpers';
-import { useDocTitle } from '~/app/hooks/doc-title.hook';
-import { useUser } from '~/app/hooks/user.hook';
-import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
+} from '../../helpers/style.helpers';
+import { useDocTitle } from '../../hooks/doc-title.hook';
+import { useUser } from '../../hooks/user.hook';
 
 import type { ReactNode } from 'react';
 import type { To } from 'react-router-dom';
-import type { FullButtonProps } from '~/app/components/controls/custom-button.component';
-import type { UserType } from '~/app/schemas/user.schema';
-import type { Mui } from '~/app/types/mui.types';
-import type { Utils } from '~/shared/types/utils.types';
+import type { Utils } from '../../../shared/types/utils.types';
+import type { FullButtonProps } from '../controls/custom-button.component';
+import type { UserType } from '../../schemas/user.schema';
+import type { Mui } from '../../types/mui.types';
 
 type Navigation = Utils.includeUnionKeys<
 	{

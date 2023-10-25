@@ -1,14 +1,13 @@
 export const electronConfig = {
-	id: 'electron-app',
-	name: 'Electron App',
-	description: 'Electron React Application',
+	id: 'electron-starter',
+	name: 'Electron Starter',
+	description: 'Electron Vite React Application',
 	icnsIcon: './src/app/assets/favicon/icons/mac/icns.ico',
 	icoIcon: './src/app/assets/favicon/icons/win/icon.ico',
 	pngIcon: './src/app/assets/favicon/favicon.png',
 	repository: {
 		owner: 'khanate-dev',
-		name: 'electron-react-webpack-starter',
+		name: 'electron-starter',
 	},
-	isDev: Boolean(process.env.DEV),
 	env: process.env.DEV ? 'development' : 'production',
 } as const;

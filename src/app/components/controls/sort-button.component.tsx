@@ -1,6 +1,6 @@
 import { IconButton, SvgIcon } from '@mui/material';
 
-import type { SortDirection } from '~/app/hooks/sorting.hook';
+import type { SortDirection } from '../../hooks/sorting.hook';
 
 export type SortIconProps = {
 	direction?: SortDirection;

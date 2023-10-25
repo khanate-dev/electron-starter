@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-import { FormSchema } from '~/app/classes/form-schema.class';
-import { USER_TYPES } from '~/app/constants';
+import { FormSchema } from '../classes/form-schema.class';
+import { USER_TYPES } from '../constants';
 import {
 	dbIdSchema,
 	imageVersionSchema,
 	jwtSchema,
 	metaSchema,
-} from '~/shared/helpers/schema.helpers';
+} from '../helpers/schema.helpers';
 
 export type UserType = (typeof USER_TYPES)[number];
 

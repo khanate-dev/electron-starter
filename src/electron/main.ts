@@ -5,17 +5,15 @@ import installExtension, {
 } from 'electron-devtools-assembler';
 
 import { electronConfig } from './electron.config';
-import { setupIpc } from './ipc';
+import { setupIpc } from './setup-ipc';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) app.quit();
 
-declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
-declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
-
 // TODO Find a way to disallow dom types in shared and electron folder
 
 const createWindow = () => {
+	// Create the browser window.
 	const mainWindow = new BrowserWindow({
 		minWidth: 700,
 		minHeight: 500,
@@ -35,20 +33,16 @@ const createWindow = () => {
 	// and load the index.html of the app.
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-	if (electronConfig.isDev) {
-		installExtension(REACT_DEVELOPER_TOOLS)
-			.then(() => {
-				const win = BrowserWindow.getFocusedWindow();
-				win?.webContents.on('did-frame-finish-load', () => {
-					win.webContents.once('devtools-opened', () => {
-						win.webContents.focus();
-					});
-					win.webContents.openDevTools({ mode: 'detach' });
-				});
-			})
-			.catch((err) => {
-				console.warn('Could Not Load React DevTools:', err);
-			});
+	// Setup IPC handlers and listeners.
+	setupIpc(mainWindow);
+
+	// Causes 2 warnings:
+	// 1. Manifest version 2
+	// 2. object null is not iterable
+	if (electronConfig.env === 'development') {
+		installExtension(REACT_DEVELOPER_TOOLS).catch((err) => {
+			console.warn('Could Not Load React DevTools:', err);
+		});
 	}
 
 	// ? https://github.com/doyensec/electronegativity/wiki/PERMISSION_REQUEST_HANDLER_GLOBAL_CHECK
@@ -58,9 +52,6 @@ const createWindow = () => {
 			callback(allowed.includes(permission));
 		},
 	);
-
-	// Setup IPC handlers and listeners.
-	setupIpc(mainWindow);
 };
 
 // This method will be called when Electron has finished
@@ -88,8 +79,8 @@ app.on('web-contents-created', (_, contents) => {
 	});
 
 	// ? https://www.electronjs.org/docs/latest/tutorial/security#13-disable-or-limit-navigation
-	contents.on('will-navigate', (event, url) => {
-		if (url !== MAIN_WINDOW_WEBPACK_ENTRY) event.preventDefault();
+	contents.on('will-navigate', (event) => {
+		event.preventDefault();
 	});
 
 	// ? https://www.electronjs.org/docs/latest/tutorial/security#14-disable-or-limit-creation-of-new-windows

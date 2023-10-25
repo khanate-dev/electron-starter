@@ -1,8 +1,8 @@
 import { Box, alpha, darken, lighten, useTheme } from '@mui/material';
 
-import { csx } from '~/app/helpers/style.helpers';
+import { csx } from '../../helpers/style.helpers';
 
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 const offsets = {
 	light: { more: 0.6, slight: 0.3 },

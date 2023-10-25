@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { useNavigate, useNavigation, useRevalidator } from 'react-router-dom';
 
-import { DataExport } from '~/app/components/app/data-export.component';
-import { PageContainer } from '~/app/components/containers/page-container.component';
-import { ConfirmationDialog } from '~/app/components/dialogs/confirmation-dialog.component';
-import { ViewTable } from '~/app/components/tables/view-table.component';
-import { getImageUrl } from '~/app/helpers/image.helpers';
-import { useUser } from '~/app/hooks/user.hook';
+import { DataExport } from '../app/data-export.component';
+import { PageContainer } from '../containers/page-container.component';
+import { ConfirmationDialog } from '../dialogs/confirmation-dialog.component';
+import { ViewTable } from '../tables/view-table.component';
+import { getImageUrl } from '../../helpers/image.helpers';
+import { useUser } from '../../hooks/user.hook';
 
-import type { PageContainerProps } from '~/app/components/containers/page-container.component';
+import type { Utils } from '../../../shared/types/utils.types';
+import type { PageContainerProps } from '../containers/page-container.component';
 import type {
 	ViewColumnKey,
 	ViewTableProps,
-} from '~/app/components/tables/view-table.component';
-import type { App } from '~/app/types/app.types';
-import type { Utils } from '~/shared/types/utils.types';
+} from '../tables/view-table.component';
+import type { App } from '../../types/app.types';
 
 export type SchemaViewProps<
 	T extends Obj,

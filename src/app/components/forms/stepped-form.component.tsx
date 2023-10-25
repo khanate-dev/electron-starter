@@ -4,13 +4,13 @@ import {
 } from '@mui/icons-material';
 import { Divider, Stack, Step, StepLabel, Stepper } from '@mui/material';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
+import { CustomButton } from '../controls/custom-button.component';
 import {
 	pageTransitionStyles,
 	scrollStyles,
-} from '~/app/helpers/style.helpers';
+} from '../../helpers/style.helpers';
 
-import type { Utils } from '~/shared/types/utils.types';
+import type { Utils } from '../../../shared/types/utils.types';
 
 export type SteppedFormProps<
 	Steps extends Readonly<string[]>,

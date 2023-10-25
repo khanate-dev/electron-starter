@@ -1,6 +1,6 @@
 import { Avatar } from '@mui/material';
 
-import { csx, getOppositeColor } from '~/app/helpers/style.helpers';
+import { csx, getOppositeColor } from '../../helpers/style.helpers';
 
 import type { AvatarProps } from '@mui/material';
 

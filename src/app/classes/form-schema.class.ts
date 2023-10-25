@@ -1,17 +1,17 @@
 import { z } from 'zod';
 
-import { stringifyError } from '~/shared/errors';
-import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
+import { stringifyError } from '../errors';
+import { humanizeToken } from '../helpers/humanize-token.helpers';
 
 import type { ComponentPropsWithoutRef } from 'react';
-import type { App } from '~/app/types/app.types';
+import type { Utils } from '../../shared/types/utils.types';
 import type {
 	ZodDatetime,
 	ZodDbId,
 	ZodNumberSelection,
 	ZodStringSelection,
-} from '~/shared/helpers/schema.helpers';
-import type { Utils } from '~/shared/types/utils.types';
+} from '../helpers/schema.helpers';
+import type { App } from '../types/app.types';
 
 export type FormZod = z.ZodObject<Record<string, FormFieldZodType>, 'strict'>;
 

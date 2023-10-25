@@ -1,10 +1,10 @@
 import { IconButton, Stack } from '@mui/material';
 
-import { AppIcon } from '~/app/components/media/app-icon.component';
-import { csx } from '~/app/helpers/style.helpers';
-import { toggleMode, useStoredMode } from '~/app/hooks/mode.hook';
+import { AppIcon } from '../media/app-icon.component';
+import { csx } from '../../helpers/style.helpers';
+import { toggleMode, useStoredMode } from '../../hooks/mode.hook';
 
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 const buttonSize = 40;
 const padding = 5;

@@ -8,7 +8,7 @@ import {
 	readableTypeOf,
 } from './type.helpers';
 
-import type { Utils } from '~/shared/types/utils.types';
+import type { Utils } from '../../shared/types/utils.types';
 
 const isNumber = (value: unknown): value is number => typeof value === 'number';
 

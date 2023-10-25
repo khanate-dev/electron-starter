@@ -1,14 +1,14 @@
 import { AppBar, Stack, Toolbar } from '@mui/material';
 import { Outlet, redirect } from 'react-router-dom';
 
-import { UserProfile } from '~/app/components/app/user-profile.component';
-import { ThemeSwitch } from '~/app/components/controls/theme-switch.component';
-import { WiMetrixLogo } from '~/app/components/media/wimetrix-logo.component';
-import { Breadcrumbs } from '~/app/components/navigation/breadcrumbs.component';
-import { Sidebar } from '~/app/components/panels/sidebar.component';
-import { APP_HEADER_HEIGHT } from '~/app/constants';
-import { scrollStyles } from '~/app/helpers/style.helpers';
-import { UserProvider, getLocalStorageUser } from '~/app/hooks/user.hook';
+import { UserProfile } from '../../components/app/user-profile.component';
+import { ThemeSwitch } from '../../components/controls/theme-switch.component';
+import { WiMetrixLogo } from '../../components/media/wimetrix-logo.component';
+import { Breadcrumbs } from '../../components/navigation/breadcrumbs.component';
+import { Sidebar } from '../../components/panels/sidebar.component';
+import { APP_HEADER_HEIGHT } from '../../constants';
+import { scrollStyles } from '../../helpers/style.helpers';
+import { UserProvider, getLocalStorageUser } from '../../hooks/user.hook';
 
 const loader = () => {
 	const user = getLocalStorageUser();

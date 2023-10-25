@@ -1,10 +1,10 @@
 import { Box, keyframes } from '@mui/material';
 
-import { BackgroundImage } from '~/app/components/media/background-image.component';
-import { csx } from '~/app/helpers/style.helpers';
+import { BackgroundImage } from '../media/background-image.component';
+import { csx } from '../../helpers/style.helpers';
 
 import type { ReactNode } from 'react';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 const triangleSize = 75;
 const decorationDistance = (-1 * triangleSize) / 2;

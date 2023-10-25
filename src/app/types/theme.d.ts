@@ -1,4 +1,3 @@
- 
 import type { PaletteColor, PaletteColorOptions } from '@mui/material';
 
 declare module '@mui/material' {

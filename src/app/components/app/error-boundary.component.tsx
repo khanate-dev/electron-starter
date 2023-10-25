@@ -9,12 +9,12 @@ import {
 	useRouteError,
 } from 'react-router-dom';
 
-import { EmptyPage } from '~/app/components/containers/empty-page.component';
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { AppIcon } from '~/app/components/media/app-icon.component';
-import { wrappedTextStyle } from '~/app/helpers/style.helpers';
-import { logout } from '~/app/hooks/user.hook';
-import { AuthError } from '~/shared/errors';
+import { EmptyPage } from '../containers/empty-page.component';
+import { CustomButton } from '../controls/custom-button.component';
+import { AppIcon } from '../media/app-icon.component';
+import { AuthError } from '../../errors';
+import { wrappedTextStyle } from '../../helpers/style.helpers';
+import { logout } from '../../hooks/user.hook';
 
 export const ErrorBoundary = () => {
 	const navigate = useNavigate();

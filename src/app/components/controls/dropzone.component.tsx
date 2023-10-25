@@ -1,10 +1,10 @@
 import { Box, Stack, alpha } from '@mui/material';
 import { useState } from 'react';
 
-import { csx } from '~/app/helpers/style.helpers';
+import { csx } from '../../helpers/style.helpers';
 
 import type { ReactNode } from 'react';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../../types/mui.types';
 
 export type DropzoneProps = Mui.propsWithSx<{
 	/** the function to call when data or files are dropped */

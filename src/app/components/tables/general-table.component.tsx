@@ -18,24 +18,24 @@ import {
 	useTheme,
 } from '@mui/material';
 
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { SortButton } from '~/app/components/controls/sort-button.component';
-import { PAGINATION_SIZES } from '~/app/constants';
+import { CustomButton } from '../controls/custom-button.component';
+import { SortButton } from '../controls/sort-button.component';
+import { PAGINATION_SIZES } from '../../constants';
+import { humanizeToken } from '../../helpers/humanize-token.helpers';
 import {
 	csx,
 	scrollStyles,
 	wrappedTextStyle,
-} from '~/app/helpers/style.helpers';
-import { useFiltering } from '~/app/hooks/filtering.hook';
-import { usePagination } from '~/app/hooks/pagination.hook';
-import { useSorting } from '~/app/hooks/sorting.hook';
-import { humanizeToken } from '~/shared/helpers/humanize-token.helpers';
+} from '../../helpers/style.helpers';
+import { useFiltering } from '../../hooks/filtering.hook';
+import { usePagination } from '../../hooks/pagination.hook';
+import { useSorting } from '../../hooks/sorting.hook';
 
 import type { ButtonProps, TableCellProps } from '@mui/material';
 import type { ReactNode } from 'react';
-import type { SortDirection } from '~/app/hooks/sorting.hook';
-import type { Mui } from '~/app/types/mui.types';
-import type { Utils } from '~/shared/types/utils.types';
+import type { Utils } from '../../../shared/types/utils.types';
+import type { SortDirection } from '../../hooks/sorting.hook';
+import type { Mui } from '../../types/mui.types';
 
 const generalTableCommonStyles = [
 	'container',

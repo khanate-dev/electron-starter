@@ -1,8 +1,8 @@
 import { DescriptionOutlined as UploadIcon } from '@mui/icons-material';
 import { Box, Button } from '@mui/material';
 
-import { getLoadingStyles } from '~/app/helpers/style.helpers';
-import { excludeString } from '~/shared/helpers/type.helpers';
+import { getLoadingStyles } from '../../helpers/style.helpers';
+import { excludeString } from '../../helpers/type.helpers';
 
 import type { ButtonProps } from '@mui/material';
 import type { ComponentPropsWithoutRef } from 'react';

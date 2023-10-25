@@ -1,4 +1,4 @@
-import type { App } from '~/app/types/app.types';
+import type { App } from '../types/app.types';
 
 /**
  * creates a `localId` for the next row in a list.

@@ -1,14 +1,14 @@
 import { useLoaderData } from 'react-router-dom';
 
-import { FormSchema } from '~/app/classes/form-schema.class';
-import { SchemaUpdate } from '~/app/components/pages/schema-update.component';
-import { getUserById, updateUser } from '~/app/endpoints/user.endpoints';
+import { FormSchema } from '../../../classes/form-schema.class';
+import { SchemaUpdate } from '../../../components/pages/schema-update.component';
+import { getUserById, updateUser } from '../../../endpoints/user.endpoints';
+import { getParamId } from '../../../helpers/route.helpers';
 import {
 	userFormSchema,
 	userFormZod,
 	userTypeDropdownOptions,
-} from '~/app/schemas/user.schema';
-import { getParamId } from '~/shared/helpers/route.helpers';
+} from '../../../schemas/user.schema';
 
 import type { LoaderFunction } from 'react-router-dom';
 

@@ -8,28 +8,28 @@ import { useState } from 'react';
 import { read, utils } from 'xlsx';
 import { z } from 'zod';
 
-import { SimpleAccordion } from '~/app/components/containers/simple-accordion.component';
-import { CustomButton } from '~/app/components/controls/custom-button.component';
-import { Dropzone } from '~/app/components/controls/dropzone.component';
-import { FileUploadButton } from '~/app/components/controls/file-upload-button.component';
-import { CustomAlert } from '~/app/components/feedback/custom-alert.component';
-import { GeneralTable } from '~/app/components/tables/general-table.component';
-import { ResponseTable } from '~/app/components/tables/response-table.component';
-import { exportToExcel } from '~/app/helpers/export.helpers';
-import { formSchemaToGeneralTableColumns } from '~/app/helpers/table.helpers';
-import { useStatus } from '~/app/hooks/status.hook';
-import { stringifyError } from '~/shared/errors';
-import { formatToken } from '~/shared/helpers/format-token.helpers';
-import { pluralize } from '~/shared/helpers/pluralize.helpers';
-import { readableTypeOf } from '~/shared/helpers/type.helpers';
+import { SimpleAccordion } from '../containers/simple-accordion.component';
+import { CustomButton } from '../controls/custom-button.component';
+import { Dropzone } from '../controls/dropzone.component';
+import { FileUploadButton } from '../controls/file-upload-button.component';
+import { CustomAlert } from '../feedback/custom-alert.component';
+import { GeneralTable } from '../tables/general-table.component';
+import { ResponseTable } from '../tables/response-table.component';
+import { stringifyError } from '../../errors';
+import { exportToExcel } from '../../helpers/export.helpers';
+import { formatToken } from '../../helpers/format-token.helpers';
+import { pluralize } from '../../helpers/pluralize.helpers';
+import { formSchemaToGeneralTableColumns } from '../../helpers/table.helpers';
+import { readableTypeOf } from '../../helpers/type.helpers';
+import { useStatus } from '../../hooks/status.hook';
 
 import type { ReactNode } from 'react';
 import type {
 	FormSchema,
 	FormSelectLists,
-} from '~/app/classes/form-schema.class';
-import type { BulkResponse } from '~/app/helpers/api.helpers';
-import type { Mui } from '~/app/types/mui.types';
+} from '../../classes/form-schema.class';
+import type { BulkResponse } from '../../helpers/api.helpers';
+import type { Mui } from '../../types/mui.types';
 
 export type SchemaImportProps<T extends FormSchema> = FormSelectLists<
 	T,

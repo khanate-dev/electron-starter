@@ -1,7 +1,7 @@
 import { alpha, keyframes } from '@mui/material';
 
 import type { Theme } from '@mui/material';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../types/mui.types';
 
 export type CxInput = 0 | undefined | false | null | string | CxInput[];
 

@@ -10,11 +10,11 @@ import {
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { csx, getOppositeColor } from '~/app/helpers/style.helpers';
-import { objectKeys } from '~/shared/helpers/object.helpers';
+import { objectKeys } from '../helpers/object.helpers';
+import { csx, getOppositeColor } from '../helpers/style.helpers';
 
 import type { ReactNode } from 'react';
-import type { Mui } from '~/app/types/mui.types';
+import type { Mui } from '../types/mui.types';
 
 export type FilterOptions<T extends Obj> = Mui.propsWithSx<{
 	/** the data to use for filtering */
