@@ -1,19 +1,16 @@
-const noParentImport = {
-	group: ['../*'],
-	message: 'Do not use parent imports',
-};
-
 /** @type {import('eslint').Linter.Config} */
 const config = {
-	env: { es2021: true },
+	env: {
+		es2021: true,
+	},
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/strict-type-checked',
 		'plugin:@typescript-eslint/stylistic-type-checked',
+		'prettier',
 		'plugin:import/recommended',
 		'plugin:import/typescript',
 		'plugin:import/electron',
-		'prettier',
 	],
 	plugins: ['import', 'unused-imports', '@typescript-eslint'],
 	parser: '@typescript-eslint/parser',
@@ -61,12 +58,6 @@ const config = {
 		'no-octal-escape': 'warn',
 		'no-param-reassign': 'warn',
 		'no-promise-executor-return': 'warn',
-		'no-restricted-imports': [
-			'error',
-			{
-				patterns: [{ group: ['../*'], message: 'Do not use parent imports' }],
-			},
-		],
 		'no-restricted-syntax': [
 			'error',
 			{
@@ -115,7 +106,6 @@ const config = {
 		'import/no-duplicates': 'warn',
 		'import/export': 'off',
 		'import/no-empty-named-blocks': 'warn',
-		'import/no-nodejs-modules': 'error',
 		'import/no-self-import': 'warn',
 		'import/no-useless-path-segments': 'warn',
 		'import/order': [
@@ -146,17 +136,19 @@ const config = {
 
 		'@typescript-eslint/consistent-type-exports': 'warn',
 		'@typescript-eslint/consistent-type-imports': 'warn',
-		'@typescript-eslint/consistent-type-definitions': ['warn', 'type'],
+		'@typescript-eslint/consistent-type-definitions': 'off',
 		'@typescript-eslint/default-param-last': 'warn',
 		'no-dupe-class-members': 'off',
 		'@typescript-eslint/no-dupe-class-members': 'warn',
-		'@typescript-eslint/no-explicit-any': ['warn', { ignoreRestArgs: true }],
+		'@typescript-eslint/no-explicit-any': 'off',
 		'@typescript-eslint/no-floating-promises': 'off',
 		'@typescript-eslint/no-inferrable-types': 'off',
 		'@typescript-eslint/no-loop-func': 'warn',
 		'@typescript-eslint/no-misused-promises': [
 			'warn',
-			{ checksVoidReturn: false },
+			{
+				checksVoidReturn: false,
+			},
 		],
 		'@typescript-eslint/no-redundant-type-constituents': 'warn',
 		'@typescript-eslint/no-shadow': 'warn',
@@ -187,6 +179,10 @@ const config = {
 		],
 		'@typescript-eslint/return-await': 'warn',
 		'@typescript-eslint/switch-exhaustiveness-check': 'warn',
+		'@typescript-eslint/restrict-template-expressions': [
+			'warn',
+			{ allowAny: true },
+		],
 		'@typescript-eslint/ban-types': [
 			'warn',
 			{
@@ -262,14 +258,8 @@ const config = {
 			},
 		},
 		{
-			files: ['**/*.cjs', '**/*.js'],
-			rules: {
-				'import/no-commonjs': 'off',
-			},
-		},
-		{
 			files: ['**/*'],
-			excludedFiles: ['src/app/**/*'],
+			excludedFiles: ['src/**/*'],
 			env: {
 				es2021: true,
 				node: true,
@@ -279,7 +269,7 @@ const config = {
 			},
 		},
 		{
-			files: ['./src/app/**/*'],
+			files: ['./src/renderer/**/*'],
 			env: {
 				es2021: true,
 				browser: true,
@@ -290,11 +280,6 @@ const config = {
 					'error',
 					{
 						patterns: [
-							noParentImport,
-							{
-								group: ['~/electron/*'],
-								message: 'Do not use electron modules in renderer',
-							},
 							{
 								group: ['electron/*', 'serialport/*'],
 								message: 'Not available in the renderer',
@@ -306,22 +291,16 @@ const config = {
 		},
 		{
 			files: ['./src/electron/**/*'],
+			env: { es2021: true, node: true },
 			rules: {
 				'no-restricted-imports': [
 					'error',
 					{
-						patterns: [
-							noParentImport,
-							{
-								group: ['~/app/*'],
-								message: 'Do not use app modules in electron',
-							},
-						],
 						paths: [
 							{
 								name: 'electron',
 								importNames: ['ipcRenderer', 'ipcMain'],
-								message: 'Please import ipc helper from `~/shared/ipc-spec`.',
+								message: 'Please import ipc helper from `@shared/ipc-spec`.',
 							},
 						],
 					},
@@ -329,9 +308,9 @@ const config = {
 			},
 		},
 		{
-			files: ['**/*.d.ts'],
+			files: ['**/*.cjs', '**/*.js'],
 			rules: {
-				'@typescript-eslint/consistent-type-definitions': 'off',
+				'import/no-commonjs': 'off',
 			},
 		},
 	],
