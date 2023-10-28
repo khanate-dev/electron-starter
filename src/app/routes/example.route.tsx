@@ -7,11 +7,11 @@ import { CustomAlert } from '~/components/feedback/custom-alert.component';
 import { AppLogo } from '~/components/media/app-logo.component';
 import { BackgroundImage } from '~/components/media/background-image.component';
 import { WiMetrixLogo } from '~/components/media/wimetrix-logo.component';
+import { useSerialPort } from '~/contexts/serial-port.context';
 import { scrollStyles } from '~/helpers/style.helpers';
-import { useCodeReader } from '~/hooks/code-reader.hook';
 
 export const Example = () => {
-	const { status, toggleConnection } = useCodeReader();
+	const { status, connect, disconnect, resume, clearError } = useSerialPort();
 
 	const [counter, setCounter] = useState(0);
 
@@ -55,32 +55,37 @@ export const Example = () => {
 
 					<Stack sx={{ flexDirection: 'row', gap: 1, alignItems: 'center' }}>
 						<Chip
-							sx={{ fontWeight: 'medium', paddingInline: 2 }}
+							label={status.type}
+							sx={{
+								fontWeight: 'medium',
+								paddingInline: 2,
+								textTransform: 'capitalize',
+							}}
 							color={
-								status.type === 'error'
-									? 'error'
+								status.type === 'paused'
+									? 'warning'
 									: status.type === 'connected'
 									? 'success'
 									: 'default'
 							}
-							label={
-								status.type === 'connecting'
-									? 'Connecting...'
-									: status.type === 'disconnecting'
-									? 'Disconnecting!'
-									: status.type === 'connected'
-									? 'Connected!'
-									: 'Not Connected!'
-							}
 						/>
 						<CustomButton
 							variant='outlined'
-							label={status.type === 'connected' ? 'disconnect' : 'connect'}
 							size='small'
-							isBusy={
-								status.type === 'connecting' || status.type === 'disconnecting'
+							label={
+								status.type === 'connected'
+									? 'disconnect'
+									: status.type === 'paused'
+									? 'resume'
+									: 'connect'
 							}
-							onClick={toggleConnection}
+							onClick={
+								status.type === 'connected'
+									? disconnect
+									: status.type === 'paused'
+									? resume
+									: connect
+							}
 						/>
 					</Stack>
 
@@ -93,16 +98,17 @@ export const Example = () => {
 								Read Value: {status.reading?.data ?? 'N/A'}
 							</Typography>
 							<Typography variant='h6'>
-								Read On: {status.reading?.at ?? 'N/A'}
+								Read On: {status.reading?.at.format() ?? 'N/A'}
 							</Typography>
 						</>
 					)}
 
-					{status.type === 'error' && (
+					{Boolean(status.error) && (
 						<CustomAlert
-							message={status.message}
+							message={status.error}
 							severity='error'
 							sx={{ maxWidth: '100%' }}
+							onClose={clearError}
 						/>
 					)}
 				</Stack>
