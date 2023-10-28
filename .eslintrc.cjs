@@ -192,6 +192,7 @@ const config = {
 			},
 		],
 		'@typescript-eslint/no-namespace': ['warn', { allowDeclarations: true }],
+		'@typescript-eslint/array-type': 'off',
 	},
 	overrides: [
 		{
