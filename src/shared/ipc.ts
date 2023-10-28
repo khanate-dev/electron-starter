@@ -5,14 +5,19 @@ import {
 } from 'electron';
 
 import type { App, BrowserWindow } from 'electron';
+// eslint-disable-next-line no-restricted-imports
+import type { SerialPortListener } from '../electron/serial-port';
 import type { Utils } from './types/utils.types';
 
 export type IpcApi = {
 	app: Pick<App, 'exit'> & { env: Env };
-	codeReader: {
-		connect: () => Promise<void>;
-		disconnect: () => Promise<void>;
-		listen: (listener: (value: number) => void) => void;
+	serialPort: {
+		connect: () => void;
+		disconnect: () => void;
+		resume: () => void;
+		pause: () => void;
+		status: () => Promise<'connected' | 'disconnected' | 'paused'>;
+		listen: (listener: SerialPortListener) => void;
 	};
 };
 

@@ -13,15 +13,24 @@ const ipcApi: IpcApi = {
 			ipcRenderer.send('appExit');
 		},
 	},
-	codeReader: {
-		async connect() {
-			return ipcRenderer.invoke('codeReaderConnect');
+	serialPort: {
+		connect() {
+			ipcRenderer.send('serialPortConnect');
 		},
-		async disconnect() {
-			return ipcRenderer.invoke('codeReaderDisconnect');
+		disconnect() {
+			ipcRenderer.send('serialPortDisconnect');
+		},
+		resume() {
+			ipcRenderer.send('serialPortResume');
+		},
+		pause() {
+			ipcRenderer.send('serialPortPause');
+		},
+		async status() {
+			return ipcRenderer.invoke('serialPortStatus');
 		},
 		listen(callback) {
-			ipcRenderer.on('codeReaderListen', (_event, value) => {
+			ipcRenderer.on('serialPortListen', (_event, value) => {
 				callback(value);
 			});
 		},

@@ -2,7 +2,7 @@ import { app } from 'electron';
 
 import { ipcMain } from '@shared/ipc';
 
-import { codeReader } from './serial-port';
+import { serialPort } from './serial-port';
 
 import type { BrowserWindow } from 'electron';
 
@@ -11,11 +11,12 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 		app.exit(exitCode);
 	});
 
-	ipcMain.handle('codeReaderConnect', codeReader.connect);
-
-	ipcMain.handle('codeReaderDisconnect', codeReader.disconnect);
-
-	codeReader.listen((code) => {
-		ipcMain.send('codeReaderListen', mainWindow, code);
+	ipcMain.on('serialPortConnect', serialPort.connect);
+	ipcMain.on('serialPortDisconnect', serialPort.connect);
+	ipcMain.on('serialPortResume', serialPort.resume);
+	ipcMain.on('serialPortPause', serialPort.pause);
+	ipcMain.handle('serialPortStatus', serialPort.status);
+	serialPort.listen((code) => {
+		ipcMain.send('serialPortListen', mainWindow, code);
 	});
 };
