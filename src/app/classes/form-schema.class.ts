@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { stringifyError } from '~/errors';
 import { humanizeToken } from '~/helpers/humanize-token.helpers';
 
+import type { Utils } from '@shared/types/utils.types';
 import type { ComponentPropsWithoutRef } from 'react';
 import type {
 	ZodDatetime,
@@ -11,7 +12,6 @@ import type {
 	ZodStringSelection,
 } from '~/helpers/schema.helpers';
 import type { App } from '~/types/app.types';
-import type { Utils } from '@shared/types/utils.types';
 
 export type FormZod = z.ZodObject<Record<string, FormFieldZodType>, 'strict'>;
 
@@ -45,7 +45,7 @@ export type FormSelectType<T extends z.ZodSchema> = T extends
 export type FormSelectLists<
 	T extends FormSchema,
 	IsMultiForm extends boolean = false,
-> = [Utils.filteredKeys<T['fields'], { type: 'selection' }>] extends [never]
+> = [Utils.keysOfType<T['fields'], { type: 'selection' }>] extends [never]
 	? { selectionLists?: never }
 	: {
 			/** the object containing option lists for selection fields */
@@ -63,13 +63,13 @@ export type FormSelectLists<
 	  };
 
 export type FormSuggestLists<T extends FormSchema> = [
-	Utils.filteredKeys<T['fields'], { hasSuggestions: true }>,
+	Utils.keysOfType<T['fields'], { hasSuggestions: true }>,
 ] extends [never]
 	? { suggestionLists?: never }
 	: {
 			/** the object containing option lists for input fields with suggestions */
 			suggestionLists: {
-				[K in keyof T['fields'] as K extends Utils.filteredKeys<
+				[K in keyof T['fields'] as K extends Utils.keysOfType<
 					T['fields'],
 					{ hasSuggestions: true }
 				>
@@ -204,7 +204,7 @@ type FormSchemaConstructor<
 	/** list of schema fields */
 	fields: {
 		[k in keyof Fields]: k extends keyof Zod['shape']
-			? k extends Utils.filteredKeys<Zod['shape'], FormFieldZodType>
+			? k extends Utils.keysOfType<Zod['shape'], FormFieldZodType>
 				? Fields[k] extends FormSchemaField<Zod['shape'][k]>
 					? Fields[k]
 					: never
