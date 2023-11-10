@@ -136,7 +136,7 @@ export type FormTableProps<T extends FormSchema> = Pick<
 
 	/** the default sorting for the table */
 	defaultSorting?: {
-		column: Utils.filteredKeys<
+		column: Utils.keysOfType<
 			T['fields'],
 			{ type: 'readonly' } | { sortable: true }
 		>;
