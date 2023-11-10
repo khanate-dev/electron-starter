@@ -17,8 +17,9 @@ export type IpcApi = {
 		resume: () => void;
 		pause: () => void;
 		status: () => Promise<'connected' | 'disconnected' | 'paused'>;
-		listen: (listener: SerialPortListener) => void;
+		listen: (listener: SerialPortListener) => Promise<{ remove: () => void }>;
 	};
+	echo: (listener: (val: string, at: Date) => void) => void;
 };
 
 export const ipcApiKey = 'ipc';
@@ -93,9 +94,12 @@ type listenerFlatApi = {
 };
 
 type renderListenerArgs<T extends keyof listenerFlatApi> = Parameters<
-	Parameters<listenerFlatApi[T]>[0]
-> extends infer args extends unknown[]
-	? args
+	listenerFlatApi[T]
+>[0] extends (...args: any[]) => unknown
+	? Parameters<Parameters<listenerFlatApi[T]>[0]> extends infer args extends
+			unknown[]
+		? args
+		: []
 	: [];
 
 type IpcRenderer = {

@@ -16,7 +16,10 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	ipcMain.on('serialPortResume', serialPort.resume);
 	ipcMain.on('serialPortPause', serialPort.pause);
 	ipcMain.handle('serialPortStatus', serialPort.status);
-	serialPort.listen((code) => {
-		ipcMain.send('serialPortListen', mainWindow, code);
+	ipcMain.handle('serialPortListen', async (_, listener) => {
+		return serialPort.listen(listener);
 	});
+	setTimeout(() => {
+		ipcMain.send('echo', mainWindow, 'hello!', new Date());
+	}, 60_000);
 };

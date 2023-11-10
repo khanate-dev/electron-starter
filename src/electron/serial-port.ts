@@ -2,6 +2,8 @@ import os from 'os';
 
 import { SerialPort } from 'serialport';
 
+import { promisify } from '@shared/helpers/async.helpers';
+
 const paths: Partial<Record<NodeJS.Platform, string>> & { default: string } = {
 	win32: 'COM102',
 	linux: '/dev/ttyUSB0',
@@ -14,6 +16,13 @@ const port = new SerialPort({
 	baudRate: 9600,
 });
 
+/**
+ * the time in `milliseconds` to wait between 2 data reads.
+ * Any reads within the debounce period are ignored.
+ * */
+const debounceTime = 1000;
+let lastRead: number = 0;
+
 export type SerialPortListener = (
 	data:
 		| { type: 'connected' | 'disconnected' | 'paused' | 'resumed' }
@@ -24,6 +33,9 @@ export type SerialPortListener = (
 const listeners: Array<SerialPortListener> = [];
 
 port.on('data', (data) => {
+	const currTime = new Date().getTime();
+	if (currTime - lastRead <= debounceTime) return;
+	lastRead = currTime;
 	const dataString = (data as { toString(encoding: string): string }).toString(
 		'utf-8',
 	);
@@ -68,13 +80,16 @@ export const serialPort = {
 		port.pause();
 	},
 	status: async () => {
-		return new Promise<'paused' | 'connected' | 'disconnected'>((resolve) => {
-			resolve(
-				port.isPaused() ? 'paused' : port.isOpen ? 'connected' : 'disconnected',
-			);
-		});
+		return promisify(
+			port.isPaused() ? 'paused' : port.isOpen ? 'connected' : 'disconnected',
+		);
 	},
-	listen: (callback: SerialPortListener) => {
+	listen: async (callback: SerialPortListener) => {
 		listeners.push(callback);
+		return promisify({
+			remove: () => {
+				listeners.splice(listeners.indexOf(callback), 1);
+			},
+		});
 	},
 };
