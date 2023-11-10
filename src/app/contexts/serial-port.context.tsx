@@ -29,44 +29,50 @@ export const SerialPortProvider = ({ children }: PropsWithChildren) => {
 			setStatus({ type });
 		});
 
-		window.ipc.serialPort.listen((data) => {
-			switch (data.type) {
-				case 'connected':
-				case 'resumed': {
-					setStatus((prev) => ({
-						...prev,
-						type: 'connected',
-						error: undefined,
-					}));
-					break;
+		let remove: (() => void) | undefined = undefined;
+		window.ipc.serialPort
+			.listen((data) => {
+				switch (data.type) {
+					case 'connected':
+					case 'resumed': {
+						setStatus((prev) => ({
+							...prev,
+							type: 'connected',
+							error: undefined,
+						}));
+						break;
+					}
+					case 'disconnected':
+					case 'paused': {
+						const type = data.type;
+						setStatus((prev) => ({ ...prev, type }));
+						break;
+					}
+					case 'data': {
+						setStatus({
+							type: 'connected',
+							reading: { at: dayjsUtc.utc(), data: data.value },
+						});
+						break;
+					}
+					case 'error': {
+						setStatus((prev) => ({
+							...prev,
+							error: data.error.message,
+						}));
+					}
 				}
-				case 'disconnected':
-				case 'paused': {
-					const type = data.type;
-					setStatus((prev) => ({ ...prev, type }));
-					break;
-				}
-				case 'data': {
-					setStatus({
-						type: 'connected',
-						reading: { at: dayjsUtc.utc(), data: data.value },
-					});
-					break;
-				}
-				case 'error': {
-					setStatus((prev) => ({
-						...prev,
-						error: data.error.message,
-					}));
-				}
-			}
-		});
+			})
+			.then((res) => {
+				remove = res.remove;
+			});
 
 		const listener = event.listen(() => {
 			setStatus((prev) => ({ ...prev, error: undefined }));
 		});
 
 		return () => {
+			remove?.();
 			window.ipc.serialPort.disconnect();
 			listener.remove();
 		};
@@ -79,12 +85,27 @@ export const SerialPortProvider = ({ children }: PropsWithChildren) => {
 	);
 };
 
-export const useSerialPort = () => {
+export const useSerialPort = (onData?: (data: string) => void) => {
 	const status = useContext(SerialPortContext);
 
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (!status)
 		throw new Error('useSerialPort must be used within a SerialPortProvider');
+
+	useEffect(() => {
+		if (!onData) return;
+		let remove: (() => void) | undefined = undefined;
+		window.ipc.serialPort
+			.listen((data) => {
+				if (data.type === 'data') onData(data.value);
+			})
+			.then((res) => {
+				remove = res.remove;
+			});
+		return () => {
+			remove?.();
+		};
+	}, [onData]);
 
 	return {
 		status,
