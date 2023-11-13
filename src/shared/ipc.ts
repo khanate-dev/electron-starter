@@ -130,13 +130,14 @@ export const ipcRenderer: IpcRenderer = {
 	async invoke(channel, ...args) {
 		return electronIpcRenderer.invoke(channel, ...args);
 	},
-	on(channel, listener) {
-		electronIpcRenderer.on(channel, (_event, ...args) => {
-			listener(...(args as never));
-		});
+	on(channel, callback) {
+		const listener = (_event: Electron.IpcRendererEvent, ...args: any[]) => {
+			callback(...(args as never));
+		}
+		electronIpcRenderer.on(channel, listener);
 		return {
 			remove() {
-				electronIpcRenderer.removeListener(channel, listener as never);
+				electronIpcRenderer.removeListener(channel, listener);
 			},
 		};
 	},
