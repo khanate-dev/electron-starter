@@ -9,6 +9,8 @@ import type { App, BrowserWindow } from 'electron';
 import type { SerialPortListener } from '../electron/serial-port';
 import type { Utils } from './types/utils.types';
 
+// TODO Check for values sent between the main and renderer to be serializable
+
 export type IpcApi = {
 	app: Pick<App, 'exit'> & { env: Env };
 	serialPort: {
@@ -17,9 +19,8 @@ export type IpcApi = {
 		resume: () => void;
 		pause: () => void;
 		status: () => Promise<'connected' | 'disconnected' | 'paused'>;
-		listen: (listener: SerialPortListener) => Promise<{ remove: () => void }>;
+		listen: (listener: SerialPortListener) => ListenerRes;
 	};
-	echo: (listener: (val: string, at: Date) => void) => void;
 };
 
 export const ipcApiKey = 'ipc';
@@ -48,8 +49,10 @@ type sender<T> = T extends (...args: infer Args extends unknown[]) => infer R
 		: never
 	: never;
 
+type ListenerRes = { remove: () => void };
+
 type listener<T> = T extends (...args: infer Args extends unknown[]) => infer R
-	? Utils.equal<R, void> extends true
+	? Utils.equal<R, ListenerRes> extends true
 		? Args extends [(...args: any[]) => void]
 			? T
 			: never
@@ -116,8 +119,8 @@ type IpcRenderer = {
 		ListenerArgs extends unknown[] = renderListenerArgs<T>,
 	>(
 		channel: T,
-		listener: (event: Electron.IpcRendererEvent, ...args: ListenerArgs) => void,
-	): void;
+		listener: (...args: ListenerArgs) => void,
+	): { remove: () => void };
 };
 
 export const ipcRenderer: IpcRenderer = {
@@ -128,7 +131,14 @@ export const ipcRenderer: IpcRenderer = {
 		return electronIpcRenderer.invoke(channel, ...args);
 	},
 	on(channel, listener) {
-		return electronIpcRenderer.on(channel, listener as never);
+		electronIpcRenderer.on(channel, (_event, ...args) => {
+			listener(...(args as never));
+		});
+		return {
+			remove() {
+				electronIpcRenderer.removeListener(channel, listener as never);
+			},
+		};
 	},
 };
 

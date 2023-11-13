@@ -84,12 +84,7 @@ export const serialPort = {
 			port.isPaused() ? 'paused' : port.isOpen ? 'connected' : 'disconnected',
 		);
 	},
-	listen: async (callback: SerialPortListener) => {
-		listeners.push(callback);
-		return promisify({
-			remove: () => {
-				listeners.splice(listeners.indexOf(callback), 1);
-			},
-		});
+	listen: (listener: SerialPortListener) => {
+		listeners.push(listener);
 	},
 };

@@ -6,7 +6,7 @@ import { serialPort } from './serial-port';
 
 import type { BrowserWindow } from 'electron';
 
-export const setupIpc = (mainWindow: BrowserWindow) => {
+export const setupIpc = (window: BrowserWindow) => {
 	ipcMain.on('appExit', (_, exitCode) => {
 		app.exit(exitCode);
 	});
@@ -16,10 +16,7 @@ export const setupIpc = (mainWindow: BrowserWindow) => {
 	ipcMain.on('serialPortResume', serialPort.resume);
 	ipcMain.on('serialPortPause', serialPort.pause);
 	ipcMain.handle('serialPortStatus', serialPort.status);
-	ipcMain.handle('serialPortListen', async (_, listener) => {
-		return serialPort.listen(listener);
+	serialPort.listen((data) => {
+		ipcMain.send('serialPortListen', window, data);
 	});
-	setTimeout(() => {
-		ipcMain.send('echo', mainWindow, 'hello!', new Date());
-	}, 60_000);
 };

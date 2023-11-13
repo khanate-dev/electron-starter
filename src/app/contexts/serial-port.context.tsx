@@ -29,52 +29,47 @@ export const SerialPortProvider = ({ children }: PropsWithChildren) => {
 			setStatus({ type });
 		});
 
-		let remove: (() => void) | undefined = undefined;
-		window.ipc.serialPort
-			.listen((data) => {
-				switch (data.type) {
-					case 'connected':
-					case 'resumed': {
-						setStatus((prev) => ({
-							...prev,
-							type: 'connected',
-							error: undefined,
-						}));
-						break;
-					}
-					case 'disconnected':
-					case 'paused': {
-						const type = data.type;
-						setStatus((prev) => ({ ...prev, type }));
-						break;
-					}
-					case 'data': {
-						setStatus({
-							type: 'connected',
-							reading: { at: dayjsUtc.utc(), data: data.value },
-						});
-						break;
-					}
-					case 'error': {
-						setStatus((prev) => ({
-							...prev,
-							error: data.error.message,
-						}));
-					}
+		const portListener = window.ipc.serialPort.listen((data) => {
+			switch (data.type) {
+				case 'connected':
+				case 'resumed': {
+					setStatus((prev) => ({
+						...prev,
+						type: 'connected',
+						error: undefined,
+					}));
+					break;
 				}
-			})
-			.then((res) => {
-				remove = res.remove;
-			});
+				case 'disconnected':
+				case 'paused': {
+					const type = data.type;
+					setStatus((prev) => ({ ...prev, type }));
+					break;
+				}
+				case 'data': {
+					setStatus({
+						type: 'connected',
+						reading: { at: dayjsUtc.utc(), data: data.value },
+					});
+					break;
+				}
+				case 'error': {
+					setStatus((prev) => ({
+						...prev,
+						error: data.error.message,
+					}));
+				}
+			}
+		});
 
-		const listener = event.listen(() => {
+		const errorListener = event.listen(() => {
 			setStatus((prev) => ({ ...prev, error: undefined }));
 		});
 
 		return () => {
-			remove?.();
+			portListener.remove();
 			window.ipc.serialPort.disconnect();
-			listener.remove();
+			errorListener.remove();
 		};
 	}, []);
 
@@ -96,16 +91,11 @@ export const useSerialPort = ({ onData }: UseSerialPortArgs = {}) => {
 
 	useEffect(() => {
 		if (!onData) return;
-		let remove: (() => void) | undefined = undefined;
-		window.ipc.serialPort
-			.listen((data) => {
-				if (data.type === 'data') onData(data.value);
-			})
-			.then((res) => {
-				remove = res.remove;
-			});
+		const { remove } = window.ipc.serialPort.listen((data) => {
+			if (data.type === 'data') onData(data.value);
+		});
 		return () => {
-			remove?.();
+			remove();
 		};
 	}, [onData]);
 

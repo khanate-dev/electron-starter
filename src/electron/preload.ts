@@ -29,14 +29,9 @@ const ipcApi: IpcApi = {
 		async status() {
 			return ipcRenderer.invoke('serialPortStatus');
 		},
-		async listen(callback) {
-			return ipcRenderer.invoke('serialPortListen', callback);
+		listen(callback) {
+			return ipcRenderer.on('serialPortListen', callback);
 		},
-	},
-	echo(callback) {
-		ipcRenderer.on('echo', (_event, val, at) => {
-			callback(val, at);
-		});
 	},
 };
 
