@@ -85,7 +85,9 @@ export const SerialPortProvider = ({ children }: PropsWithChildren) => {
 	);
 };
 
-export const useSerialPort = (onData?: (data: string) => void) => {
+type UseSerialPortArgs = { onData?: (data: string) => void };
+
+export const useSerialPort = ({ onData }: UseSerialPortArgs = {}) => {
 	const status = useContext(SerialPortContext);
 
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
