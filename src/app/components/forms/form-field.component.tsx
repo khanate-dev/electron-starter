@@ -55,13 +55,13 @@ export type FormFieldProps<
 					: never;
 		  }
 		: Field extends { hasSuggestions: true }
-		? {
-				/** the object containing the lists for dropdown fields */
-				options: Field['type'] extends 'string' ? string[] : number[];
-		  }
-		: {
-				options?: undefined;
-		  })
+		  ? {
+					/** the object containing the lists for dropdown fields */
+					options: Field['type'] extends 'string' ? string[] : number[];
+		    }
+		  : {
+					options?: undefined;
+		    })
 >;
 
 export const FormField = <
@@ -92,11 +92,11 @@ export const FormField = <
 		field.type === 'selection'
 			? passedOptions ?? []
 			: (field.type === 'int' ||
-					field.type === 'string' ||
-					field.type === 'float') &&
-			  field.hasSuggestions
-			? passedOptions ?? []
-			: [];
+						field.type === 'string' ||
+						field.type === 'float') &&
+			    field.hasSuggestions
+			  ? passedOptions ?? []
+			  : [];
 
 	switch (field.type) {
 		case 'readonly':

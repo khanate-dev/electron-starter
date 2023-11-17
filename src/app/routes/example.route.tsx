@@ -65,8 +65,8 @@ export const Example = () => {
 								status.type === 'paused'
 									? 'warning'
 									: status.type === 'connected'
-									? 'success'
-									: 'default'
+									  ? 'success'
+									  : 'default'
 							}
 						/>
 						<CustomButton
@@ -76,15 +76,15 @@ export const Example = () => {
 								status.type === 'connected'
 									? 'disconnect'
 									: status.type === 'paused'
-									? 'resume'
-									: 'connect'
+									  ? 'resume'
+									  : 'connect'
 							}
 							onClick={
 								status.type === 'connected'
 									? disconnect
 									: status.type === 'paused'
-									? resume
-									: connect
+									  ? resume
+									  : connect
 							}
 						/>
 					</Stack>

@@ -37,14 +37,14 @@ export type ViewColumns<T extends Obj, Cols extends PropertyKey> = {
 		? T[k] extends string | null
 			? 'string'
 			: T[k] extends App.dbId | null
-			? 'int'
-			: T[k] extends number | null
-			? 'int' | 'float'
-			: T[k] extends Dayjs | null
-			? 'date' | 'time' | 'datetime'
-			: T[k] extends boolean | null
-			? 'boolean'
-			: (row: T) => ReactNode
+			  ? 'int'
+			  : T[k] extends number | null
+			    ? 'int' | 'float'
+			    : T[k] extends Dayjs | null
+			      ? 'date' | 'time' | 'datetime'
+			      : T[k] extends boolean | null
+			        ? 'boolean'
+			        : (row: T) => ReactNode
 		: (row: T) => ReactNode;
 };
 

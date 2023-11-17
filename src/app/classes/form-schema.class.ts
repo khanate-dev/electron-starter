@@ -22,8 +22,8 @@ export type FormWorkingObj<T extends FormSchema> = {
 	}
 		? T['fields'][K]['zod']['_output'] | null
 		: T['fields'][K]['type'] extends 'int' | 'float'
-		? string
-		: T['fields'][K]['zod']['_output'];
+		  ? string
+		  : T['fields'][K]['zod']['_output'];
 };
 
 export type FormFields<Zod extends FormZod> = {
@@ -37,10 +37,10 @@ export type FormSelectType<T extends z.ZodSchema> = T extends
 		? U['_output']
 		: never
 	: T extends infer U
-	? U extends BaseSelectionType
-		? U['_output']
-		: never
-	: never;
+	  ? U extends BaseSelectionType
+			? U['_output']
+			: never
+	  : never;
 
 export type FormSelectLists<
 	T extends FormSchema,
@@ -126,8 +126,8 @@ type AgnosticSchemaField<T extends FormFieldZodType> = {
 } & (T extends z.ZodNullable<z.ZodTypeAny>
 	? { notRequired: true }
 	: T extends z.ZodArray<z.ZodTypeAny>
-	? { notRequired?: boolean }
-	: { notRequired?: false });
+	  ? { notRequired?: boolean }
+	  : { notRequired?: false });
 
 type StringSchemaField<Zod extends StringType> = AgnosticSchemaField<Zod> & {
 	type: 'string';
@@ -179,14 +179,14 @@ export type FormSchemaField<Zod extends FormFieldZodType> =
 	Zod extends StringType
 		? StringSchemaField<Zod> | ReadonlySchemaField<Zod>
 		: Zod extends SelectionType
-		? SelectionSchemaField<Zod> | ReadonlySchemaField<Zod>
-		: Zod extends NumberType
-		? NumberSchemaField<Zod> | ReadonlySchemaField<Zod>
-		: Zod extends DateType
-		? DateSchemaField<Zod> | ReadonlySchemaField<Zod>
-		: Zod extends BooleanType
-		? BooleanSchemaField<Zod> | ReadonlySchemaField<Zod>
-		: never;
+		  ? SelectionSchemaField<Zod> | ReadonlySchemaField<Zod>
+		  : Zod extends NumberType
+		    ? NumberSchemaField<Zod> | ReadonlySchemaField<Zod>
+		    : Zod extends DateType
+		      ? DateSchemaField<Zod> | ReadonlySchemaField<Zod>
+		      : Zod extends BooleanType
+		        ? BooleanSchemaField<Zod> | ReadonlySchemaField<Zod>
+		        : never;
 
 type FormSchemaConstructor<
 	Zod extends FormZod,
@@ -236,8 +236,8 @@ const transformSchema = <T extends z.ZodSchema, D extends boolean>(
 					isDefault
 						? val
 						: val === null || val === undefined || val === ''
-						? null
-						: String(val),
+						  ? null
+						  : String(val),
 				unwrapped.trim().nullable(),
 			);
 			def = '';
@@ -307,8 +307,8 @@ export class FormSchema<
 		}
 			? Zod['shape'][K]['_output'] | null
 			: Fields[K]['type'] extends 'int' | 'float'
-			? string
-			: Zod['shape'][K]['_output'];
+			  ? string
+			  : Zod['shape'][K]['_output'];
 	};
 
 	constructor(schema: FormSchemaConstructor<Zod, Fields>) {

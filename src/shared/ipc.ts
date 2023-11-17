@@ -133,7 +133,7 @@ export const ipcRenderer: IpcRenderer = {
 	on(channel, callback) {
 		const listener = (_event: Electron.IpcRendererEvent, ...args: any[]) => {
 			callback(...(args as never));
-		}
+		};
 		electronIpcRenderer.on(channel, listener);
 		return {
 			remove() {
