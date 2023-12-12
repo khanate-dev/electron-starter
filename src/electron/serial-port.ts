@@ -21,7 +21,10 @@ const port = new SerialPort({
  * Any reads within the debounce period are ignored.
  * */
 const debounceTime = 1000;
+/** the delimiter marking the end of line */
+const delimiter = /\r\n?/u;
 let lastRead: number = 0;
+let currReading = '';
 
 export type SerialPortListener = (
 	data:
@@ -33,13 +36,18 @@ export type SerialPortListener = (
 const listeners: Array<SerialPortListener> = [];
 
 port.on('data', (data) => {
-	const currTime = new Date().getTime();
-	if (currTime - lastRead <= debounceTime) return;
-	lastRead = currTime;
 	const dataString = (data as { toString(encoding: string): string }).toString(
 		'utf-8',
 	);
-	for (const cb of listeners) cb({ type: 'data', value: dataString });
+	if (delimiter.test(dataString)) {
+		const currTime = new Date().getTime();
+		if (currTime - lastRead <= debounceTime) return;
+		lastRead = currTime;
+		for (const cb of listeners) cb({ type: 'data', value: currReading });
+		currReading = '';
+	} else {
+		currReading += dataString;
+	}
 });
 
 port.on('close', () => {
