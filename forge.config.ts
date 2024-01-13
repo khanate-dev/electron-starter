@@ -18,7 +18,7 @@ const config: ForgeConfig = {
 	packagerConfig: {
 		icon: electronConfig.icoIcon,
 		name: electronConfig.id,
-		executableName: electronConfig.id,
+		executableName: electronConfig.name,
 		asar: true,
 	},
 	rebuildConfig: {},
@@ -26,7 +26,7 @@ const config: ForgeConfig = {
 		new MakerSquirrel({
 			name: electronConfig.id,
 			description: electronConfig.description,
-			exe: electronConfig.name,
+			exe: `${electronConfig.name}.exe`,
 			setupExe: electronConfig.id,
 			setupIcon: electronConfig.icoIcon,
 		}),
