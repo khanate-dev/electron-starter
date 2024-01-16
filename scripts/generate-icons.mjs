@@ -4,6 +4,8 @@ import path from 'path';
 import { parse } from 'node-html-parser';
 import { optimize } from 'svgo';
 
+// TODO Move this to a package to remove @types/node dependency
+
 const colors = {
 	reset: '\x1b[0m',
 	dim: '\x1b[2m',
@@ -16,13 +18,17 @@ const sourceFolder = 'src/app/assets/icons';
 const spritesPath = path.join(sourceFolder, 'sprites.svg');
 const namesPath = path.join(sourceFolder, 'icon-names.ts');
 
-const getIconDetails = async (folder: string = sourceFolder) => {
+/** @param {string} [folder] */
+const getIconDetails = async (folder = sourceFolder) => {
 	const files = await readdir(folder, {
 		withFileTypes: true,
 		recursive: true,
 	});
-	const symbols: string[] = [];
-	const names: string[] = [];
+
+	/** @type {string[]} */
+	const symbols = [];
+	/** @type {string[]} */
+	const names = [];
 
 	for (const file of files) {
 		const filePath = path.join(file.path, file.name);
