@@ -93,3 +93,4 @@ out/
 
 # typescript trace
 trace
+public/mockServiceWorker.js
