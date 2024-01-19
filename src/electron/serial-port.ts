@@ -46,8 +46,6 @@ port.on('data', (data) => {
 		lastRead = currTime;
 		for (const cb of listeners) cb({ type: 'data', value: currReading });
 		currReading = '';
-	} else {
-		currReading += dataString;
 	}
 });
 
