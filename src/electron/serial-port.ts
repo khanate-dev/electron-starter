@@ -22,7 +22,7 @@ const port = new SerialPort({
  * */
 const debounceTime = 1000;
 /** the delimiter marking the end of line */
-const delimiter = /\r\n?/u;
+const delimiter = /(.*)\r\n?$/u;
 let lastRead: number = 0;
 let currReading = '';
 
@@ -39,6 +39,7 @@ port.on('data', (data) => {
 	const dataString = (data as { toString(encoding: string): string }).toString(
 		'utf-8',
 	);
+	currReading += dataString.replace(delimiter, (_, val) => String(val));
 	if (delimiter.test(dataString)) {
 		const currTime = new Date().getTime();
 		if (currTime - lastRead <= debounceTime) return;
