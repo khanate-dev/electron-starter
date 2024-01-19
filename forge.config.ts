@@ -24,10 +24,10 @@ const config: ForgeConfig = {
 	rebuildConfig: {},
 	makers: [
 		new MakerSquirrel({
-			name: electronConfig.id,
+			name: electronConfig.name,
 			description: electronConfig.description,
 			exe: `${electronConfig.name}.exe`,
-			setupExe: electronConfig.id,
+			setupExe: `${electronConfig.id}.exe`,
 			setupIcon: electronConfig.icoIcon,
 		}),
 		new MakerDeb({
