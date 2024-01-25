@@ -13,7 +13,6 @@ const config = {
 		'plugin:import/recommended',
 		'plugin:import/typescript',
 		'plugin:import/electron',
-		'prettier',
 	],
 	plugins: ['import', 'unused-imports', '@typescript-eslint'],
 	parser: '@typescript-eslint/parser',
@@ -27,8 +26,10 @@ const config = {
 		'import/resolver': { typescript: true },
 	},
 	rules: {
+		'no-extra-semi': 'off',
+		'no-mixed-spaces-and-tabs': 'off',
+		'no-unexpected-multiline': 'off',
 		'array-callback-return': ['warn', { checkForEach: true }],
-		curly: ['warn', 'multi-or-nest', 'consistent'],
 		'default-case-last': 'warn',
 		eqeqeq: 'error',
 		'func-names': ['warn', 'never'],
@@ -47,7 +48,6 @@ const config = {
 		'no-else-return': ['warn', { allowElseIf: false }],
 		'no-extend-native': 'warn',
 		'no-extra-label': 'warn',
-		'no-floating-decimal': 'warn',
 		'no-implicit-coercion': ['warn', { disallowTemplateShorthand: true }],
 		'no-label-var': 'warn',
 		'no-labels': ['warn', { allowLoop: true, allowSwitch: true }],
@@ -231,7 +231,6 @@ const config = {
 						shorthandLast: true,
 					},
 				],
-				'react/jsx-wrap-multilines': 'warn', // cSpell: disable-line
 				'react/no-access-state-in-setstate': 'warn', // cSpell: disable-line
 				'react/no-danger': 'warn',
 				'react/no-object-type-as-default-prop': 'warn',
