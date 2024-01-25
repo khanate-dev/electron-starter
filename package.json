@@ -75,7 +75,6 @@
 		"electron-devtools-assembler": "^1.2.0",
 		"electron-icon-builder": "^2.0.1",
 		"eslint": "^8.56.0",
-		"eslint-config-prettier": "^9.1.0",
 		"eslint-import-resolver-typescript": "^3.6.1",
 		"eslint-plugin-import": "^2.29.1",
 		"eslint-plugin-jsx-a11y": "^6.8.0",
