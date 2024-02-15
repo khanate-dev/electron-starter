@@ -14,7 +14,7 @@ const config = {
 		'plugin:import/typescript',
 		'plugin:import/electron',
 	],
-	plugins: ['import', 'unused-imports', '@typescript-eslint'],
+	plugins: ['import', 'unused-imports', '@typescript-eslint', 'only-warn'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 'latest',
