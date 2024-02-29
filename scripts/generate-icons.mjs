@@ -59,7 +59,7 @@ const getIconDetails = async (folder = sourceFolder) => {
 				'removeDimensions',
 				{
 					name: 'removeAttrs',
-					params: { attrs: '*:(stroke|fill):((?!^none$).)*' },
+					params: { attrs: ['fill', 'stroke'] },
 				},
 			],
 		});
