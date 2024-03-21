@@ -73,7 +73,7 @@ export type CustomAutocompleteProps<
 					FreeSolo,
 					ChipComponent
 				>['getOptionLabel'];
-		  }
+			}
 		: { getOptionLabel?: never });
 
 export const CustomAutocomplete = <
@@ -128,7 +128,7 @@ export const CustomAutocomplete = <
 							(option) =>
 								(option as App.dropdownOption<App.dropdownType>).value ===
 								defaultValue,
-					  ) ?? emptyVal) as never)
+						) ?? emptyVal) as never)
 					: (defaultValue as never)
 			}
 			value={
@@ -137,7 +137,7 @@ export const CustomAutocomplete = <
 							(option) =>
 								(option as App.dropdownOption<App.dropdownType>).value ===
 								value,
-					  ) ?? emptyVal) as never)
+						) ?? emptyVal) as never)
 					: (value as never)
 			}
 			renderInput={(params) => {
@@ -165,7 +165,7 @@ export const CustomAutocomplete = <
 							(option) =>
 								(option as App.dropdownOption<App.dropdownType>).value ===
 								(val as never),
-					  ) ?? emptyVal) as never)
+						) ?? emptyVal) as never)
 					: (val as never);
 				onChange(valToSend, event, reason, details);
 			}}

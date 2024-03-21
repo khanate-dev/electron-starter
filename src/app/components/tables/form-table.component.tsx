@@ -189,8 +189,8 @@ export const FormTable = <T extends FormSchema>({
 						field.type === 'selection'
 							? 200
 							: field.type === 'boolean' || field.type === 'readonly'
-							  ? 75
-							  : 150,
+								? 75
+								: 150,
 				},
 			},
 			header: field.label,

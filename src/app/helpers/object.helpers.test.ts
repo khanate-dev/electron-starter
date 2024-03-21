@@ -86,7 +86,7 @@ test('testing objectToFormData', () => {
 	const second = { b: 'new', c: 3, d: true };
 	const result = objectToFormData(second);
 	assertType<FormData>(result);
-	expect(result.get('b')).toStrictEqual('new');
-	expect(result.get('c')).toStrictEqual('3');
-	expect(result.get('d')).toStrictEqual('true');
+	expect(result.get('b')).toBe('new');
+	expect(result.get('c')).toBe('3');
+	expect(result.get('d')).toBe('true');
 });

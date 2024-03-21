@@ -56,7 +56,7 @@ export const useFiltering = <T extends Obj>({
 						.toLowerCase()
 						.includes(search.toLowerCase()),
 				),
-		  )
+			)
 		: data;
 
 	const isFiltered = data.length > 0 && Boolean(search);

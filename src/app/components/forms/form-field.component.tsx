@@ -53,15 +53,15 @@ export type FormFieldProps<
 				options: Exclude<WorkingObj[Name], null> extends App.dropdownType
 					? App.dropdownOption<Exclude<WorkingObj[Name], null>>[]
 					: never;
-		  }
+			}
 		: Field extends { hasSuggestions: true }
-		  ? {
+			? {
 					/** the object containing the lists for dropdown fields */
 					options: Field['type'] extends 'string' ? string[] : number[];
-		    }
-		  : {
+				}
+			: {
 					options?: undefined;
-		    })
+				})
 >;
 
 export const FormField = <
@@ -94,9 +94,9 @@ export const FormField = <
 			: (field.type === 'int' ||
 						field.type === 'string' ||
 						field.type === 'float') &&
-			    field.hasSuggestions
-			  ? passedOptions ?? []
-			  : [];
+				  field.hasSuggestions
+				? passedOptions ?? []
+				: [];
 
 	switch (field.type) {
 		case 'readonly':

@@ -1,7 +1,7 @@
 import { isDayjs } from 'dayjs';
 import { isValidElement } from 'react';
 
-import { dayjsFormatPatterns } from '~/helpers/date.helpers';
+import { dateFormats } from '~/helpers/date.helpers';
 import { humanizeToken } from '~/helpers/humanize-token.helpers';
 
 import type { z } from 'zod';
@@ -27,7 +27,7 @@ export const getViewColumnValue = (
 		case 'date':
 		case 'time':
 		case 'datetime': {
-			return isDayjs(value) ? value.format(dayjsFormatPatterns[type]) : '';
+			return isDayjs(value) ? value.format(dateFormats[type]) : '';
 		}
 		case 'int':
 		case 'float': {
@@ -82,7 +82,7 @@ export const formSchemaToGeneralTableColumns = <T extends FormSchema>(
 			if (isDayjs(value)) {
 				if (!['date', 'time', 'datetime'].includes(field.type)) return '';
 				return value.format(
-					dayjsFormatPatterns[field.type as keyof typeof dayjsFormatPatterns],
+					dateFormats[field.type as keyof typeof dateFormats],
 				);
 			}
 			if (isValidElement(value)) return value;

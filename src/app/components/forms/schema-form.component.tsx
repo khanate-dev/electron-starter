@@ -29,8 +29,8 @@ export type SchemaFormSubmitData<
 		('required' | 'optional' extends Picture
 			? {}
 			: Picture extends 'required'
-			  ? { picture: File }
-			  : { picture?: File })
+				? { picture: File }
+				: { picture?: File })
 >;
 
 type AgnosticSchemaFormProps<

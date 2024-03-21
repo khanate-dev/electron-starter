@@ -1,4 +1,5 @@
 import type { SxProps, Theme } from '@mui/material';
+// eslint-disable-next-line no-restricted-imports
 import type { SystemStyleObject } from '@mui/system';
 import type { Utils } from '@shared/types/utils.types';
 

@@ -64,7 +64,7 @@ export const FileUploadButton = ({
 						? getLoadingStyles(
 								excludeString(buttonProps.color, ['inherit', 'default']) ??
 									'primary',
-						  )
+							)
 						: undefined
 				}
 				disableElevation

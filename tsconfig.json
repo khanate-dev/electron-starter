@@ -24,7 +24,7 @@
 		"types": ["vitest/globals"],
 		"paths": {
 			"~/*": ["./src/app/*"],
-			"@shared/*": ["./src/shared/*"],
+			"@shared/*": ["./src/shared/*"]
 		},
 
 		// emit
@@ -56,8 +56,8 @@
 		"noErrorTruncation": true,
 
 		// completeness
-		"skipLibCheck": true,
+		"skipLibCheck": true
 	},
 	"include": ["**/*", "./.*.cjs"],
-	"exclude": ["node_modules", "out", "coverage", ".webpack", "public"],
+	"exclude": ["node_modules", "out", "coverage", ".webpack", "public"]
 }

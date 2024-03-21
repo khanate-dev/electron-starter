@@ -3,11 +3,10 @@ import { Tooltip } from '@mui/material';
 import { csx } from '~/helpers/style.helpers';
 
 import type { Theme, TooltipProps } from '@mui/material';
-import type { SystemCssProperties } from '@mui/system';
 
 const arrow = 8;
 
-const borderColor: SystemCssProperties<Theme>['borderColor'] = (theme) =>
+const borderColor = (theme: Theme) =>
 	`grey.${theme.palette.mode === 'light' ? 800 : 200}`;
 
 export type CustomTooltipProps = Omit<TooltipProps, 'arrow'> & {
@@ -112,7 +111,7 @@ export const CustomTooltip = ({
 								borderBottomLeftRadius: 1,
 								'&::before': { bottom: 0 },
 							},
-					  }
+						}
 					: undefined,
 			},
 		}}

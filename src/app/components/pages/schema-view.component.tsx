@@ -124,26 +124,26 @@ export const SchemaView = <T extends Obj, Cols extends ViewColumnKey<T>>({
 										fileName={title}
 									/>
 								),
-						  ]
+							]
 						: undefined
 				}
 				actions={{
 					view: rowActions?.details
 						? (row) => {
 								navigate(`details/${getId(row)}`);
-						  }
+							}
 						: undefined,
 					update:
 						UserType !== 'Worker' && rowActions?.update
 							? (row) => {
 									navigate(`update/${getId(row)}`);
-							  }
+								}
 							: undefined,
 					delete:
 						UserType === 'Administrator' && rowActions?.delete
 							? (row) => {
 									setDeleteId(getId(row));
-							  }
+								}
 							: undefined,
 				}}
 				hasPagination

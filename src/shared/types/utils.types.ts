@@ -15,11 +15,10 @@ export declare namespace Utils {
 	} & {};
 
 	/** checks if the two given types are the same */
-	type equal<T, U> = (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U
-		? 1
-		: 2
-		? true
-		: false;
+	type equal<T, U> =
+		(<G>() => G extends T ? 1 : 2) extends <G>() => G extends U ? 1 : 2
+			? true
+			: false;
 
 	/** checks if the first type satisfies the second */
 	type satisfies<T extends U, U> = T;
@@ -30,8 +29,8 @@ export declare namespace Utils {
 	type dropFirst<T extends readonly unknown[]> = number extends T['length']
 		? T
 		: T extends readonly [unknown, ...infer U]
-		  ? U
-		  : [];
+			? U
+			: [];
 
 	/** global type helper to repeat a type `N` times in a tuple */
 	type tuple<N extends number, T = 1> = N extends N
@@ -65,7 +64,7 @@ export declare namespace Utils {
 				{
 					[K in keyof U]: U[K];
 				} & { [k in Exclude<allUnionKeys<T>, keyof U>]?: never }
-		  >
+			>
 		: never;
 
 	/** Disallow explicitly undefined value for object keys. Used when generic param is constrained to `Partial<ObjType>` */
@@ -95,10 +94,10 @@ export declare namespace Utils {
 		[k in keyof T as string extends k
 			? never
 			: number extends k
-			  ? never
-			  : symbol extends k
-			    ? never
-			    : k]: T[k];
+				? never
+				: symbol extends k
+					? never
+					: k]: T[k];
 	};
 
 	/** takes a string literal as input and returns the union of all the characters */
@@ -124,14 +123,14 @@ export declare namespace Utils {
 					: U[k]
 				: U[k]
 			: k extends keyof T
-			  ? T[k]
-			  : never;
+				? T[k]
+				: never;
 	}>;
 
 	/** convert a given union to a union of permutation of tuples */
 	type unionToTuples<T, U = T> = [T] extends [never]
 		? []
 		: U extends U
-		  ? [U, ...unionToTuples<Exclude<T, U>>]
-		  : [];
+			? [U, ...unionToTuples<Exclude<T, U>>]
+			: [];
 }

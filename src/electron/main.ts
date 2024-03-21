@@ -40,7 +40,7 @@ const createWindow = () => {
 	// 1. Manifest version 2
 	// 2. object null is not iterable
 	if (electronConfig.env === 'development') {
-		installExtension(REACT_DEVELOPER_TOOLS).catch((err) => {
+		installExtension(REACT_DEVELOPER_TOOLS).catch((err: unknown) => {
 			console.warn('Could Not Load React DevTools:', err);
 		});
 	}
