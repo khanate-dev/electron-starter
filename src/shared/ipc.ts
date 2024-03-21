@@ -62,7 +62,7 @@ type listener<T> = T extends (...args: infer Args extends unknown[]) => infer R
 type appendPrefix<
 	Str extends PropertyKey,
 	Prefix extends string,
-> = Prefix extends '' ? Str : `${Prefix}${Capitalize<Str & string>}`;
+> = Prefix extends '' ? Str & string : `${Prefix}${Capitalize<Str & string>}`;
 
 type flatIpcApi<
 	T = IpcApi,
