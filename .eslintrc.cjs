@@ -1,7 +1,20 @@
-const noParentImport = {
-	group: ['../*'],
-	message: 'Do not use parent imports',
-};
+const defaultRestrictedImportsPatterns = [
+	{
+		group: ['../*'],
+		message: 'Do not use parent imports',
+	},
+];
+const defaultRestrictedImportsPaths = [
+	{
+		name: 'dayjs',
+		importNames: ['default'],
+		message: 'Please import dayjsUtc helper from `~/helpers/date`.',
+	},
+	{
+		name: '@mui/system',
+		message: 'Import from @mui/material instead',
+	},
+];
 
 /** @type {import('eslint').Linter.Config} */
 const config = {
@@ -31,9 +44,8 @@ const config = {
 		'no-unexpected-multiline': 'off',
 		'array-callback-return': ['warn', { checkForEach: true }],
 		'default-case-last': 'warn',
-		eqeqeq: 'error',
+		eqeqeq: 'warn',
 		'func-names': ['warn', 'never'],
-		'func-style': 'warn',
 		'guard-for-in': 'warn',
 		indent: 'off',
 		'logical-assignment-operators': 'warn',
@@ -61,9 +73,15 @@ const config = {
 		'no-octal-escape': 'warn',
 		'no-param-reassign': 'warn',
 		'no-promise-executor-return': 'warn',
-		'no-restricted-imports': ['error', { patterns: [noParentImport] }],
-		'no-restricted-syntax': [
+		'no-restricted-imports': [
 			'error',
+			{
+				patterns: defaultRestrictedImportsPatterns,
+				paths: defaultRestrictedImportsPaths,
+			},
+		],
+		'no-restricted-syntax': [
+			'warn',
 			{
 				message: "Don't declare enums. Use POJO with as const instead",
 				selector: 'TSEnumDeclaration',
@@ -96,11 +114,6 @@ const config = {
 		yoda: 'warn',
 
 		'import/consistent-type-specifier-style': ['warn', 'prefer-top-level'],
-		'import/extensions': [
-			'warn',
-			'never',
-			{ helpers: 'always', json: 'always', styles: 'always', test: 'always' },
-		],
 		'import/first': 'warn',
 		'import/newline-after-import': 'warn',
 		'import/no-commonjs': 'warn',
@@ -164,7 +177,7 @@ const config = {
 			{ allowConstantLoopConditions: true },
 		],
 		'@typescript-eslint/no-unused-expressions': [
-			'error',
+			'warn',
 			{
 				allowShortCircuit: true,
 				allowTernary: true,
@@ -184,6 +197,10 @@ const config = {
 		],
 		'@typescript-eslint/return-await': 'warn',
 		'@typescript-eslint/switch-exhaustiveness-check': 'warn',
+		'@typescript-eslint/restrict-template-expressions': [
+			'warn',
+			{ allowAny: false },
+		],
 		'@typescript-eslint/ban-types': [
 			'warn',
 			{
@@ -192,6 +209,10 @@ const config = {
 					extendDefaults: true,
 				},
 			},
+		],
+		'@typescript-eslint/ban-ts-comment': [
+			'error',
+			{ minimumDescriptionLength: 3 },
 		],
 		'@typescript-eslint/no-namespace': ['warn', { allowDeclarations: true }],
 		'@typescript-eslint/array-type': 'off',
@@ -211,7 +232,6 @@ const config = {
 			},
 			rules: {
 				'@typescript-eslint/no-unnecessary-type-constraint': 'off',
-				'@typescript-eslint/no-unused-vars': 'off',
 				'react/jsx-filename-extension': [
 					'warn',
 					{ extensions: ['jsx', 'tsx'] },
@@ -263,12 +283,18 @@ const config = {
 			rules: {
 				'vitest/prefer-expect-assertions': 'off',
 				'vitest/require-top-level-describe': 'off',
-				'vitest/max-expects': ['error', { max: 10 }],
+				'vitest/max-expects': ['warn', { max: 10 }],
 				'testing-library/prefer-explicit-assert': [
-					'error',
+					'warn',
 					{ assertion: 'toBeInTheDocument' },
 				],
 				'testing-library/prefer-user-event': 'warn',
+			},
+		},
+		{
+			files: ['**/*.cjs', '**/*.js'],
+			rules: {
+				'import/no-commonjs': 'off',
 			},
 		},
 		{
@@ -288,12 +314,13 @@ const config = {
 					'error',
 					{
 						patterns: [
-							noParentImport,
+							...defaultRestrictedImportsPatterns,
 							{
 								group: ['electron/*', 'serialport/*'],
 								message: 'Not available in the renderer',
 							},
 						],
+						paths: defaultRestrictedImportsPaths,
 					},
 				],
 			},
@@ -306,13 +333,14 @@ const config = {
 					'error',
 					{
 						patterns: [
-							noParentImport,
+							...defaultRestrictedImportsPatterns,
 							{
 								group: ['~/*'],
 								message: 'Do not use app modules in electron',
 							},
 						],
 						paths: [
+							...defaultRestrictedImportsPaths,
 							{
 								name: 'electron',
 								importNames: ['ipcRenderer', 'ipcMain'],
@@ -324,10 +352,10 @@ const config = {
 			},
 		},
 		{
-			files: ['**/*.cjs', '**/*.js'],
+			files: ['src/content/**/*'],
+			plugins: ['sort-keys-plus'],
 			rules: {
-				'import/no-commonjs': 'off',
-				'import/no-nodejs-modules': 'off',
+				'sort-keys-plus/sort-keys': 'warn',
 			},
 		},
 	],
