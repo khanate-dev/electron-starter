@@ -62,6 +62,7 @@ export const FormPicker = ({
 			views={views as never}
 			disabled={disabled}
 			value={value}
+			timezone='UPC'
 			slotProps={{
 				textField: textFieldProps,
 				actionBar: { actions: ['clear', 'accept'] },

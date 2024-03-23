@@ -8,7 +8,6 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { ErrorBoundary } from './components/app/error-boundary.component';
 import { SerialPortProvider } from './contexts/serial-port.context';
 import { dashboardRoutes } from './dashboard.routes';
-import { dayjsUtc } from './helpers/date.helpers';
 import { useMode } from './hooks/mode.hook';
 import { Dashboard } from './routes/dashboard/dashboard.route';
 import { Welcome } from './routes/dashboard/welcome.route';
@@ -45,15 +44,21 @@ const router = createHashRouter([
 ]);
 export const Providers = (props: RouterProviderProps) => {
 	const mode = useMode();
+
+	const theme = getMuiTheme(mode);
+
 	return (
-		<ThemeProvider theme={getMuiTheme(mode)}>
+		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<Toaster
 				gutter={10}
 				toastOptions={{
 					style: {
-						backgroundColor: mode === 'dark' ? '#333' : '#efefef',
-						color: mode === 'dark' ? '#fff' : '#111',
+						backgroundColor: theme.palette.background.paper,
+						color: theme.palette.text.primary,
+						borderColor: theme.palette.text.secondary,
+						borderStyle: 'solid',
+						borderWidth: 1,
 						textTransform: 'capitalize',
 					},
 				}}
@@ -61,7 +66,6 @@ export const Providers = (props: RouterProviderProps) => {
 			<LocalizationProvider
 				dateAdapter={AdapterDayjs}
 				adapterLocale={locale.name}
-				dateLibInstance={dayjsUtc.utc}
 			>
 				<SerialPortProvider>
 					<RouterProvider {...props} />
