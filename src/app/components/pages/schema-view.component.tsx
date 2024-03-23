@@ -28,7 +28,7 @@ export type SchemaViewProps<
 		title: string;
 
 		/** the primaryKey column for the table */
-		id: Utils.keysOfType<Utils.noInfer<T>, App.dbId> & keyof Utils.noInfer<T>;
+		id: Utils.keysOfType<NoInfer<T>, App.dbId> & keyof NoInfer<T>;
 
 		/** the row actions to enable in the view */
 		rowActions?: {

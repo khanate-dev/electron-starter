@@ -67,20 +67,20 @@ type InheritedProps<T extends Obj> = Pick<
 
 export type ViewTableProps<
 	T extends Obj,
-	Cols extends ViewColumnKey<Utils.noInfer<T>>,
+	Cols extends ViewColumnKey<NoInfer<T>>,
 > = InheritedProps<T> & {
 	/** the styles to apply to table components */
 	styles?: ViewTableStyles;
 
 	/** the schema to use for the table */
-	columns: ViewColumns<Utils.noInfer<T>, Cols>;
+	columns: ViewColumns<NoInfer<T>, Cols>;
 
 	/** the function to get the image url for each row. image column will only be shown if this is provided */
-	getRowImage?: (row: Utils.noInfer<T>) => string;
+	getRowImage?: (row: NoInfer<T>) => string;
 
 	/** actions to show on ViewTable. used for additional actions */
 	actions?: Utils.prettify<
-		Pick<GeneralTableProps<Utils.noInfer<T>>, 'select'> & {
+		Pick<GeneralTableProps<NoInfer<T>>, 'select'> & {
 			/** should the actions be disabled? */
 			disabled?: boolean;
 
@@ -88,16 +88,16 @@ export type ViewTableProps<
 			compact?: boolean;
 
 			/** the callback for the view action. excluded if absent */
-			view?: (row: Utils.noInfer<T>) => void;
+			view?: (row: NoInfer<T>) => void;
 
 			/** the callback for the update action. excluded if absent */
-			update?: (row: Utils.noInfer<T>) => void;
+			update?: (row: NoInfer<T>) => void;
 
 			/** the callback for the delete action. excluded if absent */
-			delete?: (row: Utils.noInfer<T>) => void;
+			delete?: (row: NoInfer<T>) => void;
 
 			/** any additional actions to show */
-			custom?: GeneralTableAction<Utils.noInfer<T>>[];
+			custom?: GeneralTableAction<NoInfer<T>>[];
 		}
 	>;
 
@@ -106,7 +106,7 @@ export type ViewTableProps<
 
 	/** the default value for sorting */
 	defaultSorting?: {
-		column: Utils.noInfer<Cols> | (string & {});
+		column: NoInfer<Cols> | (string & {});
 		direction: SortDirection;
 	};
 };

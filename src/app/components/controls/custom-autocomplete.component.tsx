@@ -12,7 +12,6 @@ import type {
 	ChipTypeMap,
 	TextFieldProps,
 } from '@mui/material';
-import type { Utils } from '@shared/types/utils.types';
 import type { App } from '~/types/app.types';
 
 export type CustomAutocompleteProps<
@@ -67,7 +66,7 @@ export type CustomAutocompleteProps<
 		? {
 				/** function to get the option label for object type list */
 				getOptionLabel: AutocompleteProps<
-					Utils.noInfer<Type>,
+					NoInfer<Type>,
 					Multiple,
 					DisableClearable,
 					FreeSolo,

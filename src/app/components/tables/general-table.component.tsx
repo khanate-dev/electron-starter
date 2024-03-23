@@ -32,7 +32,6 @@ import { paginationSizes, usePagination } from '~/hooks/pagination.hook';
 import { useSorting } from '~/hooks/sorting.hook';
 
 import type { ButtonProps, TableCellProps } from '@mui/material';
-import type { Utils } from '@shared/types/utils.types';
 import type { ReactNode } from 'react';
 import type { SortDirection } from '~/hooks/sorting.hook';
 import type { Mui } from '~/types/mui.types';
@@ -106,10 +105,10 @@ export type GeneralTableProps<Type extends Obj> = {
 	data: Type[];
 
 	/** the details of the table columns */
-	columns: GeneralTableColumn<Utils.noInfer<Type>>[];
+	columns: GeneralTableColumn<NoInfer<Type>>[];
 
 	/** the actions to show on table rows? */
-	rowActions?: GeneralTableAction<Utils.noInfer<Type>>[];
+	rowActions?: GeneralTableAction<NoInfer<Type>>[];
 
 	/** the details for row selections. row selections will be enabled if this is passed in */
 	select?: {
@@ -129,10 +128,7 @@ export type GeneralTableProps<Type extends Obj> = {
 	/** the table controls to render on top of the table */
 	controls?: (
 		| JSX.Element
-		| ((
-				data: Utils.noInfer<Type>[],
-				pageData: Utils.noInfer<Type>[],
-		  ) => JSX.Element)
+		| ((data: NoInfer<Type>[], pageData: NoInfer<Type>[]) => JSX.Element)
 	)[];
 
 	/** the status of the table */
