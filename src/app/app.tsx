@@ -8,6 +8,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { ErrorBoundary } from './components/app/error-boundary.component';
 import { SerialPortProvider } from './contexts/serial-port.context';
 import { dashboardRoutes } from './dashboard.routes';
+import { dayjsUtc } from './helpers/date.helpers';
 import { useMode } from './hooks/mode.hook';
 import { Dashboard } from './routes/dashboard/dashboard.route';
 import { Welcome } from './routes/dashboard/welcome.route';
@@ -60,6 +61,7 @@ export const Providers = (props: RouterProviderProps) => {
 			<LocalizationProvider
 				dateAdapter={AdapterDayjs}
 				adapterLocale={locale.name}
+				dateLibInstance={dayjsUtc.utc}
 			>
 				<SerialPortProvider>
 					<RouterProvider {...props} />
